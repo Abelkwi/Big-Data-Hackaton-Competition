@@ -276,11 +276,11 @@
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Email Address</label>
-                <input type="email" class="form-input" placeholder="info@yourorg.rw" required />
+                <input type="email" class="form-input" name="email" placeholder="info@yourorg.rw" required />
               </div>
               <div class="form-group">
                 <label class="form-label">Email Address</label>
-                <input type="email" class="form-input" placeholder="info@yourorg.rw" required />
+                <input type="email" class="form-input" name="email" placeholder="info@yourorg.rw" required />
               </div>
             </div>
 
@@ -465,6 +465,8 @@
   </div>
 </div>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
   document.querySelectorAll('.focus-chip').forEach(chip => {
     chip.addEventListener('click', () => chip.classList.toggle('selected'));
@@ -484,6 +486,40 @@
     window.scrollTo({ top:0, behavior:'smooth' });
   }
 
+  // Real backend registration via SMARTSAVE REST API
+  document.getElementById('ngoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const form = new FormData(this);
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Submitting...';
+
+    const payload = {
+      email: form.get('email'),
+      username: form.get('email').split('@')[0],
+      first_name: form.get('contact_name') || '',
+      last_name: form.get('job_title') || '',
+      password: form.get('password1') || '',
+      password2: form.get('password2') || '',
+      role: 'ngo',
+    };
+
+    try {
+      await API.registerNGO(payload);
+      // Auto-login after registration
+      try {
+        await API.login(payload.email, payload.password);
+      } catch (e) {}
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('successBox').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      alert(err.message || 'Registration failed. Please check your details and try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
 </script>
 </body>
 </html>

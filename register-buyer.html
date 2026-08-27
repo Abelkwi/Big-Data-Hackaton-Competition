@@ -453,6 +453,8 @@
   </div>
 </div>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
   function selectOrg(card) {
     document.querySelectorAll('.org-type-card').forEach(c => c.classList.remove('selected'));
@@ -477,6 +479,40 @@
     window.scrollTo({ top:0, behavior:'smooth' });
   }
 
+  // Real backend registration via SMARTSAVE REST API
+  document.getElementById('buyerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const form = new FormData(this);
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Submitting...';
+
+    const payload = {
+      email: form.get('email'),
+      username: form.get('email').split('@')[0],
+      first_name: form.get('contact_name') || '',
+      last_name: form.get('job_title') || '',
+      password: form.get('password1') || '',
+      password2: form.get('password2') || '',
+      role: 'buyer',
+    };
+
+    try {
+      await API.registerBuyer(payload);
+      // Auto-login after registration
+      try {
+        await API.login(payload.email, payload.password);
+      } catch (e) {}
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('successBox').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      alert(err.message || 'Registration failed. Please check your details and try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
 </script>
 </body>
 </html>
