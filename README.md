@@ -94,48 +94,15 @@ Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv
   
 The cleaned data are also provided to be stored separately from the original source data by Exact filenames, row counts, cleaning actions, and quality-checks.
 
-14. Analytical methodology and model
-The project uses a data-first approach: the actual variables and their definitions determine which KPIs can be calculated. No KPI should be displayed unless its formula, input variables, units, denominator, and reference period are documented.
-Potential indicators
-The following indicators may be included only where the required variables are available and compatible:
-Recorded crop production: sum of compatible production quantities for a clearly defined crop, place and period.
-Crop yield: compatible crop production divided by an appropriate cultivated or harvested area measure. For example, tonnes per hectare require production in tonnes and area in hectares for the same crop and relevant period.
-Productivity gap: `(benchmark yield − observed yield) / benchmark yield × 100`, only where a defensible, comparable benchmark exists.
-Post-harvest loss rate: `measured quantity lost / compatible harvested quantity × 100`, only when the source contains compatible loss and harvest quantities.
-Food price trend: a summary of prices for the same commodity, market/coverage, currency, unit, and price type across comparable dates.
-CPI inflation: calculated or reported using the official index series and its documented basis; do not confuse an index level with a percentage change.
-Food-security or nutrition indicators: summarized according to the source's documented population, denominator, survey design and reference period.
-Analytical approach
-The primary methods are descriptive analysis, grouped comparisons, appropriately defined indicator calculations and Excel visualizations. A ranking or prioritization score should only be added if the indicators and weighting rules are transparent and defensible. Any assumptions or weights must be documented, and sensitivity to reasonable alternative assumptions should be checked when feasible.
-A predictive model is not claimed unless one has been implemented and evaluated using a defensible validation method. Similarly, descriptive associations between farming practices and yields do not establish causation. Scenario outputs, if included, must be labelled as hypothetical rather than achieved impacts.
-Excel workflow
-The analysis workbook is intended to organize the work into raw data, data dictionary, cleaned data, quality checks, derived indicators, summary tables and dashboard sheets. Dataset-specific tabs should be kept separate where the sources have different structures or levels of measurement.
-Final implementation details to add after validation: `[LIST THE KPIs ACTUALLY CALCULATED, THE EXACT FORMULAS USED, AND THE VALIDATION CHECKS COMPLETED.]`
-15. Key findings and visualizations
-This section must contain the findings calculated from the final, validated workbook. Do not insert draft statistics or illustrative values as if they were results.
-For each main finding, state:
-The KPI and its definition.
-The source dataset and reference period.
-The relevant geography or commodity, where available.
-The verified value or comparison.
-What the result suggests for SMARTSAVE RWANDA.
-Any limitations on interpretation.
-Final verified findings
-Agricultural production/productivity: `[ADD THE MAIN VERIFIED FINDING, SOURCE, PERIOD AND KPI.]`
-Post-harvest loss: `[ADD A FINDING ONLY IF DIRECTLY MEASURED AND VALIDATED; OTHERWISE STATE THAT THE AVAILABLE DATA DID NOT SUPPORT THIS KPI.]`
-Food prices: `[ADD THE MAIN VERIFIED PRICE TREND OR COMPARISON, IF USED.]`
-Food security/nutrition: `[ADD A VERIFIED INDICATOR WITH ITS POPULATION, DENOMINATOR AND REFERENCE YEAR.]`
-Decision-support implication: `[EXPLAIN WHAT THE RESULTS HELP A USER INVESTIGATE OR PRIORITIZE.]`
-Visualizations
-Add the final exported figures after they have been checked against the summary tables. Suggested image links, if these files are added to the repository, are:
-`![Crop production and productivity comparison](outputs/figures/crop_productivity_comparison.png)`
-`![Verified post-harvest loss visualization](outputs/figures/post_harvest_loss.png)`
-`![Food price trend](outputs/figures/food_price_trend.png)`
-`![Food security or nutrition context](outputs/figures/food_security_nutrition.png)`
-Keep only figures that actually exist and reflect validated results. Remove or replace any image link that does not resolve.
-16. Instructions for using the solution
-For evaluators using the published website
-Open the project website using the link in Section 14.
+
+**2.5. Key findings and visualizations**:
+You can find all the relevant information Here:
+Excel Analysis Link:
+Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
+
+****3. Instructions for using the solution****
+F**or evaluators using the published website:**
+Open the project website using the link
 Read the overview to understand SMARTSAVE RWANDA's purpose and four pillars.
 Open the analytical dashboard or visualization section if present in the submitted version.
 Select the available filters, such as crop, period or geographic category, if those controls have been implemented.
