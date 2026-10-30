@@ -12,14 +12,14 @@ This is a monorepo holding the full project. Each subfolder is a complete, indep
 
 | Folder | Project | What it is |
 |---|---|---|
-| [`SmartSave/`](./SmartSave) | Frontend | Static HTML/CSS/JS website (marketplace, farmers portal, food recovery, innovation hub, blog, auth pages) + JS API client |
+| [`SmartSave-frontend/`](./SmartSave-frontend) | Frontend | Static HTML/CSS/JS website (marketplace, farmers portal, food recovery, innovation hub, blog, auth pages) + JS API client |
 | [`SmartSave-backend/`](./SmartSave-backend) | Backend | Django REST API (accounts/auth, marketplace, recovery, orders, messaging, notifications, innovation, blog) deployed with Gunicorn |
 
 ## Quick start
 
 ### Frontend
 ```bash
-cd SmartSave
+cd SmartSave-frontend
 # Open index.html in a browser (or serve the folder statically)
 # API URL is configured in js/config.js
 ```
@@ -38,5 +38,5 @@ python manage.py runserver
 See each subfolder's own `README.md` for full setup and deployment instructions.
 
 ## Original repositories
-- Frontend: https://github.com/Abelkwi/SmartSave
+- Frontend: https://github.com/Abelkwi/SmartSave-frontend
 - Backend: https://github.com/Abelkwi/SmartSave-backend
