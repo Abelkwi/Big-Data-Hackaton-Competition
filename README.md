@@ -21,10 +21,11 @@ National and international evidence demonstrates the urgency of addressing these
 SMARTSAVE RWANDA responds to these challenges by **introducing an integrated system that connects farmers, cooperatives, institutional buyers, logistics providers, youth entrepreneurs, and development partners within one collaborative ecosystem**. Rather than replacing existing agricultural programmes, SMARTSAVE RWANDA complements national efforts by improving coordination across the food system, increasing market efficiency, promoting responsible food utilisation, and strengthening local value chains.
 
 The initiative is built around four strategic pillars:
-•	Food Loss Reduction: Improving storage, aggregation, value addition, and responsible food recovery.
-•	Market Connectivity: Linking farmers with reliable institutional and commercial markets through technology-enabled coordination.
-•	Nutrition Improvement: Promoting equal access to nutritious food while reducing food waste.
-•	Youth Empowerment: Creating employment, entrepreneurship, leadership, and innovation opportunities for young people within Rwanda's evolving food economy.
+
+•	**Food Loss Reduction**: Improving storage, aggregation, value addition, and responsible food recovery.
+•	**Market Connectivity:** Linking farmers with reliable institutional and commercial markets through technology-enabled coordination.
+•	**Nutrition Improvement**: Promoting equal access to nutritious food while reducing food waste.
+•	**Youth Empowerment**: Creating employment, entrepreneurship, leadership, and innovation opportunities for young people within Rwanda's evolving food economy.
 
 The initiative directly contributes to Rwanda's Vision 2050, the Second National Strategy for Transformation (NST2), and the Sustainable Development Goals, particularly SDG 1 (No Poverty), SDG 2 (Zero Hunger), SDG 4 (Quality Education) SDG 8 (Decent Work and Economic Growth), SDG 12 (Responsible Consumption and Production), SDG 13 (Climate Action) and SDG 17 (Partnership for the Goals).
 
