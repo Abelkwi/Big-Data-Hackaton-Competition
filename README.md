@@ -1,6 +1,4 @@
-**SMARTSAVE RWANDA : Circular Food-System Intelligence & Decision Support**
-
-**Tagline:** From Harvest to Hope.
+**SMARTSAVE RWANDA**
 
 **Competition:** NISR Big Data Hackathon 2026 
 
@@ -22,7 +20,7 @@ However, **important structural challenges remain**: Many smallholder farmers co
 
 National and international evidence demonstrates the urgency of addressing these challenges. Approximately 20.6% of Rwanda's population continues to experience food insecurity, 40-50% harvest in Rwanda is lost yearly due to structural inefficiencies (around 141kgs per person) that comes between the farmers(producers) and consumers which makes 12% of yearly GDP, While 20.6% of Rwandan population faces food insecurity of while 27% of children under five remain affected by stunting. Furthermore, studies indicate that significant quantities of food are lost or wasted across the value chain every year, representing not only economic losses but also wasted natural resources and missed opportunities to improve livelihoods and nutrition. 
 
-All statistics provided were examined at here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing 
+All statistics provided were examined at here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing and https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true
 
 SMARTSAVE RWANDA responds to these challenges by **introducing an integrated system that connects farmers, cooperatives, institutional buyers, logistics providers, youth entrepreneurs, and development partners within one collaborative ecosystem**. Rather than replacing existing agricultural programmes, SMARTSAVE RWANDA complements national efforts by improving coordination across the food system, increasing market efficiency, promoting responsible food utilisation, and strengthening local value chains.
 
@@ -65,7 +63,7 @@ The original SMARTSAVE research cites figures about food insecurity, child stunt
 *2.2.2 Proposed solution*
 The solution combines an **Excel-centered analytical workflow with the SMARTSAVE RWANDA project website**. The workbook is designed to keep source data, cleaned tables, definitions, validation checks, derived indicators, summary tables, and dashboard visualizations clearly separated. The public-facing project page provides context about SMARTSAVE RWANDA; any interactive analytical functionality described in this README must correspond to the version actually deployed  and a Google Colab Research Wich are both deployed here:
 
-Excel Analysis Link: HTTPS:EXCEL......................COM
+Excel Analysis Link: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true 
 Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
 
 **2.3. Data sources and acknowledgements**
@@ -83,12 +81,12 @@ The project workspace contains the following datasets or dataset folders, based 
  11. NISR CFSVA 2024
  12. Rwanda Demographic and Health Survey 2025 
  
- You can find all the datasets Here: https://drive.google.com/drive/folders/1mlUg2ti11CShWQDenfifRId2TnJprRVU?usp=drive_link
+You can find all the datasets Here: https://drive.google.com/drive/folders/1mlUg2ti11CShWQDenfifRId2TnJprRVU?usp=drive_link and https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true
 
 **2.4. Data cleaning and preprocessing**
 The analysis followwed a documented workflow. The final version of each section are provided above on the links:
 
-Excel Analysis Link: HTTPS:EXCEL......................COM
+Excel Analysis Link: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true , 
 Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
 
 *Actions:*
@@ -109,7 +107,7 @@ The cleaned data are also provided to be stored separately from the original sou
 **2.5. Key findings and visualizations**:
 You can find all the relevant information Here:
 
-Excel Analysis Link: HTTPS:EXCEL......................COM
+Excel Analysis Link: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true , 
 Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
 
 ****3. Instructions for using the solution****
@@ -125,13 +123,16 @@ Project website / current public prototype: https://github.com/Abelkwi/Big-Data-
 
 Public GitHub repository; https://github.com/Abelkwi/Big-Data-Hackaton-Competition 
 
-Dedicated interactive dashboard: HTTPS:EXCEL..............COM
+Constructed interactive dashboard: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true 
 
 Demo video : https://youtu.be/MdDpt8RrRY4   
 
-Note: You can also watch this kinyarwanda version of the video about our wesite here: https://youtu.be/0g0TjdCXk1s?si=373nE4HT6yIKX3Dr Please note that this is not the official video for submission, only a reference ! 
+**Note:** 
 
-## Repository structure
+1. You can also watch this kinyarwanda version of the demo video about our wesite here: https://youtu.be/0g0TjdCXk1s?si=373nE4HT6yIKX3Dr Please note that this is not the official video for submission, only a reference !
+2. The Excel File https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true was constucted manually offline. If you want to see its full dynamism or its full potential experience, you can download it to your local computer.
+
+## Repository structure ##
 
 This is a monorepo holding the full project. Each subfolder is a complete, independently versioned project with its own full git history.
 
