@@ -1,9 +1,13 @@
 **SMARTSAVE RWANDA : Circular Food-System Intelligence & Decision Support**
-**Tagline:** From Harvest to Hope — Every Harvest Matters.
-**Competition:** NISR Big Data Hackathon 2026  
+
+**Tagline:** From Harvest to Hope.
+
+**Competition:** NISR Big Data Hackathon 2026 
+
 **Track:** Track 1 — Agricultural Productivity  
 
 Demo video: https://youtu.be/MdDpt8RrRY4  
+
 Team: 
     1. Abel KWIZERA
     2. Francine UWAJENEZA
@@ -16,7 +20,9 @@ Rwanda has made remarkable progress in agricultural development over the past tw
 
 However, **important structural challenges remain**: Many smallholder farmers continue to experience post-harvest losses, limited storage capacity, weak market access, and low bargaining power. At the same time, institutional buyers including schools, hotels, restaurants, hospitals, retailers, and food processors often struggle to secure reliable, high-quality supplies from local producers. These inefficiencies exist alongside persistent food insecurity, malnutrition, and youth unemployment.
 
-National and international evidence demonstrates the urgency of addressing these challenges. Approximately 20.6% of Rwanda's population continues to experience food insecurity, 40-50% harvest in Rwanda is lost yearly due to structural inefficiencies (around 141kgs per person) that comes between the farmers(producers) and consumers which makes 12% of yearly GDP, While 20.6% of Rwandan population faces food insecurity of while 27% of children under five remain affected by stunting. Furthermore, studies indicate that significant quantities of food are lost or wasted across the value chain every year, representing not only economic losses but also wasted natural resources and missed opportunities to improve livelihoods and nutrition. (All statistics provided were examined at here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing ) 
+National and international evidence demonstrates the urgency of addressing these challenges. Approximately 20.6% of Rwanda's population continues to experience food insecurity, 40-50% harvest in Rwanda is lost yearly due to structural inefficiencies (around 141kgs per person) that comes between the farmers(producers) and consumers which makes 12% of yearly GDP, While 20.6% of Rwandan population faces food insecurity of while 27% of children under five remain affected by stunting. Furthermore, studies indicate that significant quantities of food are lost or wasted across the value chain every year, representing not only economic losses but also wasted natural resources and missed opportunities to improve livelihoods and nutrition. 
+
+All statistics provided were examined at here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing 
 
 SMARTSAVE RWANDA responds to these challenges by **introducing an integrated system that connects farmers, cooperatives, institutional buyers, logistics providers, youth entrepreneurs, and development partners within one collaborative ecosystem**. Rather than replacing existing agricultural programmes, SMARTSAVE RWANDA complements national efforts by improving coordination across the food system, increasing market efficiency, promoting responsible food utilisation, and strengthening local value chains.
 
@@ -34,9 +40,10 @@ Beyond improving agricultural markets, SMARTSAVE seeks to build a more connected
 
 
 **2. NISR BIG DATA HACKATON INVESTIGATIONS**
+
 For the NISR Big Data Hackathon 2026, the project uses available NISR and other public datasets to investigate agricultural production and productivity alongside relevant food-loss, market-price, food-security, food-availability, and nutrition indicators. The aim is to turn statistical information into clear Excel-based indicators and visualizations that can support evidence-informed discussion and prioritization by agricultural planners, cooperatives, researchers, development partners, and other food-system stakeholders.
 
-**2.1 Problem statement and national relevance**
+******2.1 Problem statement and national relevance******: 
 SMARTSAVE RWANDA addresses this wider coordination challenge by organizing relevant agricultural and food-system evidence into accessible indicators and visualizations. The hackathon work is intended to demonstrate how data can help users compare documented outcomes, explore differences across commodities or reference periods where appropriate, and identify issues for further investigation.
 
 The project aligns with NISR Big Data Hackathon Track 1: Agricultural Productivity, which encourages data-driven solutions related to agricultural productivity, irrigation, soil conservation, post-harvest collection and storage, processing, value addition, and related real-world agricultural challenges. It is also intended to contribute to relevant priorities in Rwanda's Second National Strategy for Transformation (NST2) and Vision 2050, subject to the final policy references cited in the analysis.
@@ -57,7 +64,8 @@ The original SMARTSAVE research cites figures about food insecurity, child stunt
   
 *2.2.2 Proposed solution*
 The solution combines an **Excel-centered analytical workflow with the SMARTSAVE RWANDA project website**. The workbook is designed to keep source data, cleaned tables, definitions, validation checks, derived indicators, summary tables, and dashboard visualizations clearly separated. The public-facing project page provides context about SMARTSAVE RWANDA; any interactive analytical functionality described in this README must correspond to the version actually deployed  and a Google Colab Research Wich are both deployed here:
-Excel Analysis Link:
+
+Excel Analysis Link: HTTPS:EXCEL......................COM
 Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
 
 **2.3. Data sources and acknowledgements**
@@ -79,7 +87,8 @@ The project workspace contains the following datasets or dataset folders, based 
 
 **2.4. Data cleaning and preprocessing**
 The analysis followwed a documented workflow. The final version of each section are provided above on the links:
-Excel Analysis Link:
+
+Excel Analysis Link: HTTPS:EXCEL......................COM
 Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
 
 *Actions:*
@@ -99,176 +108,28 @@ The cleaned data are also provided to be stored separately from the original sou
 
 **2.5. Key findings and visualizations**:
 You can find all the relevant information Here:
-Excel Analysis Link:
+
+Excel Analysis Link: HTTPS:EXCEL......................COM
 Google Colab Research Link: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6 
 
 ****3. Instructions for using the solution****
-F**or evaluators using the published website:**
-Open the project website using the link
-Read the overview to understand SMARTSAVE RWANDA's purpose and four pillars.
-Open the analytical dashboard or visualization section if present in the submitted version.
-Select the available filters, such as crop, period or geographic category, if those controls have been implemented.
-Review the displayed KPI definitions, units, reference periods and source notes.
-Use the methodology and limitations sections to interpret results correctly.
-For evaluators reviewing the Excel workbook
-Download or open `SMARTSAVE_RWANDA_ANALYSIS.xlsx` from the repository or the documented shared location.
-Start with the `README` or instructions worksheet.
-Review the `Data_Inventory` and `Data_Dictionary` sheets to understand the sources and variables.
-Inspect `Quality_Checks` to see the documented preprocessing and validation.
-Review `Derived_Indicators` and `Summary_Tables` to trace the dashboard metrics to their calculations.
-Open `Dashboard` to review the selected charts and KPIs.
-Update these instructions if the final workbook or deployed application uses different names, navigation, filters or features.
-17. Application link and screenshots
-Project website / current public prototype: https://abelkwi.github.io/SmartSave/
-Public GitHub repository: https://github.com/abelkwi/SmartSave (verify that this is the exact repository URL before submission)
-Dedicated interactive dashboard, if separately deployed: `[ADD VERIFIED LIVE DASHBOARD URL, OR STATE THAT THE DASHBOARD IS INCLUDED IN THE PROJECT WEBSITE.]`
-Demo video (maximum 3 minutes): `[ADD PUBLIC VIDEO LINK]`
-Screenshots
-Add screenshots of the actual deployed version to a folder such as `assets/` and link them here. Do not use mockups as proof of implemented functionality.
-`![SMARTSAVE RWANDA home page](assets/smartsave_homepage.png)`
-`![SMARTSAVE RWANDA analytical dashboard](assets/smartsave_dashboard.png)`
-Remove any screenshot link unless the corresponding image exists in the repository.
-18. Limitations and future improvements
-Current limitations to verify and document
-Data sources may differ in definitions, reference periods, geographical resolution, units and collection methods.
-National food-security, nutrition, price-index, market-price and agricultural survey indicators are not interchangeable and should not be merged without a defensible method.
-Public datasets may not contain real-time institutional-buyer demand, current farmer inventories, storage capacity, transport availability or transaction-level prices. Without those inputs, the prototype cannot claim to perform live buyer–seller matching or establish actual unmet demand.
-Food-loss rates can only be calculated if the data provide compatible loss and harvest quantities. Estimates from different studies may not be directly comparable.
-Survey-based population estimates may require weights and variance methods that cannot be replaced by simple unweighted averages.
-Findings based on descriptive comparisons do not, by themselves, establish causal impacts.
-Real-world effects on food loss, farmer income, food security, nutrition or youth employment require implementation and evaluation; they must not be presented as achieved by the prototype without evidence.
-Potential future improvements
-Add verified demand and procurement information from participating institutional buyers.
-Integrate compatible storage, transport, weather, market-access or crop-loss measurements where reliable data are available.
-Develop a validated, transparent prioritization model if the dataset supports it.
-Conduct user testing with farmers, cooperatives and agricultural planners.
-Evaluate the solution through a pilot using measurable outcome indicators.
-Improve the dashboard's accessibility, filters and documentation.
-Update the dataset registry and indicators as new official data become available.
-19. AI-use disclosure
-AI tools, including Claude AI, may have assisted the team with tasks such as planning the analysis, proposing KPI definitions, drafting or checking Excel formulas, explaining data-cleaning procedures, structuring visualizations, troubleshooting and preparing documentation. The final disclosure must be edited to describe only the assistance actually used in this project.
-The project team is responsible for reviewing and verifying every formula, transformation, chart, interpretation and claim. AI-generated suggestions were not treated as evidence by themselves. Dataset definitions and quantitative findings must be checked against their original sources and the final workbook.
-20. Features and functionality
-Use this list to record the functions that are actually implemented and tested in the submitted version:
-[ ] Organized data-source inventory and variable definitions.
-[ ] Documented data-cleaning and validation checks.
-[ ] Excel-based KPI calculations.
-[ ] Agricultural production/productivity summaries.
-[ ] Directly measured post-harvest-loss indicators, if supported by the data.
-[ ] Food-price analysis, if included in the final workbook.
-[ ] Food-security/nutrition context, if included in the final workbook.
-[ ] Excel dashboard with verified charts.
-[ ] Working public website.
-[ ] Interactive filters or controls, if available.
-[ ] Downloadable workbook or summary reports.
-Before submission, mark only the features that have been implemented and tested.
-21. Technology stack
-The current intended workflow includes:
-Microsoft Excel Online: data preparation, formula-based KPI calculations, summary tables and visualizations.
-Google Drive: storage and organization of working datasets and project outputs.
-Claude AI: assistance with analytical planning, Excel formula drafting, cleaning design, visualization planning and documentation, to the extent actually used.
-GitHub: public source-code repository and project documentation.
-GitHub Pages: current project website, provided the URL above is active and points to the submitted version.
-Add other software or libraries only if they were actually used in the final project. Do not list Python, R, Stata, Power BI, JavaScript libraries or machine-learning packages unless they form part of the submitted implementation.
-22. Project links
-Website / public prototype: https://abelkwi.github.io/SmartSave/
-GitHub repository: https://github.com/abelkwi/SmartSave (verify URL and public access)
-Excel analysis workbook: `[ADD PUBLIC OR EVALUATOR-ACCESSIBLE LINK TO SMARTSAVE_RWANDA_ANALYSIS.xlsx, IF SHARING IS PERMITTED.]`
-Demo video (≤ 3 minutes): `[ADD PUBLIC VIDEO LINK]`
-Additional documentation: `[ADD LINKS TO METHODOLOGY, DATA DICTIONARY OR OTHER FILES IF HOSTED SEPARATELY.]`
-If a link requires a sign-in, permission request or private account, verify that evaluators will be able to access it. Do not include credentials in this README unless the application genuinely requires login and the credentials are intended for public demonstration.
-23. Demo video
-Demo video: `[ADD PUBLIC LINK TO THE SCREEN-RECORDED DEMONSTRATION — MAXIMUM 3 MINUTES]`
-The recording should show the project in use rather than only showing code. Recommended sequence:
-Introduce the agricultural problem and intended user.
-Open the deployed website or dashboard.
-Demonstrate the principal implemented interaction.
-Show one verified KPI and explain its data source.
-Explain the practical decision the result can inform.
-Use a screen recorder and confirm that the video is publicly accessible before submission.
-24. Login credentials
-Login required: `[CONFIRM YES OR NO]`
-If no login is required, write: `No login is required to access the public demonstration.`
-If login is required, provide only a dedicated demo account approved for public use. Never expose personal passwords, production credentials, secret API keys or private access tokens.
-25. How to run the project
-Use the live website
-Open: https://abelkwi.github.io/SmartSave/
-If GitHub Pages is the deployment method, the static website should be accessed through the published URL. Confirm that the published page matches the final files in the repository.
-Review the Excel analysis
-Open the shared `SMARTSAVE_RWANDA_ANALYSIS.xlsx` workbook using the link added in Section 14. If a public workbook link cannot be shared, provide a permitted copy or the official source links and document the access procedure.
-Run locally (only if the repository contains a static HTML/CSS/JavaScript website)
-```bash
-git clone https://github.com/abelkwi/SmartSave.git
-cd SmartSave
-```
-Open `index.html` in a browser if the repository is a static website and its files do not require a build step. Check the actual repository files and deployment instructions before relying on this method. If the project uses a framework or build process, replace these instructions with the correct installation and run commands.
-18. Project structure
-Update this tree to match the actual repository. The following is an example of a suitable organization, not a claim that every directory already exists:
-```text
-SmartSave/
-├── index.html                 # Main page, if present
-├── assets/                    # Images and screenshots, if present
-├── css/                       # Stylesheets, if present
-├── js/                        # Front-end scripts, if present
-├── README.md                  # Project documentation
-├── documentation/             # Methods, data dictionary and limitations, if included
-├── outputs/                   # Permitted charts and summary outputs, if included
-└── data/                      # Data links or permitted public data only
-```
-Do not upload restricted survey microdata to a public `data/` folder. For large or restricted datasets, include the official source URL and instructions in `data/README.md` instead.
-19. Team members and roles
-[Team member 1 name] — `[actual contributions: project research, data analysis, Excel KPIs, visualization, documentation, etc.]`
-[Team member 2 name] — `[actual contributions: data preparation, website, testing, deployment, documentation, etc.]`
-Describe contributions truthfully and do not claim a person completed work that they did not perform.
-20. Contact information
-Project lead: Abel Kwizera
-Email: `[ADD A PUBLIC TEAM CONTACT EMAIL, IF YOU CHOOSE TO PROVIDE ONE]`
-GitHub profile: `[ADD OR VERIFY PUBLIC GITHUB PROFILE URL]`
-21. References and acknowledgements
-National Institute of Statistics of Rwanda (NISR). Rwanda Seasonal Agricultural Survey 2025. Microdata catalogue.
-National Institute of Statistics of Rwanda (NISR). Rwanda Seasonal Agricultural Survey 2024. Microdata catalogue.
-National Institute of Statistics of Rwanda (NISR). Health, nutrition and food-security statistical publications.
-National Institute of Statistics of Rwanda (NISR). CFSVA 2018.
-National Institute of Statistics of Rwanda (NISR). CFSVA 2024.
-National Institute of Statistics of Rwanda (NISR). Demographic and Health Survey 2025.
-Food and Agriculture Organization of the United Nations (FAO). Food Loss and Waste Database.
-Food and Agriculture Organization of the United Nations (FAO). FAOSTAT Food Balances.
-Our World in Data, based on FAO data. Share of population experiencing moderate or severe food insecurity.
-National Institute of Statistics of Rwanda (NISR). Consumer Price Index — September 2025.
-National Institute of Statistics of Rwanda (NISR). Consumer Price Index — September 2026.
-World Resources Institute (WRI). Relevant publications on circular food systems and food loss in Rwanda: WRI insights.
-AVSI. Kungahara–Muhinzi: project to improve food security in Rwanda.
-RWARRI. Hinga-Ukire project.
-NISR. 2026 Big Data Hackathon — official competition rules and evaluation criteria.
-Also acknowledge the exact source page for the WFP food-price file and any other dataset actually used. Cite relevant Excel or software documentation if required by the final implementation.
-22. Hackathon submission checklist
-[ ] Public GitHub repository link verified.
-[ ] Live application link verified and accessible.
-[ ] README reviewed and all placeholders removed.
-[ ] Data sources and reference periods documented.
-[ ] Raw data preserved; public sharing permitted by the source terms.
-[ ] Cleaning operations documented.
-[ ] KPI formulas and denominators checked.
-[ ] Charts match verified summary tables.
-[ ] Key findings include source, period, units and limitations.
-[ ] Methodology and limitations documented.
-[ ] AI-use disclosure completed truthfully.
-[ ] Team roles checked for accuracy.
-[ ] Demo video is no longer than three minutes and is publicly accessible.
-[ ] Any required access credentials are safe, dedicated demo credentials.
-[ ] Originality and other competition declarations are accurate.
-[ ] Intellectual-property terms in the official rules have been reviewed.
-23. Licence and intellectual property
-The NISR Big Data Hackathon rules state that participants agree to assign and transfer intellectual property rights in submitted work to NISR, which reserves the right to use, reproduce, modify, publish and distribute the work. Review the official competition rules before adding a repository licence or reusing third-party components. Any third-party data, code, assets or content must continue to comply with the applicable terms and attribution requirements.
----
-Last reviewed: `[ADD DATE AFTER FINAL VALIDATION]`  
-Status: Working README draft — update the results, tested features, repository structure, links, team details and AI-use disclosure to match the final submitted version.# Big Data Hackathon Competition
+**For evaluators using the published website:**
+ . Open the project website using the link
+ . Read the overview to understand SMARTSAVE RWANDA's purpose and four pillars.
+ . Open the analytical dashboard or visualization section if present in the submitted version.
+ . Select the available filters, such as crop, period or geographic category, if those controls have been implemented.
 
-Welcome to the **SMARTSAVE** project repository for the Big Data Hackathon Competition.
+******3. SOLUTION******
 
-SMARTSAVE is a youth-led circular food ecosystem platform for Rwanda — connecting farmers, buyers, food-recovery partners, and youth innovators into a single digital marketplace so that every harvest creates value instead of loss.
+Project website / current public prototype: https://github.com/Abelkwi/Big-Data-Hackaton-Competition.io
 
-> **From Harvest to Hope 🌱**
+Public GitHub repository; https://github.com/Abelkwi/Big-Data-Hackaton-Competition 
+
+Dedicated interactive dashboard: HTTPS:EXCEL..............COM
+
+Demo video : https://youtu.be/MdDpt8RrRY4   
+
+Note: You can also watch this kinyarwanda version of the video about our wesite here: https://youtu.be/0g0TjdCXk1s?si=373nE4HT6yIKX3Dr Please note that this is not the official video for submission, only a reference ! 
 
 ## Repository structure
 
