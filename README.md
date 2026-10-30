@@ -1,9 +1,8 @@
-SMARTSAVE RWANDA : Circular Food-System Intelligence & Decision Support
-Tagline: From Harvest to Hope — Every Harvest Matters. Every Connection Creates Opportunity.
-Competition: NISR Big Data Hackathon 2026  
-Track: Track 1 — Agricultural Productivity  
-Country focus: Rwanda  
-  
+**SMARTSAVE RWANDA : Circular Food-System Intelligence & Decision Support**
+**Tagline:** From Harvest to Hope — Every Harvest Matters.
+**Competition:** NISR Big Data Hackathon 2026  
+**Track:** Track 1 — Agricultural Productivity  
+
 Demo video: https://youtu.be/MdDpt8RrRY4  
 Team: 
     1. Abel KWIZERA
@@ -11,7 +10,8 @@ Team:
     
 This README is a working draft based on SMARTSAVE RWANDA's project research and the datasets identified in the project workspace.
 
-1. Project overview
+**1. Project overview**
+
 Rwanda has made remarkable progress in agricultural development over the past two decades. Investments in agricultural productivity, improved inputs, climate-smart farming, and rural development. Nevertheless, improving the amount of food produced is not sufficient on its own: farmers also need effective post-harvest handling, storage and market access, while buyers and communities need reliable access to suitable and nutritious food. Fragmented information across production, prices, food availability, food security, and nutrition can make it harder for stakeholders to identify where further investigation or intervention may be needed.agricultural productivity, climate-smart farming, improved inputs, and rural development have significantly increased food production. 
 
 However, **important structural challenges remain**: Many smallholder farmers continue to experience post-harvest losses, limited storage capacity, weak market access, and low bargaining power. At the same time, institutional buyers including schools, hotels, restaurants, hospitals, retailers, and food processors often struggle to secure reliable, high-quality supplies from local producers. These inefficiencies exist alongside persistent food insecurity, malnutrition, and youth unemployment.
