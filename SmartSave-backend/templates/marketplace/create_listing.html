@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create listing</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f4f8f4; color: #1b5e20; }
+        .card { max-width: 520px; margin: 40px auto; background: white; border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(27,94,32,0.12); }
+        input, textarea, select { width: 100%; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #d6e7d6; border-radius: 10px; }
+        .btn { background: #1b5e20; color: white; padding: 10px 14px; border: none; border-radius: 999px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Create product listing</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Product name" required>
+            <textarea name="description" placeholder="Description"></textarea>
+            <select name="category">
+                <option value="vegetable">Vegetable</option>
+                <option value="fruit">Fruit</option>
+                <option value="grain">Grain</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="number" name="quantity" placeholder="Quantity" required>
+            <input type="number" step="0.01" name="price_per_unit" placeholder="Price per unit" required>
+            <input type="text" name="unit" placeholder="Unit (kg, crate, bag)" value="kg">
+            <input type="text" name="location" placeholder="Location">
+            <button class="btn" type="submit">Save listing</button>
+        </form>
+        <p><a href="{% url 'marketplace:list' %}">Back to marketplace</a></p>
+    </div>
+</body>
+</html>

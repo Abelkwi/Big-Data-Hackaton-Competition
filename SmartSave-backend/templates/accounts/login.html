@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #f1f8f2, #e8f5e9); color: #1b5e20; margin: 0; padding: 24px; }
+        .card { max-width: 420px; margin: 40px auto; background: white; border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(27,94,32,0.12); }
+        h2 { margin-top: 0; }
+        input { width: 100%; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #d6e7d6; border-radius: 10px; }
+        .btn { background: #1b5e20; color: white; padding: 10px 16px; border: none; border-radius: 999px; cursor: pointer; }
+        .muted { color: #6b7f6b; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Email address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button class="btn" type="submit">Login</button>
+        </form>
+        <p class="muted"><a href="{% url 'accounts:register' %}">Create account</a></p>
+    </div>
+</body>
+</html>

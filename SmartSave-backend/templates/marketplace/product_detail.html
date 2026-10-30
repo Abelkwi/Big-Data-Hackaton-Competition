@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | SmartSave{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="row">
+
+        <!-- LEFT SIDE -->
+        <div class="col-lg-7">
+
+            {% if product.main_image %}
+                <img src="{{ product.main_image.url }}"
+                     class="img-fluid rounded shadow-sm mb-3"
+                     style="width:100%; max-height:500px; object-fit:cover;">
+            {% else %}
+                <div class="border rounded d-flex align-items-center justify-content-center"
+                     style="height:450px;">
+                    No Image
+                </div>
+            {% endif %}
+
+            <div class="row">
+
+                {% for image in product.images.all %}
+                    <div class="col-3 mb-3">
+                        <img src="{{ image.image.url }}"
+                             class="img-thumbnail"
+                             style="height:100px;width:100%;object-fit:cover;">
+                    </div>
+                {% empty %}
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="col-lg-5">
+
+            <h2>{{ product.name }}</h2>
+
+            <p class="mb-2">
+
+                ⭐ {{ average_rating }}/5
+
+                ({{ review_count }} review{{ review_count|pluralize }})
+
+            </p>
+
+            <h4 class="text-success">
+                {{ product.price_per_unit }} RWF / {{ product.unit }}
+            </h4>
+
+            <hr>
+
+            <p>
+
+                <strong>Category:</strong>
+
+                {{ product.get_category_display }}
+
+            </p>
+
+            <p>
+
+                <strong>Variety:</strong>
+
+                {{ product.variety }}
+
+            </p>
+
+            <p>
+
+                <strong>Available Quantity:</strong>
+
+                {{ product.quantity }} {{ product.unit }}
+
+            </p>
+
+            <p>
+
+                <strong>Minimum Order:</strong>
+
+                {{ product.minimum_order }} {{ product.unit }}
+
+            </p>
+
+            <p>
+
+                <strong>Status:</strong>
+
+                {{ product.get_availability_status_display }}
+
+            </p>
+
+            <p>
+
+                <strong>Verification:</strong>
+
+                {{ product.get_verification_status_display }}
+
+            </p>
+
+            {% if product.organic %}
+                <span class="badge bg-success">
+                    🌱 Organic Product
+                </span>
+            {% endif %}
+
+            <hr>
+
+            <h5>Description</h5>
+
+            <p>
+
+                {{ product.description }}
+
+            </p>
+
+            <hr>
+
+            <h5>Location</h5>
+
+            <p>
+
+                {{ product.village }},
+                {{ product.cell }},
+                {{ product.sector }},
+                {{ product.district }},
+                {{ product.province }}
+
+            </p>
+
+            <hr>
+
+            <a href="{% url 'marketplace:place_order' product.id %}"
+               class="btn btn-success w-100 mb-2">
+
+                🛒 Order Now
+
+            </a>
+
+            <a href="{% url 'marketplace:send_message' product.farmer.id %}"
+               class="btn btn-outline-primary w-100">
+
+                💬 Contact Farmer
+
+            </a>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'marketplace:toggle_wishlist' product.slug %}"
+               class="btn btn-outline-danger w-100 mt-2">
+
+                {% if wishlist %}
+                    ❤️ Remove from Wishlist
+                {% else %}
+                    🤍 Add to Wishlist
+                {% endif %}
+
+            </a>
+
+        {% endif %}
+
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+    <!-- Farmer Card -->
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <h4>Farmer Information</h4>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    {% if product.farmer.profile.profile_photo %}
+                        <img src="{{ product.farmer.profile.profile_photo.url }}"
+                             class="rounded-circle img-fluid">
+                    {% else %}
+                        <img src="https://via.placeholder.com/180"
+                             class="rounded-circle img-fluid">
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <h4>
+
+                        <a href="{% url 'accounts:farmer_store' product.farmer.profile.store_slug %}">
+                         {{ product.farmer.get_full_name }}
+                        </a>
+                        
+                    </h4>
+
+                    <p>
+
+                        {{ product.farmer.profile.bio }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Phone:</strong>
+
+                        {{ product.farmer.profile.phone }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Organization:</strong>
+
+                        {{ product.farmer.profile.organization }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+<!-- Reviews Section -->
+
+<div class="card mb-4">
+
+    <div class="card-body">
+
+        <h4>Customer Reviews</h4>
+
+        <hr>
+
+        <h5>
+
+            ⭐ {{ average_rating }}/5
+
+            ({{ review_count }} review{{ review_count|pluralize }})
+
+        </h5>
+
+        <hr>
+
+        {% if user.is_authenticated %}
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Rating
+                    </label>
+
+                    {{ review_form.rating }}
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Review
+                    </label>
+
+                    {{ review_form.comment }}
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Submit Review
+                </button>
+
+            </form>
+
+            <hr>
+
+        {% endif %}
+
+        {% for review in reviews %}
+
+            <div class="border rounded p-3 mb-3">
+
+                <h6>
+
+                    {{ review.buyer.get_full_name|default:review.buyer.username }}
+
+                </h6>
+
+                <p class="mb-1">
+
+                    {% for i in "12345" %}
+
+                        {% if forloop.counter <= review.rating %}
+                            ⭐
+                        {% else %}
+                            ☆
+                        {% endif %}
+
+                    {% endfor %}
+
+                </p>
+
+                <small class="text-muted">
+
+                    {{ review.created_at|date:"M d, Y" }}
+
+                </small>
+
+                {% if review.comment %}
+
+                    <p class="mt-2 mb-0">
+
+                        {{ review.comment }}
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        {% empty %}
+
+            <p class="text-muted">
+
+                No reviews yet. Be the first to review this product.
+
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

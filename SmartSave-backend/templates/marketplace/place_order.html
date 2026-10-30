@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f8f4; color: #1b5e20; padding: 24px; }
+        .card { background: white; border-radius: 16px; padding: 20px; max-width: 480px; margin: auto; box-shadow: 0 8px 24px rgba(27,94,32,0.08); }
+        .btn { display: inline-block; background: #1b5e20; color: white; padding: 8px 12px; border-radius: 999px; border: none; cursor: pointer; }
+        input { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #dce8dc; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Place Order</h2>
+        <p><strong>{{ product.name }}</strong> — {{ product.price_per_unit }} RWF per {{ product.unit }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="number" name="quantity" min="1" value="1" required>
+            <button class="btn" type="submit">Confirm Order</button>
+        </form>
+        <p><a href="{% url 'marketplace:list' %}">Back to marketplace</a></p>
+    </div>
+</body>
+</html>
