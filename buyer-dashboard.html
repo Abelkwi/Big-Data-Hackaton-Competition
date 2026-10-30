@@ -55,6 +55,7 @@
       border-bottom:1px solid rgba(255,255,255,0.07);
     }
     .sidebar-logo-icon { width:32px; height:32px; background:var(--gd); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .sidebar-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
     .sidebar-logo-icon svg { width:17px; height:17px; }
     .sidebar-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:15px; color:white; letter-spacing:-0.2px; }
     .sidebar-logo-text span { color:var(--gf); }
@@ -356,12 +357,12 @@
 
 <!-- ══════════ SIDEBAR ══════════ -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
+  <a href="index.html" class="sidebar-logo">
     <div class="sidebar-logo-icon">
-      <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C6.5 2 4 5 4 8c0 4 6 10 6 10s6-6 6-10c0-3-2.5-6-6-6z" fill="#fff" opacity=".3"/><path d="M10 6l1.5 3H15l-2.5 1.8.9 3L10 12.2 7.6 13.8l.9-3L6 9h3.5L10 6z" fill="#fff"/></svg>
+      <img src="Logo.png" alt="SmartSave logo" />
     </div>
     <span class="sidebar-logo-text">SMART<span>SAVE</span></span>
-  </div>
+  </a>
 
   <div class="sidebar-user">
     <div class="su-avatar">JK</div>
@@ -373,7 +374,7 @@
 
   <nav class="sidebar-nav">
     <div class="nav-section-label">Main</div>
-    <a href="#" class="nav-item active">
+    <a href="buyer-dashboard.html" class="nav-item active">
       <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
       Dashboard
     </a>
@@ -416,7 +417,7 @@
       <svg viewBox="0 0 16 16" fill="none"><polyline points="1 12 5 7 9 10 13 4 15 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Spend Analytics
     </a>
-    <a href="#" class="nav-item">
+    <a href="marketplace.html" class="nav-item">
       <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       Market Prices
     </a>
@@ -439,7 +440,7 @@
   <div class="topbar-left">
     <div>
       <div class="topbar-greeting">Good morning, Jean-Paul 👋</div>
-      <div class="topbar-date">Thursday, 2 July 2026 · Kigali</div>
+      <div class="topbar-date">Sunday, 25 October 2026 · Kigali</div>
     </div>
   </div>
   <div class="topbar-right">
@@ -587,7 +588,7 @@
           </div>
           <div class="notif-item">
             <div class="notif-dot-wrap"><div class="ndot blue"></div></div>
-            <div class="notif-text">Your monthly invoice for <strong>June 2026</strong> is ready to download.</div>
+            <div class="notif-text">Your monthly invoice for <strong>October 2026</strong> is ready to download.</div>
             <div class="notif-time">Yesterday</div>
           </div>
           <div class="notif-item">
