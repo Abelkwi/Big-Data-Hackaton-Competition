@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register as a Farmer — SMARTSAVE Rwanda</title>
+  <style>
+    /* ── FONTS ── */
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    /* ── TOKENS ── */
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+      --red:#E53935; --red-l:#FFEBEE;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:var(--gp); overflow-x:hidden; min-height:100vh; }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-right { font-size:14px; color:var(--tm); }
+    .nav-right a { color:var(--gd); font-weight:700; }
+    .nav-right a:hover { color:var(--gf); }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-outline { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-outline:hover { border-color:var(--gf); background:var(--gl); }
+    .btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark { background:rgba(10,28,10,0.58); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+
+    .photo-slot { width:100%; height:100%; min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:20px; }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:11px; color:var(--tm); max-width:200px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* ── PAGE LAYOUT ── */
+    .reg-wrap {
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1.15fr;
+      padding-top:68px;
+    }
+
+    /* Left visual panel */
+    .reg-visual {
+      background-color:var(--gd);
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:48px;
+      min-height:calc(100vh - 68px);
+    }
+    .rv-top { position:relative; z-index:2; }
+    .rv-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gold); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:18px; }
+    .rv-title { font-size:clamp(26px,2.8vw,34px); font-weight:800; color:white; letter-spacing:-0.7px; line-height:1.25; margin-bottom:16px; max-width:380px; }
+    .rv-desc { font-size:14px; color:rgba(255,255,255,0.68); max-width:340px; line-height:1.65; }
+
+    .rv-benefits { position:relative; z-index:2; display:flex; flex-direction:column; gap:14px; }
+    .rv-benefit { display:flex; align-items:flex-start; gap:14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:var(--rm); padding:16px 18px; backdrop-filter:blur(4px); }
+    .rv-b-icon { width:36px; height:36px; border-radius:10px; background:rgba(249,168,37,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .rv-b-icon svg { width:18px; height:18px; color:var(--gold); }
+    .rv-b-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:white; margin-bottom:2px; }
+    .rv-b-desc { font-size:12px; color:rgba(255,255,255,0.55); line-height:1.5; }
+
+    /* Right form panel */
+    .reg-form-panel {
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:48px 6% 80px;
+    }
+    .reg-form-box { width:100%; max-width:560px; }
+
+    /* Progress steps */
+    .progress-row { display:flex; align-items:center; gap:8px; margin-bottom:36px; }
+    .progress-step { flex:1; height:4px; border-radius:4px; background:var(--border); transition:background 0.3s; }
+    .progress-step.active, .progress-step.done { background:var(--gf); }
+    .progress-label { display:flex; justify-content:space-between; margin-bottom:8px; }
+    .progress-label span { font-size:12px; font-weight:600; color:var(--tm); }
+    .progress-label span.current { color:var(--gd); }
+
+    .reg-form-header { margin-bottom:28px; }
+    .reg-form-title { font-size:26px; font-weight:800; letter-spacing:-0.5px; margin-bottom:8px; }
+    .reg-form-sub { font-size:14px; color:var(--tm); }
+    .reg-form-sub a { color:var(--gd); font-weight:700; }
+
+    /* Form sections */
+    .form-step { display:none; }
+    .form-step.active { display:block; }
+
+    .form-section-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .form-section-title svg { width:18px; height:18px; color:var(--gf); }
+
+    .form-group { margin-bottom:18px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-label .optional { font-weight:400; color:var(--tm); font-size:12px; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--gf); box-shadow:0 0 0 3px rgba(67,160,71,0.11); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-hint { font-size:12px; color:var(--tm); margin-top:6px; }
+
+    /* Crop chips (multi-select) */
+    .chip-group { display:flex; flex-wrap:wrap; gap:8px; }
+    .crop-chip { padding:9px 16px; border-radius:50px; border:1.5px solid var(--border); background:white; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--tb); cursor:pointer; transition:all 0.2s; user-select:none; }
+    .crop-chip:hover { border-color:var(--gf); }
+    .crop-chip.selected { background:var(--gd); border-color:var(--gd); color:white; }
+
+    /* Phone verification row */
+    .phone-row { display:flex; gap:10px; }
+    .phone-row .form-input { flex:1; }
+    .verify-btn { padding:0 18px; background:var(--gl); color:var(--gd); border:1.5px solid var(--border); border-radius:var(--r); font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:background 0.2s; }
+    .verify-btn:hover { background:var(--border); }
+
+    /* Step nav buttons */
+    .step-nav { display:flex; gap:12px; margin-top:32px; }
+    .step-nav .btn { flex:1; }
+
+    /* Success state */
+    .success-box { display:none; text-align:center; padding:20px 0; }
+    .success-box.show { display:block; }
+    .success-icon { width:72px; height:72px; background:var(--gl); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; }
+    .success-icon svg { width:36px; height:36px; color:var(--gd); }
+    .success-title { font-size:24px; font-weight:800; margin-bottom:10px; }
+    .success-desc { font-size:14px; color:var(--tm); max-width:380px; margin:0 auto 28px; line-height:1.65; }
+
+    .reg-footer-note { text-align:center; font-size:12px; color:var(--tm); margin-top:24px; line-height:1.6; }
+    .reg-footer-note a { color:var(--gd); font-weight:600; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:980px){
+      .reg-wrap { grid-template-columns:1fr; }
+      .reg-visual { display:none; }
+      .reg-form-panel { padding:40px 6% 64px; }
+    }
+    @media(max-width:480px){
+      nav { padding:0 4%; }
+      .reg-form-panel { padding:32px 5% 56px; }
+      .reg-form-title { font-size:22px; }
+      .form-row { grid-template-columns:1fr; }
+      .step-nav { flex-direction:column-reverse; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <div class="nav-right">Already have an account? <a href="login.html">Sign in</a></div>
+</nav>
+
+<div class="reg-wrap">
+
+  <!-- ── LEFT VISUAL PANEL (photo-bg) ──
+    📸 PHOTO SLOT — Farmer registration visual
+    Save as: assets/images/register-farmer-visual.jpg
+    Add inside this div, BEFORE the .ov div:
+      <img class="bg-img" src="assets/images/register-farmer-visual.jpg" alt="Farmer registration" />
+    SHOOT: A farmer mid-action — tending crops, harvesting, or carrying
+    produce. Vertical orientation works best since this panel is tall.
+    Natural light, authentic, not posed.
+  -->
+  <div class="reg-visual photo-bg">
+    <div class="ov ov-dark"></div>
+    <div class="rv-top">
+      <div class="rv-eyebrow">Farmer Registration</div>
+      <h1 class="rv-title">Join 12,400+ farmers already growing with SMARTSAVE.</h1>
+      <p class="rv-desc">Free registration. Verified within 24 hours. Start receiving orders from real buyers right away.</p>
+    </div>
+
+    <div class="rv-benefits">
+      <div class="rv-benefit">
+        <div class="rv-b-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2v16M14 6H8a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="rv-b-title">+34% average income increase</div>
+          <div class="rv-b-desc">Reported by farmers within their first season on the platform</div>
+        </div>
+      </div>
+      <div class="rv-benefit">
+        <div class="rv-b-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div>
+          <div class="rv-b-title">860+ verified buyers waiting</div>
+          <div class="rv-b-desc">Hotels, schools, restaurants and retailers actively sourcing</div>
+        </div>
+      </div>
+      <div class="rv-benefit">
+        <div class="rv-b-icon">
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="rv-b-title">Verified within 24 hours</div>
+          <div class="rv-b-desc">No long waiting periods — start listing produce almost immediately</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT FORM PANEL ── -->
+  <div class="reg-form-panel">
+    <div class="reg-form-box">
+
+      <!-- FORM (3 steps) -->
+      <div id="formWrap">
+
+        <div class="progress-label">
+          <span id="stepLabel1" class="current">1. Your Details</span>
+          <span id="stepLabel2">2. Farm Details</span>
+          <span id="stepLabel3">3. Verify</span>
+        </div>
+        <div class="progress-row">
+          <div class="progress-step active" id="bar1"></div>
+          <div class="progress-step" id="bar2"></div>
+          <div class="progress-step" id="bar3"></div>
+        </div>
+
+        <div class="reg-form-header">
+          <h2 class="reg-form-title">Register as a Farmer</h2>
+          <p class="reg-form-sub">Already registered? <a href="login.html">Sign in instead</a></p>
+        </div>
+
+        <form id="farmerForm" method="post" action="/accounts/register/">
+          
+          <input type="hidden" name="role" value="farmer" />
+
+          <!-- STEP 1 — Personal details -->
+          <div class="form-step active" id="step1">
+            <div class="form-section-title">
+              <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Personal Information
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" name="first_name" placeholder="e.g. Marie" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" name="last_name" placeholder="e.g. Uwamahoro" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address (for account access)</label>
+              <input type="email" class="form-input" name="email" placeholder="you@example.com" required />
+              <div class="form-hint">This email will be used to access your account and receive updates.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email <span class="optional">(optional)</span></label>
+              <input type="email" class="form-input" placeholder="you@example.com" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Create Password</label>
+              <input type="password" class="form-input" name="password1" placeholder="At least 8 characters" required />
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="btn btn-primary" onclick="goToStep(2)" style="flex:1;">
+                Continue
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2 — Farm details -->
+          <div class="form-step" id="step2">
+            <div class="form-section-title">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M9 2C6 2 4 4.5 4 7.5c0 4 5 8.5 5 8.5s5-4.5 5-8.5C14 4.5 12 2 9 2z" stroke="currentColor" stroke-width="1.5"/></svg>
+              Farm &amp; Location Details
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">District</label>
+                <select class="form-select" required>
+                  <option value="">Select your district</option>
+                  <option>Musanze</option><option>Huye</option><option>Nyanza</option>
+                  <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
+                  <option>Bugesera</option><option>Kamonyi</option><option>Gasabo</option>
+                  <option>Kicukiro</option><option>Nyarugenge</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sector / Village <span class="optional">(optional)</span></label>
+                <input type="text" class="form-input" placeholder="e.g. Cyuve, Kinigi" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Cooperative <span class="optional">(optional)</span></label>
+              <input type="text" class="form-input" placeholder="e.g. Akagera Farmers Cooperative" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">What do you grow? <span class="optional">(select all that apply)</span></label>
+              <div class="chip-group" id="cropChips">
+                <button type="button" class="crop-chip">🥬 Vegetables</button>
+                <button type="button" class="crop-chip">🫘 Legumes &amp; Beans</button>
+                <button type="button" class="crop-chip">🍌 Fruits</button>
+                <button type="button" class="crop-chip">☕ Coffee</button>
+                <button type="button" class="crop-chip">🍵 Tea</button>
+                <button type="button" class="crop-chip">🌾 Grains &amp; Cereals</button>
+                <button type="button" class="crop-chip">🥛 Dairy</button>
+                <button type="button" class="crop-chip">🍠 Root Crops</button>
+                <button type="button" class="crop-chip">🌿 Herbs</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Estimated Farm Size <span class="optional">(optional)</span></label>
+              <select class="form-select">
+                <option value="">Select size range</option>
+                <option>Less than 0.5 hectares</option>
+                <option>0.5 – 1 hectare</option>
+                <option>1 – 3 hectares</option>
+                <option>3 – 10 hectares</option>
+                <option>More than 10 hectares</option>
+              </select>
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="btn btn-outline" onclick="goToStep(1)">Back</button>
+              <button type="button" class="btn btn-primary" onclick="goToStep(3)">
+                Continue
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3 — Verification -->
+          <div class="form-step" id="step3">
+            <div class="form-section-title">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M2 7l3.5 3.5L16 0.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,4)"/></svg>
+              Verify Your Email Address
+            </div>
+<p class="form-hint" style="margin-bottom:18px;">We'll send a confirmation link to verify your email address. This helps keep the marketplace safe for everyone.</p>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <div class="phone-row">
+                <input type="email" class="form-input" placeholder="you@example.com" disabled style="background:var(--gp);" />
+                <button type="button" class="verify-btn" onclick="sendCode()">Send Code</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Verification Code</label>
+              <input type="text" class="form-input" name="verification_code" placeholder="Enter 6-digit code" maxlength="6" />
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="btn btn-outline" onclick="goToStep(2)">Back</button>
+              <button type="submit" class="btn btn-primary">
+                Create My Account
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <p class="reg-footer-note">By registering you agree to SMARTSAVE's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>. Free forever for farmers.</p>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="success-box" id="successBox">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 class="success-title">Welcome to SMARTSAVE!</h2>
+        <p class="success-desc">Your farmer account has been created. Our team will verify your details within 24 hours — you'll get an SMS once you're ready to start listing produce.</p>
+        <a href="buyer-dashboard.html" class="btn btn-primary">
+          Go to Farmer Dashboard
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  // Crop chip multi-select
+  document.querySelectorAll('.crop-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('selected'));
+  });
+
+  // Step navigation
+  function goToStep(step) {
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    for (let i = 1; i <= 3; i++) {
+      const bar = document.getElementById('bar' + i);
+      const label = document.getElementById('stepLabel' + i);
+      bar.classList.remove('active', 'done');
+      label.classList.remove('current');
+      if (i < step) bar.classList.add('done');
+      if (i === step) { bar.classList.add('active'); label.classList.add('current'); }
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function sendCode() {
+    const btn = event.target;
+    btn.textContent = 'Code Sent ✓';
+    btn.style.background = 'var(--gl)';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Resend Code'; btn.disabled = false; }, 5000);
+  }
+
+  // Real backend registration via SMARTSAVE REST API
+  document.getElementById('farmerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const form = new FormData(this);
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Creating account...';
+
+    const payload = {
+      email: form.get('email'),
+      username: form.get('email').split('@')[0],
+      first_name: form.get('first_name') || '',
+      last_name: form.get('last_name') || '',
+      password: form.get('password1') || '',
+      password2: form.get('password1') || '',
+      role: 'farmer',
+    };
+
+    try {
+      await API.registerFarmer(payload);
+      // Auto-login after registration
+      try {
+        await API.login(payload.email, payload.password);
+      } catch (e) {}
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('successBox').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      alert(err.message || 'Registration failed. Please check your details and try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
+</script>
+</body>
+</html>

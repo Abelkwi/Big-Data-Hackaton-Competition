@@ -1,0 +1,5 @@
+# Sensitive files - NEVER commit these to public repos
+Admin Credentials.txt
+*.sql
+*.env
+.env

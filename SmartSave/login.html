@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — SMARTSAVE Rwanda</title>
+  <style>
+    /* ── FONTS ── */
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    /* ── TOKENS ── */
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+      --red:#E53935; --red-l:#FFEBEE;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#fff; overflow-x:hidden; min-height:100vh; }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-right { font-size:14px; color:var(--tm); }
+    .nav-right a { color:var(--gd); font-weight:700; }
+    .nav-right a:hover { color:var(--gf); }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-google { background:white; color:var(--tp); border:1.5px solid var(--border); }
+    .btn-google:hover { border-color:var(--border2); background:var(--gp); }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark { background:rgba(10,28,10,0.58); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+
+    .photo-slot { width:100%; height:100%; min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:20px; }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:11px; color:var(--tm); max-width:200px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* ── PAGE LAYOUT ── */
+    .auth-wrap {
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      padding-top:68px;
+    }
+
+    /* Left visual panel */
+    .auth-visual {
+      background-color:var(--gd);
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:56px;
+      min-height:calc(100vh - 68px);
+    }
+    .av-content { position:relative; z-index:2; }
+    .av-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gold); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:18px; }
+    .av-title { font-size:clamp(28px,3vw,38px); font-weight:800; color:white; letter-spacing:-0.8px; line-height:1.2; margin-bottom:16px; max-width:420px; }
+    .av-desc { font-size:15px; color:rgba(255,255,255,0.7); max-width:380px; line-height:1.65; margin-bottom:32px; }
+    .av-stats { display:flex; gap:28px; }
+    .av-stat-num { font-family:'Manrope',sans-serif; font-size:24px; font-weight:800; color:white; }
+    .av-stat-num span { color:var(--gold); }
+    .av-stat-lbl { font-size:12px; color:rgba(255,255,255,0.5); margin-top:2px; }
+
+    /* Right form panel */
+    .auth-form-panel {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:60px 5%;
+    }
+    .auth-form-box { width:100%; max-width:420px; }
+    .auth-form-header { margin-bottom:32px; }
+    .auth-form-title { font-size:30px; font-weight:800; letter-spacing:-0.6px; margin-bottom:8px; }
+    .auth-form-sub { font-size:15px; color:var(--tm); }
+    .auth-form-sub a { color:var(--gd); font-weight:700; }
+    .auth-form-sub a:hover { color:var(--gf); }
+
+    /* Social buttons */
+    .social-row { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+
+    .divider-row { display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+    .divider-line { flex:1; height:1px; background:var(--border); }
+    .divider-text { font-size:12px; color:var(--tm); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+
+    /* Form fields */
+    .form-group { margin-bottom:18px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-input-wrap { position:relative; }
+    .form-input-wrap svg.field-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:17px; height:17px; color:var(--tm); pointer-events:none; }
+    .form-input { width:100%; padding:13px 14px 13px 42px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus { border-color:var(--gf); box-shadow:0 0 0 3px rgba(67,160,71,0.11); }
+    .pw-toggle { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:4px; color:var(--tm); display:flex; }
+    .pw-toggle svg { width:17px; height:17px; }
+    .pw-toggle:hover { color:var(--tb); }
+
+    .form-row-between { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .remember-check { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--tb); cursor:pointer; }
+    .remember-check input { width:16px; height:16px; accent-color:var(--gd); cursor:pointer; }
+    .forgot-link { font-size:13px; font-weight:600; color:var(--gd); }
+    .forgot-link:hover { color:var(--gf); }
+
+    .form-error { display:none; background:var(--red-l); border:1px solid #FFCDD2; border-radius:var(--r); padding:12px 16px; font-size:13px; color:#C62828; margin-bottom:18px; align-items:center; gap:8px; }
+    .form-error.show { display:flex; }
+    .form-error svg { width:16px; height:16px; flex-shrink:0; }
+
+    .auth-footer-note { text-align:center; font-size:12px; color:var(--tm); margin-top:24px; line-height:1.6; }
+    .auth-footer-note a { color:var(--gd); font-weight:600; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .auth-wrap { grid-template-columns:1fr; }
+      .auth-visual { display:none; }
+      .auth-form-panel { padding:48px 6%; }
+    }
+    @media(max-width:480px){
+      nav { padding:0 4%; }
+      .auth-form-panel { padding:40px 5%; }
+      .auth-form-title { font-size:26px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <div class="nav-right">New here? <a href="register.html">Create an account</a></div>
+</nav>
+
+<div class="auth-wrap">
+
+  <!-- ── LEFT VISUAL PANEL (photo-bg) ──
+    📸 PHOTO SLOT — Login visual
+    Save as: assets/images/login-visual.jpg
+    Add inside this div, BEFORE the .ov div:
+      <img class="bg-img" src="assets/images/login-visual.jpg" alt="SMARTSAVE Rwanda" />
+    SHOOT: Wide shot of a farmer or market scene with good negative
+    space at the bottom for text overlay. Portrait or square works too
+    since this panel is tall. Warm, natural light.
+  -->
+  <div class="auth-visual photo-bg">
+    <div class="ov ov-dark"></div>
+    <div class="av-content">
+      <div class="av-eyebrow">Welcome Back</div>
+      <h1 class="av-title">Every harvest matters. Sign in to keep building Rwanda's food future.</h1>
+      <p class="av-desc">Access your dashboard, manage orders, track listings, and stay connected to your part of the SMARTSAVE ecosystem.</p>
+      <div class="av-stats">
+        <div>
+          <div class="av-stat-num">12,400<span>+</span></div>
+          <div class="av-stat-lbl">Farmers Connected</div>
+        </div>
+        <div>
+          <div class="av-stat-num">860<span>+</span></div>
+          <div class="av-stat-lbl">Active Buyers</div>
+        </div>
+        <div>
+          <div class="av-stat-num">30</div>
+          <div class="av-stat-lbl">Districts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT FORM PANEL ── -->
+  <div class="auth-form-panel">
+    <div class="auth-form-box">
+
+      <div class="auth-form-header">
+        <h2 class="auth-form-title">Sign in</h2>
+        <p class="auth-form-sub">Don't have an account yet? <a href="register.html">Register for free</a></p>
+      </div>
+
+      <!-- Error message (hidden by default, shown via JS on failed attempt) -->
+      <div class="form-error" id="loginError">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Incorrect email or password. Please try again.
+      </div>
+
+      <!-- Social sign-in -->
+      <div class="social-row">
+        <button type="button" class="btn btn-google">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.95v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.95A9 9 0 0 0 0 9c0 1.45.35 2.83.95 4.05l3.02-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.59-2.59C13.46.89 11.43 0 9 0A9 9 0 0 0 .95 4.95l3.02 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <div class="divider-row">
+        <div class="divider-line"></div>
+        <div class="divider-text">or sign in with email</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Login form -->
+      <form id="loginForm" method="post" action="/accounts/login/">
+        
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="form-input-wrap">
+            <svg class="field-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input type="email" class="form-input" name="username" placeholder="you@example.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="form-input-wrap">
+            <svg class="field-icon" viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 8V5.5a3 3 0 0 1 6 0V8" stroke="currentColor" stroke-width="1.5"/></svg>
+            <input type="password" class="form-input" id="pwField" name="password" placeholder="Enter your password" required style="padding-right:42px;" />
+            <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="Show password">
+              <svg id="pwIcon" viewBox="0 0 18 18" fill="none"><path d="M1.5 9S4.5 3.5 9 3.5 16.5 9 16.5 9 13.5 14.5 9 14.5 1.5 9 1.5 9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row-between">
+          <label class="remember-check">
+            <input type="checkbox" />
+            Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;">
+          Sign In
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+
+      <p class="auth-footer-note">By signing in, you agree to SMARTSAVE's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  // Password visibility toggle
+  function togglePw() {
+    const field = document.getElementById('pwField');
+    const icon = document.getElementById('pwIcon');
+    if (field.type === 'password') {
+      field.type = 'text';
+      icon.innerHTML = '<path d="M2 2l14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7.5 4.2A7.5 7.5 0 0 1 9 4c4.5 0 7.5 5 7.5 5a13 13 0 0 1-2.3 2.9M5 5.6C3 7 1.5 9 1.5 9s3 5 7.5 5c.8 0 1.6-.15 2.3-.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else {
+      field.type = 'password';
+      icon.innerHTML = '<path d="M1.5 9S4.5 3.5 9 3.5 16.5 9 16.5 9 13.5 14.5 9 14.5 1.5 9 1.5 9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/>';
+    }
+  }
+
+  // Real backend login via SMARTSAVE REST API
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const errorBox = document.getElementById('loginError');
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const email = this.querySelector('input[name="username"]').value.trim();
+    const password = this.querySelector('input[name="password"]').value;
+
+    errorBox.classList.remove('show');
+
+    if (!email || !password) {
+      errorBox.textContent = 'Please enter both email and password.';
+      errorBox.classList.add('show');
+      return;
+    }
+
+    // Loading state
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Signing in...';
+
+    try {
+      const profile = await API.login(email, password);
+      API.setUser(profile);
+
+      // Redirect to dashboard (all roles use buyer-dashboard since no separate admin page exists)
+      window.location.href = 'buyer-dashboard.html';
+    } catch (err) {
+      errorBox.textContent = err.message || 'Incorrect email or password. Please try again.';
+      errorBox.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
+
+  // If already logged in, redirect away from login page
+  if (API.isAuthenticated()) {
+    const user = API.getUser();
+    if (user) {
+      window.location.href = 'buyer-dashboard.html';
+    }
+  }
+</script>
+</body>
+</html>

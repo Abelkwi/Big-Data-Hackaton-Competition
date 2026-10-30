@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akagera Farmers Cooperative — SMARTSAVE Rwanda</title>
+  <style>
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --brown:#8D6E63; --brown-l:#EFEBE9;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:var(--gp); }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* BUTTONS */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 24px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:15px; height:15px; flex-shrink:0; }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-secondary { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--gf); background:var(--gl); }
+    .btn-sm { padding:9px 18px; font-size:13px; }
+
+    /* PHOTO SYSTEM */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark { background:rgba(10,28,10,0.55); }
+    .photo-bg .ov-mid  { background:rgba(10,28,10,0.38); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+
+    .photo-slot { width:100%; height:100%; min-height:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:16px; }
+    .ps-icon { width:38px; height:38px; background:rgba(27,94,32,0.12); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:19px; height:19px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:10px; color:var(--tm); max-width:160px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:2px 8px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:9px; font-weight:700; color:var(--gd); }
+
+    /* HERO BANNER */
+    .coop-hero { min-height:320px; display:flex; align-items:flex-end; padding:0 5% 48px; background-color:var(--gd); }
+    /* photo-bg version — add bg-img inside */
+    .coop-hero-inner { max-width:1200px; margin:0 auto; width:100%; display:flex; align-items:flex-end; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+    .coop-hero-identity { display:flex; align-items:flex-end; gap:24px; }
+    .coop-logo { width:80px; height:80px; border-radius:20px; background:white; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.2); }
+    .coop-logo .photo-slot { min-height:unset; height:100%; padding:6px; border-radius:0; }
+    .coop-logo .ps-icon { width:28px; height:28px; }
+    .coop-logo .ps-icon svg { width:14px; height:14px; }
+    .coop-logo .ps-title, .coop-logo .ps-hint, .coop-logo .ps-tag { display:none; }
+    .coop-hero-text h1 { font-size:clamp(22px,3vw,32px); font-weight:800; color:white; letter-spacing:-0.5px; margin-bottom:6px; }
+    .coop-hero-meta { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .coop-hero-meta-item { display:flex; align-items:center; gap:5px; font-size:13px; color:rgba(255,255,255,0.72); }
+    .coop-hero-meta-item svg { width:13px; height:13px; }
+    .coop-hero-badges { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .hero-badge { padding:4px 12px; border-radius:50px; font-size:11px; font-weight:700; }
+    .hb-organic  { background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.3); }
+    .hb-verified { background:rgba(249,168,37,0.25); color:var(--gold); border:1px solid rgba(249,168,37,0.4); }
+    .coop-hero-actions { display:flex; gap:10px; align-items:center; padding-bottom:4px; flex-shrink:0; }
+
+    /* BREADCRUMB */
+    .breadcrumb { max-width:1200px; margin:0 auto; padding:8px 5% 0; display:flex; align-items:center; gap:6px; font-size:13px; color:var(--tm); }
+    .breadcrumb a { color:var(--gd); font-weight:500; }
+    .breadcrumb a:hover { color:var(--gf); }
+    .breadcrumb svg { width:12px; height:12px; flex-shrink:0; }
+
+    /* PAGE BODY */
+    .coop-body { max-width:1200px; margin:0 auto; padding:20px 5% 80px; display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:start; }
+
+    /* ── LEFT ── */
+    .coop-left { display:flex; flex-direction:column; gap:20px; }
+
+    /* Section card */
+    .sec-card { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:24px 28px; }
+    .sc-title { font-family:'Manrope',sans-serif; font-size:17px; font-weight:700; color:var(--tp); margin-bottom:16px; }
+    .sc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .sc-link  { font-size:13px; font-weight:600; color:var(--gd); }
+    .sc-link:hover { color:var(--gf); }
+
+    /* Stats grid */
+    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .stat-item { text-align:center; background:var(--gp); border-radius:var(--rm); padding:18px 12px; }
+    .stat-num { font-family:'Manrope',sans-serif; font-size:28px; font-weight:800; color:var(--gd); line-height:1; margin-bottom:5px; }
+    .stat-num span { color:var(--gold); }
+    .stat-lbl { font-size:12px; color:var(--tm); font-weight:500; line-height:1.4; }
+
+    /* About text */
+    .about-text p { font-size:14px; color:var(--tm); line-height:1.75; margin-bottom:12px; }
+    .about-text p:last-child { margin-bottom:0; }
+
+    /* Product listings grid */
+    .prod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .prod-card { border:1px solid var(--border); border-radius:var(--rm); overflow:hidden; transition:box-shadow 0.2s, transform 0.2s; cursor:pointer; background:white; }
+    .prod-card:hover { box-shadow:var(--sh); transform:translateY(-2px); }
+    .pc-img { height:120px; background:var(--gl); position:relative; }
+    .pc-img .photo-slot { min-height:unset; height:100%; }
+    .pc-img .ps-icon { width:28px; height:28px; }
+    .pc-img .ps-icon svg { width:14px; height:14px; }
+    .pc-img .ps-title { font-size:10px; }
+    .pc-img .ps-hint, .pc-img .ps-tag { display:none; }
+    .pc-stock-badge { position:absolute; top:6px; left:6px; padding:3px 8px; border-radius:50px; font-size:10px; font-weight:700; background:var(--gd); color:white; }
+    .pc-body { padding:10px 12px 12px; }
+    .pc-name  { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--tp); margin-bottom:2px; }
+    .pc-price { font-family:'Manrope',sans-serif; font-size:13px; font-weight:800; color:var(--gd); }
+    .pc-unit  { font-size:11px; color:var(--tm); font-weight:400; }
+    .pc-qty   { font-size:11px; color:var(--tm); margin-top:2px; }
+
+    /* Members grid */
+    .members-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .member-card { display:flex; align-items:center; gap:12px; padding:14px 16px; background:var(--gp); border-radius:var(--rm); border:1px solid var(--border); transition:box-shadow 0.2s; cursor:pointer; }
+    .member-card:hover { box-shadow:0 2px 12px rgba(27,94,32,0.1); }
+    .member-avatar { width:40px; height:40px; border-radius:50%; background:var(--gl); display:flex; align-items:center; justify-content:center; font-family:'Manrope',sans-serif; font-size:13px; font-weight:800; color:var(--gd); flex-shrink:0; }
+    .member-name { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--tp); }
+    .member-meta { font-size:11px; color:var(--tm); }
+    .member-rating { font-size:11px; color:var(--gold); font-weight:600; }
+
+    /* Photo gallery */
+    .gallery-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:200px 200px; gap:8px; }
+    .gallery-item { border-radius:var(--rm); overflow:hidden; background:var(--gl); }
+    .gallery-item.span-col { grid-row:1/3; }
+    .gallery-item .photo-slot { min-height:unset; height:100%; }
+    .gallery-item .ps-icon { width:32px; height:32px; }
+    .gallery-item .ps-icon svg { width:16px; height:16px; }
+    .gallery-item .ps-title { font-size:11px; }
+    .gallery-item .ps-hint { font-size:10px; }
+
+    /* Reviews */
+    .reviews-list { display:flex; flex-direction:column; gap:12px; }
+    .review-item { background:var(--gp); border-radius:var(--rm); padding:16px 18px; }
+    .ri-top { display:flex; justify-content:space-between; margin-bottom:6px; }
+    .ri-org  { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); }
+    .ri-date { font-size:12px; color:var(--tm); }
+    .ri-stars { color:var(--gold); font-size:13px; margin-bottom:6px; }
+    .ri-text  { font-size:13px; color:var(--tm); line-height:1.65; }
+
+    /* ── RIGHT ── */
+    .coop-right { display:flex; flex-direction:column; gap:20px; }
+
+    /* Quick order */
+    .quick-order { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:22px; }
+    .qo-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:14px; }
+    .qo-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+    .qo-stat { background:var(--gp); border-radius:var(--rm); padding:12px; }
+    .qo-num { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:var(--gd); }
+    .qo-lbl { font-size:11px; color:var(--tm); margin-top:2px; }
+    .qo-btn-stack { display:flex; flex-direction:column; gap:9px; }
+
+    /* Info card */
+    .info-card { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:22px; }
+    .info-card-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:16px; }
+    .info-rows { display:flex; flex-direction:column; gap:12px; }
+    .info-row { display:flex; align-items:flex-start; gap:10px; }
+    .ir-icon { width:32px; height:32px; border-radius:8px; background:var(--gl); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ir-icon svg { width:15px; height:15px; color:var(--gd); }
+    .ir-lbl { font-size:11px; font-weight:700; color:var(--tm); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:2px; }
+    .ir-val { font-family:'Manrope',sans-serif; font-size:13px; font-weight:600; color:var(--tp); }
+
+    /* Certification card */
+    .cert-card { background:var(--gold-l); border:1px solid #FFE082; border-radius:var(--rl); padding:20px 22px; }
+    .cert-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:#B37A00; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .cert-title svg { width:16px; height:16px; }
+    .cert-list { display:flex; flex-direction:column; gap:8px; }
+    .cert-item { display:flex; align-items:center; gap:8px; font-size:13px; color:#795548; font-weight:500; }
+    .cert-item svg { width:14px; height:14px; color:#B37A00; flex-shrink:0; }
+
+    /* FADE UP */
+    .fade-up { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up:nth-child(2){transition-delay:0.07s}
+    .fade-up:nth-child(3){transition-delay:0.14s}
+
+    /* FOOTER */
+    footer { background:var(--tp); padding:32px 5%; }
+    .ft-bottom { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .ft-brand { font-family:'Manrope',sans-serif; font-size:16px; font-weight:800; color:white; }
+    .ft-brand span { color:var(--gf); }
+    .ft-links-row { display:flex; gap:20px; }
+    .ft-links-row a { font-size:13px; color:rgba(255,255,255,0.5); }
+    .ft-links-row a:hover { color:var(--gf); }
+    .ft-copy { font-size:13px; color:rgba(255,255,255,0.35); }
+
+    @media(max-width:960px){ .coop-body { grid-template-columns:1fr; } .stats-row { grid-template-columns:repeat(2,1fr); } .prod-grid { grid-template-columns:1fr 1fr; } .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; } .gallery-item.span-col { grid-row:auto; } }
+    @media(max-width:640px){ nav { padding:0 4%; } .nav-links { display:none; } .coop-hero { padding-bottom:36px; } .coop-hero-inner { flex-direction:column; align-items:flex-start; gap:16px; } .members-grid { grid-template-columns:1fr; } .gallery-grid { grid-template-columns:1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html" class="active">Marketplace</a></li>
+    <li><a href="farmers.html">Farmers</a></li>
+    <li><a href="recovery.html">Food Recovery</a></li>
+    <li><a href="innovation.html">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO BANNER
+  📸 PHOTO SLOT — Cooperative hero banner
+  Save as: assets/images/coop-akagera-hero.jpg
+  Add inside .coop-hero, BEFORE the .ov div:
+    <img class="bg-img" src="assets/images/coop-akagera-hero.jpg" alt="Akagera Cooperative" />
+  SHOOT: Wide shot of the cooperative's fields — rolling terrain,
+  multiple farmers working, vibrant crop rows. Or the cooperative
+  group gathered together. Landscape orientation, wide.
+-->
+<div class="coop-hero photo-bg">
+  <div class="ov ov-dark"></div>
+  <div class="coop-hero-inner">
+    <div class="coop-hero-identity">
+      <!-- Logo
+        📸 Replace .photo-slot with: <img src="assets/images/coop-akagera-logo.jpg" alt="Akagera logo" />
+        SHOOT: The cooperative's official logo, or a symbolic image
+        (hands holding produce, seed, leaf motif) — square crop.
+      -->
+      <div class="coop-logo">
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="9" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 19c0-4 3.1-7 7-7s7 3 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="coop-hero-text">
+        <h1>Akagera Farmers Cooperative</h1>
+        <div class="coop-hero-meta">
+          <div class="coop-hero-meta-item">
+            <svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1C4.3 1 2.5 2.9 2.5 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10.5 2.9 8.7 1 6.5 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Musanze District, Northern Province
+          </div>
+          <div class="coop-hero-meta-item">
+            <svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1.5l1.3 3.5H11l-2.7 2 1 3.3L6.5 8.6 3.7 10.3l1-3.3L2 5h3.2z" stroke="currentColor" stroke-width="1.2"/></svg>
+            4.8 · 124 completed orders
+          </div>
+          <div class="coop-hero-meta-item">
+            <svg viewBox="0 0 13 13" fill="none"><path d="M11 10v-1a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="6.5" cy="4" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+            280 member farmers
+          </div>
+        </div>
+        <div class="coop-hero-badges">
+          <span class="hero-badge hb-organic">Organic Certified</span>
+          <span class="hero-badge hb-verified">Verified Cooperative</span>
+          <span class="hero-badge hb-organic">RAB Registered</span>
+        </div>
+      </div>
+    </div>
+    <div class="coop-hero-actions">
+      <button class="btn btn-white" style="background:white; color:var(--gd);">
+        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Order from Cooperative
+      </button>
+      <button class="btn btn-outline-white" style="border:1.5px solid rgba(255,255,255,0.4); color:white; background:transparent;">
+        <svg viewBox="0 0 14 14" fill="none"><path d="M2 4h10a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4l-3 2V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Message
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb" style="padding-top:16px;">
+  <a href="marketplace.html">Marketplace</a>
+  <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <a href="farmers.html">Cooperatives</a>
+  <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Akagera Farmers Cooperative</span>
+</div>
+
+<div class="coop-body">
+
+  <!-- ── LEFT ── -->
+  <div class="coop-left">
+
+    <!-- STATS -->
+    <div class="sec-card fade-up">
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">280</div>
+          <div class="stat-lbl">Member Farmers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">8,400<span>kg</span></div>
+          <div class="stat-lbl">Monthly Supply Capacity</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.8<span>★</span></div>
+          <div class="stat-lbl">Average Buyer Rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">97<span>%</span></div>
+          <div class="stat-lbl">On-time Delivery</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="sec-card fade-up">
+      <div class="sc-title">About the Cooperative</div>
+      <div class="about-text">
+        <p>Akagera Farmers Cooperative was founded in 2018 with the mission of strengthening market access for smallholder farmers in Musanze District. Today, the cooperative brings together 280 member farmers across 6 sectors, collectively managing over 340 hectares of productive land in the fertile volcanic soils of the Northern Province.</p>
+        <p>The cooperative specialises in vegetables, legumes, and root crops — with organic certification covering all member farms. Through SMARTSAVE, Akagera has connected to institutional buyers in Kigali and across the country, enabling the cooperative to fulfill bulk orders that individual farmers could not handle alone.</p>
+        <p>Key programmes include shared storage facilities, group transport to Kigali markets twice weekly, and a training programme for post-harvest handling and soil health. The cooperative also supports a women farmers group representing 62% of membership.</p>
+      </div>
+    </div>
+
+    <!-- CURRENT LISTINGS -->
+    <div class="sec-card fade-up">
+      <div class="sc-header">
+        <div class="sc-title">Available Now</div>
+        <a href="marketplace.html" class="sc-link">View all →</a>
+      </div>
+      <div class="prod-grid">
+        <div class="prod-card" onclick="window.location='marketplace-product.html'">
+          <div class="pc-img">
+            <!--📸 Tomatoes in basket-->
+            <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Tomatoes</div></div>
+            <span class="pc-stock-badge">In Stock</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Fresh Tomatoes</div>
+            <div class="pc-price">450 RWF <span class="pc-unit">/ kg</span></div>
+            <div class="pc-qty">1,200 kg available</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img">
+            <!--📸 Bell peppers-->
+            <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Bell Peppers</div></div>
+            <span class="pc-stock-badge">In Stock</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Green Bell Peppers</div>
+            <div class="pc-price">600 RWF <span class="pc-unit">/ kg</span></div>
+            <div class="pc-qty">680 kg available</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img">
+            <!--📸 Climbing beans-->
+            <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Climbing Beans</div></div>
+            <span class="pc-stock-badge" style="background:#E65100;">Low Stock</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Climbing Beans</div>
+            <div class="pc-price">1,100 RWF <span class="pc-unit">/ kg</span></div>
+            <div class="pc-qty" style="color:#E53935; font-weight:600;">Only 120 kg left</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img">
+            <!--📸 Amaranth leaves-->
+            <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Amaranth Leaves</div></div>
+            <span class="pc-stock-badge">In Stock</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Amaranth Leaves</div>
+            <div class="pc-price">280 RWF <span class="pc-unit">/ bunch</span></div>
+            <div class="pc-qty">340 bunches available</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img">
+            <!--📸 Dried maize-->
+            <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Dried Maize</div></div>
+            <span class="pc-stock-badge">In Stock</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Dried Maize</div>
+            <div class="pc-price">380 RWF <span class="pc-unit">/ kg</span></div>
+            <div class="pc-qty">2,400 kg available</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="pc-img">
+            <!--📸 Sweet potatoes in a pile-->
+            <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Sweet Potatoes</div></div>
+            <span class="pc-stock-badge">In Stock</span>
+          </div>
+          <div class="pc-body">
+            <div class="pc-name">Sweet Potatoes</div>
+            <div class="pc-price">320 RWF <span class="pc-unit">/ kg</span></div>
+            <div class="pc-qty">1,800 kg available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO GALLERY -->
+    <div class="sec-card fade-up">
+      <div class="sc-title" style="margin-bottom:16px;">Farm Gallery</div>
+      <div class="gallery-grid">
+        <!--
+          📸 Gallery photos — 4 total
+          gallery-1 (tall/left): Wide cooperative field or group of farmers working
+          gallery-2 (top right): Storage facility or aggregation point
+          gallery-3 (mid right): Produce being sorted or weighed
+          gallery-4 (bottom right): Delivery truck loading or market handoff
+        -->
+        <div class="gallery-item span-col">
+          <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Cooperative Fields</div><div class="ps-hint">Wide cooperative field, farmers working, vibrant crops</div><span class="ps-tag">📸 Portrait · tall</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Storage Facility</div><div class="ps-hint">Coop storage room or aggregation point</div><span class="ps-tag">📸 Square</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Sorting Produce</div><div class="ps-hint">Farmers sorting or weighing produce together</div><span class="ps-tag">📸 Square</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Delivery Loading</div><div class="ps-hint">Truck being loaded with bagged produce for Kigali</div><span class="ps-tag">📸 Square</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMBER FARMERS -->
+    <div class="sec-card fade-up">
+      <div class="sc-header">
+        <div class="sc-title">Featured Member Farmers</div>
+        <a href="farmers.html" class="sc-link">View all 280 →</a>
+      </div>
+      <div class="members-grid">
+        <a href="farmer-profile.html" class="member-card">
+          <div class="member-avatar">MU</div>
+          <div>
+            <div class="member-name">Marie Uwamahoro</div>
+            <div class="member-meta">Tomatoes · Beans · 1.2 ha</div>
+            <div class="member-rating">★ 4.9 · 47 orders</div>
+          </div>
+        </a>
+        <div class="member-card">
+          <div class="member-avatar">JP</div>
+          <div>
+            <div class="member-name">Jean-Paul Habimana</div>
+            <div class="member-meta">Maize · Root Crops · 2.4 ha</div>
+            <div class="member-rating">★ 4.7 · 31 orders</div>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">AN</div>
+          <div>
+            <div class="member-name">Anitha Nyiransabimana</div>
+            <div class="member-meta">Vegetables · Herbs · 0.8 ha</div>
+            <div class="member-rating">★ 4.9 · 22 orders</div>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">EK</div>
+          <div>
+            <div class="member-name">Emmanuel Kalisa</div>
+            <div class="member-meta">Beans · Sweet Potatoes · 1.5 ha</div>
+            <div class="member-rating">★ 4.8 · 28 orders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="sec-card fade-up">
+      <div class="sc-header">
+        <div class="sc-title">Buyer Reviews</div>
+        <span style="font-size:13px; color:var(--tm);">4.8 average · 38 reviews</span>
+      </div>
+      <div class="reviews-list">
+        <div class="review-item">
+          <div class="ri-top"><span class="ri-org">WFP Rwanda</span><span class="ri-date">2 weeks ago</span></div>
+          <div class="ri-stars">★★★★★</div>
+          <p class="ri-text">"We have sourced from Akagera Cooperative for three consecutive quarters. Delivery is consistently on time and the quality standards are maintained. A reliable partner for institutional procurement."</p>
+        </div>
+        <div class="review-item">
+          <div class="ri-top"><span class="ri-org">Kigali Serena Hotel</span><span class="ri-date">1 month ago</span></div>
+          <div class="ri-stars">★★★★★</div>
+          <p class="ri-text">"The cooperative's ability to aggregate bulk orders is what distinguishes them. We receive consistent volume, consistent quality, and a single point of contact for everything."</p>
+        </div>
+        <div class="review-item">
+          <div class="ri-top"><span class="ri-org">Green Hills Academy</span><span class="ri-date">6 weeks ago</span></div>
+          <div class="ri-stars">★★★★☆</div>
+          <p class="ri-text">"Very good experience overall. Vegetables are always fresh and pricing is fair. Occasional minor packaging issues but the coordinator responds quickly when we raise them."</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /coop-left -->
+
+  <!-- ── RIGHT ── -->
+  <div class="coop-right">
+
+    <div class="quick-order fade-up">
+      <div class="qo-title">Order from Cooperative</div>
+      <div class="qo-stat-grid">
+        <div class="qo-stat"><div class="qo-num">6</div><div class="qo-lbl">Active listings</div></div>
+        <div class="qo-stat"><div class="qo-num">Next day</div><div class="qo-lbl">Delivery to Kigali</div></div>
+        <div class="qo-stat"><div class="qo-num">50 kg</div><div class="qo-lbl">Min order</div></div>
+        <div class="qo-stat"><div class="qo-num">8,400 kg</div><div class="qo-lbl">Monthly capacity</div></div>
+      </div>
+      <div class="qo-btn-stack">
+        <a href="marketplace.html" class="btn btn-primary">Browse All Listings</a>
+        <button class="btn btn-secondary">Send Message</button>
+      </div>
+    </div>
+
+    <div class="info-card fade-up">
+      <div class="info-card-title">Cooperative Details</div>
+      <div class="info-rows">
+        <div class="info-row">
+          <div class="ir-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.2 1 2 3.2 2 6c0 3.9 5 7 5 7s5-3.1 5-7c0-2.8-2.2-5-5-5z" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div><div class="ir-lbl">Location</div><div class="ir-val">Musanze District, Northern Province</div></div>
+        </div>
+        <div class="info-row">
+          <div class="ir-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M12 12v-1.5a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3V12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="7" cy="4.5" r="2" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div><div class="ir-lbl">Members</div><div class="ir-val">280 farmers across 6 sectors</div></div>
+        </div>
+        <div class="info-row">
+          <div class="ir-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M2 4h10a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3l-2 2V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div><div class="ir-lbl">Main Products</div><div class="ir-val">Vegetables · Legumes · Root Crops · Cereals</div></div>
+        </div>
+        <div class="info-row">
+          <div class="ir-icon"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 4.5v2.5l2 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div><div class="ir-lbl">Delivery Days</div><div class="ir-val">Mon, Wed, Fri to Kigali</div></div>
+        </div>
+        <div class="info-row">
+          <div class="ir-icon"><svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4" width="11" height="7" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M5 4V2.5a2 2 0 0 1 4 0V4" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div><div class="ir-lbl">Payment Accepted</div><div class="ir-val">MTN MoMo · Airtel Money · Invoice</div></div>
+        </div>
+        <div class="info-row">
+          <div class="ir-icon"><svg viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M4 7l2.5 2.5L10 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ir-lbl">Founded</div><div class="ir-val">2018 · 7 years of operation</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-card fade-up">
+      <div class="cert-title">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1l1.5 4H14l-3.5 2.5 1.3 4L8 9.5 4.2 11.5 5.5 7.5 2 5h4.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Certifications &amp; Standards
+      </div>
+      <div class="cert-list">
+        <div class="cert-item"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Organic Certified — Rwanda Agriculture Board</div>
+        <div class="cert-item"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Registered Cooperative — MINICOM</div>
+        <div class="cert-item"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> SMARTSAVE Verified Supplier</div>
+        <div class="cert-item"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Food Safety Standard — NAEB compliant</div>
+      </div>
+    </div>
+
+  </div><!-- /coop-right -->
+
+</div><!-- /coop-body -->
+
+<footer>
+  <div class="ft-bottom">
+    <div class="ft-brand">SMART<span>SAVE</span> Rwanda</div>
+    <div class="ft-links-row">
+      <a href="marketplace.html">Marketplace</a>
+      <a href="farmers.html">Farmers</a>
+      <a href="about.html">About</a>
+      <a href="#">Privacy</a>
+    </div>
+    <div class="ft-copy">© 2026 SMARTSAVE Rwanda.</div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+  const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); }), { threshold:0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

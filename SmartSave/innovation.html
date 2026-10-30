@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Innovation Hub — SMARTSAVE Rwanda</title>
+  <style>
+    /* ── FONTS ── */
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    /* ── TOKENS ── */
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --purple:#7B1FA2; --purple-l:#F3E5F5;
+      --sky:#E3F2FD; --sky-d:#1565C0;
+      --pink:#D81B60; --pink-l:#FCE4EC;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#fff; overflow-x:hidden; }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary   { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-secondary { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--gf); background:var(--gl); }
+    .btn-white { background:white; color:var(--gd); }
+    .btn-white:hover { box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+    .btn-outline-white { background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.45); }
+    .btn-outline-white:hover { background:rgba(255,255,255,0.1); }
+    .btn-purple { background:var(--purple); color:white; }
+    .btn-purple:hover { background:#6A1B9A; box-shadow:0 8px 24px rgba(123,31,162,0.25); }
+    .btn-sm { padding:9px 20px; font-size:14px; }
+    .btn-lg { padding:16px 34px; font-size:16px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gf); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:14px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:2px; background:var(--gf); border-radius:2px; }
+    .eyebrow.gold   { color:var(--gold); }
+    .eyebrow.gold::before   { background:var(--gold); }
+    .eyebrow.purple { color:#CE93D8; }
+    .eyebrow.purple::before { background:#CE93D8; }
+    .eyebrow.white  { color:rgba(255,255,255,0.8); }
+    .eyebrow.white::before  { background:rgba(255,255,255,0.5); }
+    .eyebrow.center { justify-content:center; }
+    .eyebrow.center::before { display:none; }
+
+    /* ── LAYOUT ── */
+    .sec { padding:80px 5%; }
+    .inner { max-width:1200px; margin:0 auto; }
+    .sec-title { font-size:clamp(28px,3.8vw,44px); font-weight:800; letter-spacing:-0.8px; margin-bottom:14px; }
+    .sec-title.white { color:white; }
+    .sec-desc { font-size:17px; color:var(--tm); max-width:520px; line-height:1.7; }
+    .sec-desc.white  { color:rgba(255,255,255,0.65); }
+    .sec-desc.center { margin:0 auto; text-align:center; }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov       { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark  { background:rgba(15,12,30,0.62); }
+    .photo-bg .ov-mid   { background:rgba(15,12,30,0.44); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+    .photo-frame { border-radius:var(--rl); overflow:hidden; background:var(--gl); }
+    .photo-frame img { width:100%; height:100%; object-fit:cover; }
+
+    /* ── PHOTO PLACEHOLDER ── */
+    .photo-slot { width:100%; height:100%; min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:20px; }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:11px; color:var(--tm); max-width:170px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* ── CARD ── */
+    .card { background:white; border:1px solid var(--border); border-radius:var(--rm); padding:28px; transition:box-shadow 0.25s, transform 0.25s, border-color 0.25s; }
+    .card:hover { box-shadow:var(--sh); transform:translateY(-3px); border-color:var(--border2); }
+
+    /* ── CTA BOX ── */
+    .cta-box { background:var(--gd); border-radius:var(--rxl); padding:76px 56px; text-align:center; position:relative; overflow:hidden; }
+    .cta-box::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; border-radius:50%; background:rgba(67,160,71,0.13); pointer-events:none; }
+    .cta-box::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:260px; height:260px; border-radius:50%; background:rgba(249,168,37,0.07); pointer-events:none; }
+    .cta-box > * { position:relative; z-index:1; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--tp); color:rgba(255,255,255,0.65); padding:56px 5% 32px; }
+    .ft-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:44px; margin-bottom:40px; }
+    .ft-brand { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:white; margin-bottom:10px; }
+    .ft-brand span { color:var(--gf); }
+    .ft-tagline { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:16px; }
+    .ft-col-title { font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:white; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:12px; }
+    .ft-links { list-style:none; }
+    .ft-links li { margin-bottom:8px; }
+    .ft-links a { font-size:14px; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+    .ft-links a:hover { color:var(--gf); }
+    .ft-bottom { max-width:1200px; margin:0 auto; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .ft-copy { font-size:13px; color:rgba(255,255,255,0.35); }
+    .ft-dot { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; background:rgba(255,255,255,0.06); border-radius:50px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); }
+    .ft-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gf); }
+
+    /* ── FADE UP ── */
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up:nth-child(2){transition-delay:0.08s}
+    .fade-up:nth-child(3){transition-delay:0.16s}
+    .fade-up:nth-child(4){transition-delay:0.24s}
+    .fade-up:nth-child(5){transition-delay:0.32s}
+    .fade-up:nth-child(6){transition-delay:0.40s}
+
+    /* ════════════════════════════
+       PAGE STYLES
+       ════════════════════════════ */
+
+    /* ── HERO (photo-bg, purple-tinted dark gradient) ── */
+    .hero {
+      min-height:92vh; padding:140px 5% 70px;
+      display:flex; align-items:center;
+      background:linear-gradient(150deg, #1B5E20 0%, #2E1A47 100%);
+      position:relative; overflow:hidden;
+    }
+    .hero::before { content:''; position:absolute; top:-140px; right:-100px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(123,31,162,0.25) 0%, transparent 70%); pointer-events:none; }
+    .hero::after  { content:''; position:absolute; bottom:-100px; left:-80px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle, rgba(249,168,37,0.12) 0%, transparent 70%); pointer-events:none; }
+    .hero-inner { max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center; position:relative; z-index:2; }
+    .hero h1 { font-size:clamp(36px,5vw,60px); font-weight:800; color:white; letter-spacing:-1.3px; line-height:1.1; margin-bottom:20px; }
+    .hero h1 span { color:var(--gold); }
+    .hero-sub { font-size:18px; color:rgba(255,255,255,0.7); line-height:1.65; max-width:480px; margin-bottom:36px; }
+    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px; }
+    .hero-stats-row { display:flex; gap:32px; flex-wrap:wrap; }
+    .hs-num { font-family:'Manrope',sans-serif; font-size:26px; font-weight:800; color:white; }
+    .hs-num span { color:var(--gold); }
+    .hs-lbl { font-size:12px; color:rgba(255,255,255,0.5); margin-top:2px; }
+
+    /* Hero photo card */
+    .hero-photo { border-radius:var(--rl); overflow:hidden; aspect-ratio:4/5; border:1px solid rgba(255,255,255,0.12); }
+
+    /* ── EVENT BANNER ── */
+    .event-bar { background:var(--gold); padding:16px 5%; }
+    .event-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .event-icon { width:34px; height:34px; background:rgba(27,94,32,0.15); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .event-icon svg { width:18px; height:18px; color:var(--tp); }
+    .event-text { font-size:14px; color:var(--tp); font-weight:600; flex:1; }
+    .event-text span { font-weight:800; }
+    .event-btn { padding:8px 20px; background:var(--tp); color:white; border-radius:50px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; white-space:nowrap; transition:background 0.2s; }
+    .event-btn:hover { background:#0D2E0D; }
+
+    /* ── PILLARS (6 cards) ── */
+    .pillars-section { background:var(--gp); }
+    .pillars-header { text-align:center; margin-bottom:56px; }
+    .pillars-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .pillar-card { background:white; border:1px solid var(--border); border-radius:var(--rm); padding:30px; transition:box-shadow 0.25s, transform 0.25s, border-color 0.25s; }
+    .pillar-card:hover { box-shadow:var(--sh); transform:translateY(-4px); border-color:var(--border2); }
+    .pillar-emoji { font-size:32px; margin-bottom:16px; display:block; }
+    .pillar-title { font-family:'Manrope',sans-serif; font-size:18px; font-weight:700; color:var(--tp); margin-bottom:10px; }
+    .pillar-desc  { font-size:14px; color:var(--tm); line-height:1.65; }
+
+    /* ── HACKATHON / PROGRAM CARDS ── */
+    .programs-section { background:white; }
+    .programs-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+    .program-card { border-radius:var(--rl); overflow:hidden; height:280px; position:relative; }
+    .program-content { height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:28px; }
+    .program-tag { display:inline-block; padding:5px 12px; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:50px; font-size:11px; font-weight:700; color:white; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:10px; backdrop-filter:blur(4px); width:fit-content; }
+    .program-title { font-family:'Manrope',sans-serif; font-size:22px; font-weight:800; color:white; margin-bottom:6px; }
+    .program-meta  { font-size:13px; color:rgba(255,255,255,0.72); margin-bottom:16px; }
+    .program-btn { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; background:white; border-radius:50px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; width:fit-content; transition:transform 0.15s; }
+    .program-btn:hover { transform:translateY(-1px); }
+    .program-btn svg { width:13px; height:13px; }
+
+    /* ── PROJECTS GALLERY ── */
+    .projects-section { background:var(--gp); }
+    .projects-header { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:36px; flex-wrap:wrap; }
+    .filter-pills { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+    .f-pill { padding:8px 18px; border-radius:50px; border:1.5px solid var(--border); background:white; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--tb); cursor:pointer; transition:all 0.2s; }
+    .f-pill:hover { border-color:var(--gf); color:var(--gd); }
+    .f-pill.active { background:var(--gd); border-color:var(--gd); color:white; }
+
+    .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .project-card { background:white; border:1px solid var(--border); border-radius:var(--rm); overflow:hidden; transition:box-shadow 0.25s, transform 0.25s; }
+    .project-card:hover { box-shadow:var(--sh); transform:translateY(-3px); }
+    .proj-img { height:170px; position:relative; }
+    .proj-img .photo-slot { min-height:unset; height:100%; }
+    .proj-img .ps-icon { width:34px; height:34px; }
+    .proj-img .ps-icon svg { width:17px; height:17px; }
+    .proj-img .ps-title { font-size:12px; }
+    .proj-img .ps-hint { font-size:10px; max-width:130px; }
+    .proj-stage { position:absolute; top:12px; left:12px; padding:4px 10px; border-radius:50px; font-size:11px; font-weight:700; }
+    .stage-idea  { background:var(--sky); color:var(--sky-d); }
+    .stage-pilot { background:var(--gold-l); color:#B37A00; }
+    .stage-scale { background:var(--gl); color:var(--gd); }
+    .proj-body { padding:18px 20px; }
+    .proj-title { font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); margin-bottom:6px; }
+    .proj-desc  { font-size:13px; color:var(--tm); line-height:1.55; margin-bottom:14px; }
+    .proj-footer { display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border); }
+    .proj-author { display:flex; align-items:center; gap:8px; }
+    .proj-avatar { width:28px; height:28px; border-radius:50%; background:var(--gl); display:flex; align-items:center; justify-content:center; font-family:'Manrope',sans-serif; font-size:11px; font-weight:800; color:var(--gd); flex-shrink:0; }
+    .proj-author-name { font-size:12px; font-weight:600; color:var(--tb); }
+    .proj-university { font-size:11px; color:var(--tm); }
+
+    /* ── RESOURCES STRIP ── */
+    .resources-section { background:white; }
+    .resources-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+    .resource-card { text-align:center; padding:32px 20px; border:1px solid var(--border); border-radius:var(--rm); transition:box-shadow 0.2s, transform 0.2s, border-color 0.2s; }
+    .resource-card:hover { box-shadow:var(--sh); transform:translateY(-3px); border-color:var(--border2); }
+    .res-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+    .res-icon svg { width:26px; height:26px; }
+    .res-icon.green  { background:var(--gl); }
+    .res-icon.green svg  { color:var(--gd); }
+    .res-icon.gold   { background:var(--gold-l); }
+    .res-icon.gold svg   { color:#B37A00; }
+    .res-icon.purple { background:var(--purple-l); }
+    .res-icon.purple svg { color:var(--purple); }
+    .res-icon.pink   { background:var(--pink-l); }
+    .res-icon.pink svg   { color:var(--pink); }
+    .res-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:8px; }
+    .res-desc  { font-size:13px; color:var(--tm); line-height:1.55; }
+
+    /* ── MENTOR / PARTNER LOGOS ── */
+    .partners-strip { background:var(--gp); padding:56px 5%; }
+    .partners-inner { max-width:1200px; margin:0 auto; }
+    .partners-lbl { text-align:center; font-size:12px; font-weight:700; color:var(--tm); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:24px; }
+    .partners-row { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+    .p-chip { padding:10px 22px; background:white; border:1px solid var(--border); border-radius:var(--r); font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--tm); }
+
+    /* ── APPLY FORM ── */
+    .apply-section { background:white; }
+    .apply-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .apply-photo { border-radius:var(--rl); overflow:hidden; aspect-ratio:4/5; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-group { margin-bottom:16px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--purple); box-shadow:0 0 0 3px rgba(123,31,162,0.1); }
+    .form-textarea { resize:vertical; min-height:90px; }
+    .form-note { font-size:12px; color:var(--tm); margin-top:10px; }
+    .form-note a { color:var(--purple); font-weight:600; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .hero-inner    { grid-template-columns:1fr; }
+      .hero-photo    { display:none; }
+      .pillars-grid  { grid-template-columns:1fr 1fr; }
+      .programs-grid { grid-template-columns:1fr; }
+      .projects-grid { grid-template-columns:1fr 1fr; }
+      .resources-grid{ grid-template-columns:1fr 1fr; }
+      .apply-grid    { grid-template-columns:1fr; gap:40px; }
+      .apply-photo   { display:none; }
+      .ft-grid       { grid-template-columns:1fr 1fr; gap:28px; }
+    }
+    @media(max-width:640px){
+      nav { padding:0 4%; }
+      .nav-links { display:none; }
+      .sec { padding:64px 4%; }
+      .pillars-grid  { grid-template-columns:1fr; }
+      .projects-grid { grid-template-columns:1fr; }
+      .resources-grid{ grid-template-columns:1fr 1fr; }
+      .form-row      { grid-template-columns:1fr; }
+      .cta-box       { padding:44px 24px; }
+      .ft-grid       { grid-template-columns:1fr; gap:24px; }
+      .event-inner   { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="farmers.html">Farmers</a></li>
+    <li><a href="recovery.html">Food Recovery</a></li>
+    <li><a href="innovation.html" class="active">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="#apply" class="btn btn-primary btn-sm">Join the Hub</a>
+  </div>
+</nav>
+
+<!-- ── HERO (photo-bg gradient) ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="fade-up">
+      <div class="eyebrow purple">Youth Innovation Hub</div>
+      <h1>You don't need<br/>permission to<br/><span>solve this.</span></h1>
+      <p class="hero-sub">Thousands of young Rwandans have the skills, creativity, and ambition to transform the food system. The Innovation Hub gives you the platform, mentors, and resources to do it.</p>
+      <div class="hero-actions">
+        <a href="#apply" class="btn btn-purple btn-lg">
+          Submit Your Idea
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#projects" class="btn btn-outline-white btn-lg">Explore Projects</a>
+      </div>
+      <div class="hero-stats-row">
+        <div>
+          <div class="hs-num">2,300<span>+</span></div>
+          <div class="hs-lbl">Youth innovators</div>
+        </div>
+        <div>
+          <div class="hs-num">180<span>+</span></div>
+          <div class="hs-lbl">Active projects</div>
+        </div>
+        <div>
+          <div class="hs-num">24</div>
+          <div class="hs-lbl">Universities engaged</div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      📸 HERO PHOTO (foreground, 4:5)
+      Save as: assets/images/innovation-hero.jpg
+      Replace .photo-slot with: <img src="assets/images/innovation-hero.jpg" alt="Youth innovators" />
+      SHOOT: A group of young Rwandan innovators collaborating around a
+      laptop or whiteboard — energetic, diverse, modern setting (hub or
+      university space). Portrait orientation.
+    -->
+    <div class="hero-photo photo-frame fade-up">
+      <div class="photo-slot" style="min-height:100%;">
+        <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="ps-title">Youth Collaboration</div>
+        <div class="ps-hint">Young innovators working together around laptop or whiteboard, energetic, modern hub setting</div>
+        <span class="ps-tag">📸 Portrait · 4:5</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EVENT BANNER ── -->
+<div class="event-bar">
+  <div class="event-inner">
+    <div class="event-icon">
+      <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M9 5v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </div>
+    <div class="event-text"><span>SMARTSAVE Hackathon 2026</span> — Registration closes in 12 days. Build a food-loss solution, win funding, get mentorship.</div>
+    <a href="#apply" class="event-btn">Register Now</a>
+  </div>
+</div>
+
+<!-- ── SIX PILLARS ── -->
+<section class="sec pillars-section">
+  <div class="inner">
+    <div class="pillars-header fade-up">
+      <div class="eyebrow center">What You Get</div>
+      <h2 class="sec-title" style="text-align:center;">A real platform for real ideas</h2>
+      <p class="sec-desc center" style="margin-top:8px;">Not just a competition — an ongoing ecosystem for youth to build, test, and scale food systems solutions.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🏆</span>
+        <div class="pillar-title">Hackathons &amp; Challenges</div>
+        <div class="pillar-desc">Quarterly hackathons focused on real food system problems — storage, logistics, market access, nutrition — with funding for winning teams.</div>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🔬</span>
+        <div class="pillar-title">Research Grants</div>
+        <div class="pillar-desc">Funding and academic partnership support for university students and researchers studying food loss, agritech, and circular economy models.</div>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">💡</span>
+        <div class="pillar-title">Idea Incubation</div>
+        <div class="pillar-desc">Submit an early-stage idea and get structured feedback, validation support, and a path toward piloting it on the SMARTSAVE platform.</div>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🚀</span>
+        <div class="pillar-title">Startup Acceleration</div>
+        <div class="pillar-desc">Promising ventures get matched with mentors, potential investors, and a fast-track to integrate with SMARTSAVE's farmer and buyer network.</div>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🎓</span>
+        <div class="pillar-title">Mentorship Network</div>
+        <div class="pillar-desc">Access experienced mentors from agritech, logistics, public health, and entrepreneurship — paired based on your project's specific needs.</div>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🌍</span>
+        <div class="pillar-title">National Recognition</div>
+        <div class="pillar-desc">Showcase your work to government agencies, NGOs, and private sector partners actively looking for youth-led solutions to scale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROGRAMS (2 large cards) ── -->
+<section class="sec programs-section">
+  <div class="inner">
+    <div class="fade-up" style="margin-bottom:36px;">
+      <div class="eyebrow">Current Programs</div>
+      <h2 class="sec-title" style="margin-bottom:0;">Two ways to get involved right now</h2>
+    </div>
+    <div class="programs-grid">
+
+      <!--
+        📸 PHOTO SLOT — Hackathon program card
+        SHOOT: Energetic hackathon scene — students at laptops, sticky
+        notes, whiteboard sketches, collaborative energy. Save as:
+        assets/images/program-hackathon.jpg
+        Add <img class="bg-img" src="..." alt="Hackathon" /> before .ov
+      -->
+      <div class="program-card photo-bg fade-up" style="background-color:#4A148C;">
+        <div class="ov ov-mid"></div>
+        <div class="program-content">
+          <span class="program-tag">Applications Open</span>
+          <div class="program-title">SMARTSAVE Hackathon 2026</div>
+          <div class="program-meta">48-hour build sprint · 6,000,000 RWF in prizes · Kigali Innovation City</div>
+          <a href="#apply" class="program-btn" style="color:var(--purple);">
+            Register Your Team
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!--
+        📸 PHOTO SLOT — Research grants program card
+        SHOOT: A student researcher or small team working with data —
+        laptops, charts, focused academic setting. University context.
+        Save as: assets/images/program-research.jpg
+        Add <img class="bg-img" src="..." alt="Research" /> before .ov
+      -->
+      <div class="program-card photo-bg fade-up" style="background-color:#0D47A1;">
+        <div class="ov ov-mid"></div>
+        <div class="program-content">
+          <span class="program-tag">Rolling Applications</span>
+          <div class="program-title">Research Grant Program</div>
+          <div class="program-meta">Up to 2,000,000 RWF per project · University partnerships · 6-month cycle</div>
+          <a href="#apply" class="program-btn" style="color:var(--sky-d);">
+            Apply for a Grant
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS GALLERY ── -->
+<section class="sec projects-section" id="projects">
+  <div class="inner">
+    <div class="projects-header fade-up">
+      <div>
+        <div class="eyebrow">Youth-Led Projects</div>
+        <h2 class="sec-title">Built by young innovators, for Rwanda</h2>
+      </div>
+      <a href="#" class="btn btn-secondary btn-sm">View all 180 projects</a>
+    </div>
+
+    <div class="filter-pills fade-up">
+      <button class="f-pill active">All Projects</button>
+      <button class="f-pill">📦 Storage &amp; Preservation</button>
+      <button class="f-pill">🚛 Logistics</button>
+      <button class="f-pill">💻 Digital Tools</button>
+      <button class="f-pill">🥗 Nutrition</button>
+      <button class="f-pill">♻️ Circular Economy</button>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Project Card 1 -->
+      <div class="project-card fade-up">
+        <div class="proj-img">
+          <!--
+            📸 PHOTO: Solar-powered cold storage unit prototype, outdoors,
+            student demonstrating it. Replace .photo-slot with an <img>.
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Cold Storage Prototype</div>
+            <div class="ps-hint">Solar cold storage unit demo, student presenting, outdoors</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="proj-stage stage-pilot">Piloting</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">SolarCool — Off-grid Storage</div>
+          <div class="proj-desc">A low-cost solar-powered cold storage unit for smallholder farmers without access to electricity, extending produce shelf life by up to 12 days.</div>
+          <div class="proj-footer">
+            <div class="proj-author">
+              <div class="proj-avatar">AN</div>
+              <div>
+                <div class="proj-author-name">Aline Niyonsenga</div>
+                <div class="proj-university">University of Rwanda</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Card 2 -->
+      <div class="project-card fade-up">
+        <div class="proj-img">
+          <!--
+            📸 PHOTO: Mobile app screen mockup on a phone, held by a
+            young developer. Tech-forward, clean.
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Mobile App Demo</div>
+            <div class="ps-hint">Young developer holding phone with app screen visible, clean tech setting</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="proj-stage stage-scale">Scaling</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">RouteSmart — Logistics Matching</div>
+          <div class="proj-desc">An SMS and app-based platform that matches farmers with available transport routes, reducing empty truck trips and delivery costs by 22%.</div>
+          <div class="proj-footer">
+            <div class="proj-author">
+              <div class="proj-avatar">PH</div>
+              <div>
+                <div class="proj-author-name">Patrick Habimana</div>
+                <div class="proj-university">Carnegie Mellon Africa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Card 3 -->
+      <div class="project-card fade-up">
+        <div class="proj-img">
+          <!--
+            📸 PHOTO: Dried/preserved fruit or vegetable products in
+            packaging, laid out on a table — value-addition product shot.
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Dried Produce Products</div>
+            <div class="ps-hint">Packaged dried fruit or vegetable products laid out on table</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="proj-stage stage-idea">Idea Stage</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">FreshDry — Solar Dehydration Kits</div>
+          <div class="proj-desc">Affordable solar dehydration kits that let farmers turn surplus fruit and vegetables into shelf-stable dried products, reducing post-harvest loss.</div>
+          <div class="proj-footer">
+            <div class="proj-author">
+              <div class="proj-avatar">DM</div>
+              <div>
+                <div class="proj-author-name">Diane Mukamana</div>
+                <div class="proj-university">University of Global Health Equity</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Card 4 -->
+      <div class="project-card fade-up">
+        <div class="proj-img">
+          <!--
+            📸 PHOTO: Composting or organic waste processing setup —
+            community-scale, outdoors, circular economy focus.
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Composting Setup</div>
+            <div class="ps-hint">Community-scale composting or organic waste processing, outdoors</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="proj-stage stage-pilot">Piloting</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">EarthLoop — Community Composting</div>
+          <div class="proj-desc">A community-scale composting network that converts unavoidable food waste into organic fertilizer, sold back to local farmers at low cost.</div>
+          <div class="proj-footer">
+            <div class="proj-author">
+              <div class="proj-avatar">EK</div>
+              <div>
+                <div class="proj-author-name">Eric Karangwa</div>
+                <div class="proj-university">University of Rwanda</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Card 5 -->
+      <div class="project-card fade-up">
+        <div class="proj-img">
+          <!--
+            📸 PHOTO: Nutrition workshop or school feeding program scene —
+            children or community members, healthy food visible.
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Nutrition Workshop</div>
+            <div class="ps-hint">Community nutrition session, healthy food visible, engaged participants</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="proj-stage stage-scale">Scaling</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">NutriTrack — School Nutrition Monitor</div>
+          <div class="proj-desc">A simple data tool that helps schools track student nutrition outcomes and optimize how donated and purchased food is used in feeding programs.</div>
+          <div class="proj-footer">
+            <div class="proj-author">
+              <div class="proj-avatar">SI</div>
+              <div>
+                <div class="proj-author-name">Sandrine Iradukunda</div>
+                <div class="proj-university">University of Rwanda</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Card 6 -->
+      <div class="project-card fade-up">
+        <div class="proj-img">
+          <!--
+            📸 PHOTO: A small kiosk or marketplace stall using digital
+            payment / QR code — fintech-meets-agriculture scene.
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Digital Payment Kiosk</div>
+            <div class="ps-hint">Marketplace stall with QR code or mobile payment in use</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="proj-stage stage-idea">Idea Stage</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">PayHarvest — Instant Farmer Payments</div>
+          <div class="proj-desc">A simplified MoMo payment layer designed specifically for last-mile produce transactions between farmers and small local buyers.</div>
+          <div class="proj-footer">
+            <div class="proj-author">
+              <div class="proj-avatar">TB</div>
+              <div>
+                <div class="proj-author-name">Theo Bizimana</div>
+                <div class="proj-university">Carnegie Mellon Africa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /projects-grid -->
+  </div>
+</section>
+
+<!-- ── RESOURCES ── -->
+<section class="sec resources-section">
+  <div class="inner">
+    <div class="fade-up" style="margin-bottom:36px;">
+      <div class="eyebrow">Resources</div>
+      <h2 class="sec-title">Everything you need to start building</h2>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card fade-up">
+        <div class="res-icon green">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="res-title">Toolkits &amp; Guides</div>
+        <div class="res-desc">Business model canvases, food systems data, and step-by-step guides for early-stage validation.</div>
+      </div>
+      <div class="resource-card fade-up">
+        <div class="res-icon gold">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="res-title">Mentor Directory</div>
+        <div class="res-desc">Browse and request mentorship sessions with agritech founders, researchers, and industry experts.</div>
+      </div>
+      <div class="resource-card fade-up">
+        <div class="res-icon purple">
+          <svg viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="res-title">Market &amp; Loss Data</div>
+        <div class="res-desc">Access anonymized district-level food loss and market data to ground your project in real evidence.</div>
+      </div>
+      <div class="resource-card fade-up">
+        <div class="res-icon pink">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.8"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="1.8"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div class="res-title">Community Forum</div>
+        <div class="res-desc">Connect with other youth innovators, share progress, ask questions, and find collaborators for your project.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARTNERS ── -->
+<div class="partners-strip">
+  <div class="partners-inner">
+    <p class="partners-lbl">Innovation Hub partners</p>
+    <div class="partners-row">
+      <div class="p-chip">University of Rwanda</div>
+      <div class="p-chip">Carnegie Mellon Africa</div>
+      <div class="p-chip">Kigali Innovation City</div>
+      <div class="p-chip">RDB</div>
+      <div class="p-chip">UNDP Rwanda</div>
+      <div class="p-chip">Norrsken Kigali</div>
+      <div class="p-chip">AERG</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APPLY FORM ── -->
+<section class="sec apply-section" id="apply">
+  <div class="inner">
+    <div class="apply-grid">
+
+      <!--
+        📸 PHOTO (foreground, 4:5)
+        Save as: assets/images/apply-photo.jpg
+        Replace .photo-slot with: <img src="assets/images/apply-photo.jpg" alt="Young innovator" />
+        SHOOT: A single confident young innovator presenting or sketching
+        an idea on a whiteboard — determined, focused expression.
+      -->
+      <div class="apply-photo photo-frame fade-up">
+        <div class="photo-slot" style="min-height:100%;">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Innovator Presenting Idea</div>
+          <div class="ps-hint">Confident young innovator sketching or presenting at a whiteboard</div>
+          <span class="ps-tag">📸 Portrait · 4:5</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow purple" style="color:var(--purple);">Submit Your Idea</div>
+        <h2 class="sec-title">Tell us what you're building</h2>
+        <p class="sec-desc" style="margin-bottom:28px;">No idea is too early. We review every submission and respond within one week.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-input" placeholder="+250 7XX XXX XXX or email" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">University / Institution</label>
+            <input type="text" class="form-input" placeholder="e.g. University of Rwanda" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Field of Focus</label>
+            <select class="form-select">
+              <option value="">Select a category</option>
+              <option>Storage &amp; Preservation</option>
+              <option>Logistics</option>
+              <option>Digital Tools</option>
+              <option>Nutrition</option>
+              <option>Circular Economy</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Stage</label>
+          <select class="form-select">
+            <option>Just an idea</option>
+            <option>Early prototype</option>
+            <option>Piloting with users</option>
+            <option>Ready to scale</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell us about your idea</label>
+          <textarea class="form-textarea" placeholder="What problem are you solving? What's your approach? What support do you need?"></textarea>
+        </div>
+
+        <a href="#" class="btn btn-purple" style="width:100%; justify-content:center; margin-top:4px;">
+          Submit My Idea
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="form-note">By submitting you agree to our <a href="#">Terms of Use</a>. We review every idea — no submission is too early.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div style="background:var(--gp); padding:72px 5%;">
+  <div class="inner">
+    <div class="cta-box">
+      <div class="eyebrow gold center" style="margin-bottom:14px;">Become a mentor or partner</div>
+      <h2 class="sec-title white" style="margin-bottom:12px;">Help shape the next generation</h2>
+      <p class="sec-desc white" style="margin:0 auto 32px; text-align:center; max-width:480px;">Experienced professionals, organisations, and investors — join us in mentoring and funding Rwanda's youth-led food innovation.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-white">Become a Mentor</a>
+        <a href="about.html" class="btn btn-outline-white">Partner With Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">SMART<span>SAVE</span> Rwanda</div>
+      <p class="ft-tagline">Connecting farmers, markets, technology, youth, and communities to reduce food loss across Rwanda.</p>
+      <div class="ft-dot">Platform Active · All 30 Districts</div>
+    </div>
+    <div>
+      <div class="ft-col-title">Platform</div>
+      <ul class="ft-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="farmers.html">Farmers Portal</a></li>
+        <li><a href="recovery.html">Food Recovery</a></li>
+        <li><a href="innovation.html">Innovation Hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Company</div>
+      <ul class="ft-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Support</div>
+      <ul class="ft-links">
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 SMARTSAVE Rwanda.</div>
+    <div class="ft-copy">From Harvest to Hope 🌱</div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+  // Filter pills toggle
+  document.querySelectorAll('.f-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.f-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Fade up
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+</script>
+</body>
+</html>

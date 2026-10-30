@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMARTSAVE Rwanda — From Harvest to Hope</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:    #1B5E20;
+      --green-mid:     #2E7D32;
+      --green-fresh:   #43A047;
+      --green-light:   #E8F5E9;
+      --green-pale:    #F1F8F2;
+      --gold:          #F9A825;
+      --gold-light:    #FFF8E1;
+      --brown:         #8D6E63;
+      --sky:           #E3F2FD;
+      --white:         #FFFFFF;
+      --text-primary:  #1A2E1A;
+      --text-body:     #374737;
+      --text-muted:    #6B7F6B;
+      --border:        #D4E8D4;
+      --shadow-sm:     0 1px 4px rgba(27,94,32,0.08);
+      --shadow-md:     0 4px 24px rgba(27,94,32,0.12);
+      --radius-sm:     8px;
+      --radius-md:     16px;
+      --radius-lg:     24px;
+      --radius-xl:     32px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-body);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Manrope', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5%;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212,232,212,0.6);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--green-dark);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .nav-logo-text {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--green-dark);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-text span { color: var(--green-fresh); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-body);
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { background: var(--green-light); color: var(--green-dark); }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-outline-sm {
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--green-dark);
+      background: transparent;
+      color: var(--green-dark);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline-sm:hover { background: var(--green-dark); color: white; }
+    .btn-primary-sm {
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: none;
+      background: var(--green-dark);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary-sm:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      padding: 100px 5% 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #F1F8F2 0%, #E8F5E9 40%, #DCEDC8 100%);
+    }
+
+    .hero-bg-circles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-bg-circles::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -80px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(67,160,71,0.12) 0%, transparent 70%);
+    }
+    .hero-bg-circles::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -60px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,168,37,0.10) 0%, transparent 70%);
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(27,94,32,0.08);
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green-dark);
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green-fresh);
+    }
+
+    .hero-title {
+      font-size: clamp(42px, 5.5vw, 68px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -1.5px;
+      line-height: 1.08;
+      margin-bottom: 24px;
+    }
+    .hero-title .accent { color: var(--green-fresh); }
+    .hero-title .gold { color: var(--gold); }
+
+    .hero-subtitle {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--text-body);
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: none;
+      background: var(--green-dark);
+      color: white;
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--green-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(27,94,32,0.25);
+    }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(3px); }
+
+    .btn-secondary {
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: white;
+      color: var(--green-dark);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--green-fresh);
+      background: var(--green-light);
+      transform: translateY(-2px);
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .hero-trust-icon {
+      width: 20px; height: 20px;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-trust-icon svg { width: 11px; height: 11px; }
+
+    /* Hero image panel */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-photo-frame {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/5;
+      background: var(--green-light);
+      border: 1px solid rgba(27,94,32,0.1);
+    }
+
+    /* ── PHOTO PLACEHOLDER ── */
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #E8F5E9, #C8E6C9);
+      text-align: center;
+      padding: 20px;
+    }
+    .photo-placeholder-icon {
+      width: 56px; height: 56px;
+      background: rgba(27,94,32,0.12);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-placeholder-icon svg { width: 28px; height: 28px; color: var(--green-dark); }
+    .photo-placeholder-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .photo-placeholder-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 200px;
+      line-height: 1.5;
+    }
+    .photo-placeholder-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      background: rgba(27,94,32,0.1);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green-dark);
+      margin-top: 4px;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-float-card.card-1 {
+      bottom: 32px; left: -40px;
+      min-width: 200px;
+    }
+    .hero-float-card.card-2 {
+      top: 32px; right: -32px;
+      min-width: 190px;
+    }
+    .float-card-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .float-card-icon.green { background: var(--green-light); }
+    .float-card-icon.gold { background: var(--gold-light); }
+    .float-card-icon svg { width: 20px; height: 20px; }
+    .float-card-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .float-card-value { font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 800; color: var(--text-primary); }
+
+    /* ─── STATS ─── */
+    .stats-section {
+      background: var(--green-dark);
+      padding: 60px 5%;
+    }
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 12px;
+    }
+    .stat-number {
+      font-family: 'Manrope', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-number span { color: var(--gold); }
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .stat-divider {
+      border: none;
+      width: 1px;
+      background: rgba(255,255,255,0.15);
+      align-self: stretch;
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 100px 5%; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green-fresh);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--green-fresh);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ─── PROBLEM SECTION ─── */
+    .problem-section { background: white; }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 64px;
+    }
+
+    .problem-visual {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: var(--green-pale);
+      position: relative;
+    }
+
+    .problem-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .problem-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+    }
+    .problem-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+      border-color: var(--green-fresh);
+    }
+
+    .problem-card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .problem-card-icon svg { width: 22px; height: 22px; }
+    .icon-red { background: #FFEBEE; }
+    .icon-red svg { color: #C62828; }
+    .icon-amber { background: var(--gold-light); }
+    .icon-amber svg { color: #E65100; }
+    .icon-blue { background: #E3F2FD; }
+    .icon-blue svg { color: #1565C0; }
+    .icon-purple { background: #F3E5F5; }
+    .icon-purple svg { color: #6A1B9A; }
+
+    .problem-card-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .problem-card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── SOLUTION SECTION ─── */
+    .solution-section { background: var(--green-pale); }
+    .solution-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+
+    .solution-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .solution-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+      cursor: default;
+    }
+    .solution-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+      border-color: var(--green-fresh);
+    }
+
+    .solution-card-emoji {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .solution-card-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .solution-card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .solution-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green-dark);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .solution-card-link:hover { gap: 10px; }
+    .solution-card-link svg { width: 14px; height: 14px; }
+
+    /* ─── PLATFORM FEATURES ─── */
+    .features-section { background: white; }
+    .features-header { margin-bottom: 56px; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--border);
+    }
+    .feature-cell {
+      background: white;
+      padding: 32px 28px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .feature-cell:hover { background: var(--green-pale); }
+
+    .feature-cell-icon {
+      width: 48px; height: 48px;
+      background: var(--green-light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .feature-cell-icon svg { width: 24px; height: 24px; color: var(--green-dark); }
+    .feature-cell-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .feature-cell-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── IMPACT FLOW ─── */
+    .impact-section {
+      background: var(--green-dark);
+      padding: 100px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+    .impact-section::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: rgba(67,160,71,0.12);
+    }
+
+    .impact-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+
+    .impact-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .impact-header .section-eyebrow { color: var(--gold); justify-content: center; }
+    .impact-header .section-eyebrow::before { background: var(--gold); }
+    .impact-header .section-title { color: white; }
+    .impact-header .section-desc { color: rgba(255,255,255,0.65); margin: 0 auto; }
+
+    .impact-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      row-gap: 24px;
+    }
+
+    .flow-step {
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+      max-width: 160px;
+    }
+    .flow-step-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .flow-step:hover .flow-step-circle {
+      background: rgba(255,255,255,0.18);
+      transform: scale(1.08);
+    }
+    .flow-step-circle svg { width: 28px; height: 28px; color: white; }
+    .flow-step-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+    .flow-step-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .flow-arrow {
+      color: rgba(255,255,255,0.3);
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+    .flow-arrow svg { width: 20px; height: 20px; }
+
+    .flow-highlight .flow-step-circle {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .flow-highlight .flow-step-circle svg { color: var(--green-dark); }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials-section { background: var(--green-pale); }
+    .testimonials-header { margin-bottom: 56px; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+    }
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .testimonial-stars svg { width: 16px; height: 16px; color: var(--gold); }
+    .testimonial-quote {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-body);
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--green-dark);
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .author-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ─── PARTNERS ─── */
+    .partners-section {
+      background: white;
+      padding: 64px 5%;
+    }
+    .partners-inner { max-width: 1200px; margin: 0 auto; }
+    .partners-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .partners-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .partner-logo {
+      padding: 12px 24px;
+      background: var(--green-pale);
+      border-radius: var(--radius-sm);
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: white;
+      padding: 100px 5%;
+    }
+    .cta-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .cta-box {
+      background: var(--green-dark);
+      border-radius: var(--radius-xl);
+      padding: 80px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(67,160,71,0.15);
+    }
+    .cta-box::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(249,168,37,0.08);
+    }
+    .cta-content { position: relative; z-index: 2; }
+    .cta-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(249,168,37,0.2);
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+    .cta-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 800;
+      color: white;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .cta-subtitle {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      padding: 14px 30px;
+      border-radius: 50px;
+      border: none;
+      background: white;
+      color: var(--green-dark);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      padding: 14px 30px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      background: transparent;
+      color: white;
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--text-primary);
+      color: rgba(255,255,255,0.7);
+      padding: 64px 5% 40px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+    }
+    .footer-brand-name span { color: var(--green-fresh); }
+    .footer-tagline {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 20px;
+    }
+    .footer-col-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--green-fresh); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green-fresh);
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+    .fade-up:nth-child(5) { transition-delay: 0.4s; }
+    .fade-up:nth-child(6) { transition-delay: 0.5s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; max-width: 640px; }
+      .hero-visual { display: none; }
+      .stats-inner { grid-template-columns: repeat(3, 1fr); }
+      .stat-divider { display: none; }
+      .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+      .problem-visual { display: none; }
+      .solution-cards { grid-template-columns: 1fr 1fr; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 4%; }
+      .nav-links { display: none; }
+      section { padding: 72px 4%; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .solution-cards, .features-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 48px 28px; }
+      .impact-flow { gap: 8px; }
+      .flow-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="Logo.png" alt="SmartSave logo" />
+      </div>
+      <span class="nav-logo-text">SMART<span>SAVE</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="farmers.html">Farmers</a></li>
+      <li><a href="recovery.html">Food Recovery</a></li>
+      <li><a href="innovation.html">Innovation</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+
+    <div class="nav-cta">
+      <a href="login.html" class="btn-outline-sm">Sign in</a>
+      <a href="register.html" class="btn-primary-sm">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-circles"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Rwanda's Circular Food Platform
+        </div>
+        <h1 class="hero-title">
+          Every <span class="accent">Harvest</span><br/>
+          Matters.<br/>
+          Every <span class="gold">Connection</span><br/>
+          Creates Opportunity.
+        </h1>
+        <p class="hero-subtitle">
+          Connecting farmers, markets, technology, youth, and communities to reduce food loss and build Rwanda's circular food future — from harvest to hope.
+        </p>
+        <div class="hero-actions">
+          <a href="register.html" class="btn-primary">
+            Get Started
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="marketplace.html" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            Explore Marketplace
+          </a>
+        </div>
+        <div class="hero-trust">
+          <div class="hero-trust-item">
+            <div class="hero-trust-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1B5E20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Free to join
+          </div>
+          <div class="hero-trust-item">
+            <div class="hero-trust-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1B5E20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            All 30 districts
+          </div>
+          <div class="hero-trust-item">
+            <div class="hero-trust-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1B5E20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Youth-led innovation
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="hero-visual">
+        <div class="hero-photo-frame">
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="22" height="22" rx="4" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="9.5" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M3 18l6-5 4 4 3-3 9 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="photo-placeholder-title">Hero Landscape Photo</div>
+            <div class="photo-placeholder-desc">A wide, vibrant shot of Rwandan farmland — rolling green hills, farmers working at harvest, golden crops in the foreground</div>
+            <span class="photo-placeholder-badge">📸 Landscape · 4:5 ratio</span>
+          </div>
+        </div>
+        <!-- Floating stat cards -->
+        <div class="hero-float-card card-1">
+          <div class="float-card-icon green">
+            <svg viewBox="0 0 20 20" fill="none">
+              <path d="M10 2v16M14 6H8a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H6" stroke="#1B5E20" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="float-card-label">Food Saved This Month</div>
+            <div class="float-card-value">24,800 kg</div>
+          </div>
+        </div>
+        <div class="hero-float-card card-2">
+          <div class="float-card-icon gold">
+            <svg viewBox="0 0 20 20" fill="none">
+              <path d="M10 2C6.686 2 4 4.686 4 8c0 5.25 6 10 6 10s6-4.75 6-10c0-3.314-2.686-6-6-6z" stroke="#E65100" stroke-width="1.8"/>
+              <circle cx="10" cy="8" r="2" stroke="#E65100" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <div>
+            <div class="float-card-label">Active Districts</div>
+            <div class="float-card-value">30 Districts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number" data-target="12400">0<span>+</span></div>
+        <div class="stat-label">Farmers Connected</div>
+      </div>
+      <hr class="stat-divider">
+      <div class="stat-item">
+        <div class="stat-number" data-target="480000">0<span>kg</span></div>
+        <div class="stat-label">Food Saved (kg)</div>
+      </div>
+      <hr class="stat-divider">
+      <div class="stat-item">
+        <div class="stat-number" data-target="860">0<span>+</span></div>
+        <div class="stat-label">Buyers &amp; Institutions</div>
+      </div>
+      <hr class="stat-divider">
+      <div class="stat-item">
+        <div class="stat-number" data-target="2300">0<span>+</span></div>
+        <div class="stat-label">Youth Innovators</div>
+      </div>
+      <hr class="stat-divider">
+      <div class="stat-item">
+        <div class="stat-number" data-target="30">0</div>
+        <div class="stat-label">Districts Covered</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="problem-section">
+    <div class="section-inner">
+      <div class="problem-grid">
+        <div class="problem-visual">
+          <div class="photo-placeholder" style="height:100%">
+            <div class="photo-placeholder-icon">
+              <svg viewBox="0 0 28 28" fill="none">
+                <rect x="3" y="3" width="22" height="22" rx="4" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="9.5" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M3 18l6-5 4 4 3-3 9 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="photo-placeholder-title">The Challenge Photo</div>
+            <div class="photo-placeholder-desc">A farmer looking at spoiled produce, or an empty market stall — conveying loss and missed opportunity. Emotional, honest.</div>
+            <span class="photo-placeholder-badge">📸 Portrait/Square · 1:1 ratio</span>
+          </div>
+        </div>
+        <div>
+          <div class="section-eyebrow">The Challenge</div>
+          <h2 class="section-title">Food is being lost before it can nourish anyone</h2>
+          <p class="section-desc" style="margin-bottom: 36px;">Despite Rwanda's remarkable agricultural progress, interconnected challenges continue to hold the food system back.</p>
+          <div class="problem-cards">
+            <div class="problem-card fade-up">
+              <div class="problem-card-icon icon-red">
+                <svg viewBox="0 0 22 22" fill="none"><path d="M11 3v10M11 17v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
+              </div>
+              <div>
+                <div class="problem-card-title">Post-Harvest Food Loss</div>
+                <div class="problem-card-desc">Up to 40% of food is lost after harvest due to poor storage, handling, and lack of market connections — costing farmers income they've already earned.</div>
+              </div>
+            </div>
+            <div class="problem-card fade-up">
+              <div class="problem-card-icon icon-amber">
+                <svg viewBox="0 0 22 22" fill="none"><path d="M3 11h16M11 3l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="problem-card-title">Fragmented Market Access</div>
+                <div class="problem-card-desc">Hotels, schools, and restaurants struggle to source reliable local produce while farmers lack access to institutional buyers — both sides miss out.</div>
+              </div>
+            </div>
+            <div class="problem-card fade-up">
+              <div class="problem-card-icon icon-blue">
+                <svg viewBox="0 0 22 22" fill="none"><path d="M4 8h14M4 12h10M4 16h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="problem-card-title">Nutrition &amp; Hunger Gap</div>
+                <div class="problem-card-desc">Over 1 in 4 children under five experience stunting — yet edible food is lost every day. The problem isn't production alone; it's access and distribution.</div>
+              </div>
+            </div>
+            <div class="problem-card fade-up">
+              <div class="problem-card-icon icon-purple">
+                <svg viewBox="0 0 22 22" fill="none"><path d="M11 2a6 6 0 0 1 6 6c0 4-6 12-6 12S5 12 5 8a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8"/><circle cx="11" cy="8" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
+              </div>
+              <div>
+                <div class="problem-card-title">Untapped Youth Potential</div>
+                <div class="problem-card-desc">Thousands of young graduates have the skills and ambition to transform Rwanda's food system — but lack pathways to apply them meaningfully.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="solution-section">
+    <div class="section-inner">
+      <div class="solution-header">
+        <div>
+          <div class="section-eyebrow">Our Solution</div>
+          <h2 class="section-title">One platform.<br/>Every connection.</h2>
+        </div>
+        <p class="section-desc">Rather than addressing these challenges in isolation, SMARTSAVE integrates them into one collaborative circular food ecosystem.</p>
+      </div>
+      <div class="solution-cards">
+        <div class="solution-card fade-up">
+          <span class="solution-card-emoji">🌱</span>
+          <div class="solution-card-title">Farmers</div>
+          <div class="solution-card-desc">Smallholder farmers list produce, access real-time market prices, connect to institutional buyers, and receive personalized storage and agronomic guidance.</div>
+          <a href="farmers.html" class="solution-card-link">
+            Farmer Portal
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="solution-card fade-up">
+          <span class="solution-card-emoji">🏪</span>
+          <div class="solution-card-title">Marketplace</div>
+          <div class="solution-card-desc">Buyers — schools, hotels, restaurants, retailers — discover verified local suppliers, compare prices, and place orders directly with cooperatives and farmers.</div>
+          <a href="marketplace.html" class="solution-card-link">
+            Browse Market
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="solution-card fade-up">
+          <span class="solution-card-emoji">❤️</span>
+          <div class="solution-card-title">Food Recovery</div>
+          <div class="solution-card-desc">Restaurants, hotels, and schools donate surplus food. NGOs and community organizations request it. No edible food goes to waste while families go hungry.</div>
+          <a href="recovery.html" class="solution-card-link">
+            Food Recovery
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="solution-card fade-up">
+          <span class="solution-card-emoji">📦</span>
+          <div class="solution-card-title">Smart Storage</div>
+          <div class="solution-card-desc">Data-driven guidance on post-harvest storage, preservation techniques, and affordable technology solutions to reduce losses before produce reaches market.</div>
+          <a href="farmers.html" class="solution-card-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="solution-card fade-up">
+          <span class="solution-card-emoji">💻</span>
+          <div class="solution-card-title">Market Intelligence</div>
+          <div class="solution-card-desc">Real-time price data, demand forecasting, district-level analytics, and supply maps empower every actor with the information they need to make better decisions.</div>
+          <a href="marketplace.html" class="solution-card-link">
+            Analytics
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="solution-card fade-up">
+          <span class="solution-card-emoji">🚀</span>
+          <div class="solution-card-title">Innovation Hub</div>
+          <div class="solution-card-desc">Young innovators, researchers, and entrepreneurs collaborate on food systems challenges through hackathons, research grants, and practical deployment opportunities.</div>
+          <a href="innovation.html" class="solution-card-link">
+            Innovation Hub
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM FEATURES -->
+  <section class="features-section">
+    <div class="section-inner">
+      <div class="features-header">
+        <div class="section-eyebrow">Platform Features</div>
+        <h2 class="section-title">Built for every role in the food system</h2>
+        <p class="section-desc" style="margin-top: 12px;">Nine platform modules — purpose-built for farmers, buyers, institutions, NGOs, youth innovators, and administrators.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Farmer Dashboard</div>
+          <div class="feature-cell-desc">Manage listings, track orders, view earnings, monitor crop status, and receive personalized market alerts — all in one place.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 10a4 4 0 0 1-8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Marketplace</div>
+          <div class="feature-cell-desc">Search, filter, and order verified local produce by district, price, availability, and certification — from vegetables to coffee and dairy.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Market Intelligence</div>
+          <div class="feature-cell-desc">Live price feeds, seasonal demand forecasts, and district-level supply analytics to help producers and buyers plan with confidence.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Food Recovery</div>
+          <div class="feature-cell-desc">Coordinate surplus food donations from institutions and direct them efficiently to NGOs and vulnerable households across Rwanda.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.8"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div class="feature-cell-title">District Analytics</div>
+          <div class="feature-cell-desc">Interactive maps showing food loss hotspots, market demand by region, and coverage gaps — enabling targeted interventions across all 30 districts.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.8"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="1.8"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div class="feature-cell-title">Partnership Hub</div>
+          <div class="feature-cell-desc">Connect government agencies, NGOs, universities, cooperatives, and private companies into coordinated initiatives that multiply impact.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Buyer Portal</div>
+          <div class="feature-cell-desc">Manage orders, track deliveries, schedule recurring supply agreements, and build direct relationships with verified cooperatives and farms.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Innovation Hub</div>
+          <div class="feature-cell-desc">Hackathons, startup incubation, research collaboration, and mentorship — connecting youth innovators with real food system challenges to solve.</div>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-cell-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="feature-cell-title">Learning &amp; Resources</div>
+          <div class="feature-cell-desc">Agricultural best practices, storage guides, market analysis reports, and training content — accessible to every member on the platform.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT FLOW -->
+  <div class="impact-section">
+    <div class="impact-inner">
+      <div class="impact-header">
+        <div class="section-eyebrow">Circular Food System</div>
+        <h2 class="section-title" style="margin-bottom:16px">From field to community — and back</h2>
+        <p class="section-desc">Every stage of the food system, connected. Nothing is wasted. Every resource creates value for the next stage.</p>
+      </div>
+      <div class="impact-flow">
+        <div class="flow-step">
+          <div class="flow-step-circle">
+            <svg viewBox="0 0 28 28" fill="none"><path d="M14 4C9 4 5 8 5 13c0 3 2 5.5 5 7v4h8v-4c3-1.5 5-4 5-7 0-5-4-9-9-9z" stroke="currentColor" stroke-width="1.8"/><path d="M10 24h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="flow-step-label">Farmers</div>
+          <div class="flow-step-sub">Harvest &amp; list produce</div>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle">
+            <svg viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M9 8V6a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div class="flow-step-label">Storage</div>
+          <div class="flow-step-sub">Preserve &amp; protect value</div>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="flow-step flow-highlight">
+          <div class="flow-step-circle">
+            <svg viewBox="0 0 28 28" fill="none"><path d="M4 14l10-10 10 10M6 12v10h6v-6h4v6h6V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="flow-step-label">Marketplace</div>
+          <div class="flow-step-sub">Connect supply &amp; demand</div>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle">
+            <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M14 10v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="flow-step-label">Processing</div>
+          <div class="flow-step-sub">Add value locally</div>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle">
+            <svg viewBox="0 0 28 28" fill="none"><path d="M14 4C9 4 5 8 5 13c0 5 4 9 9 9s9-4 9-9c0-5-4-9-9-9z" stroke="currentColor" stroke-width="1.8"/><path d="M10 13l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="flow-step-label">Consumers</div>
+          <div class="flow-step-sub">Nourish communities</div>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle">
+            <svg viewBox="0 0 28 28" fill="none"><path d="M20 8.5A8 8 0 1 0 22 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20 4v5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="flow-step-label">Recovery</div>
+          <div class="flow-step-sub">Recover surplus food</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-inner">
+      <div class="testimonials-header">
+        <div class="section-eyebrow">Community Voice</div>
+        <h2 class="section-title">Built with the people it serves</h2>
+        <p class="section-desc" style="margin-top:12px">From smallholder farmers around Rwanda to hotel managers. SMARTSAVE connects real people.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+          </div>
+          <p class="testimonial-quote">"Before SMARTSAVE, I had to sell my tomatoes at whatever price traders offered at the farm gate. Now I can see market prices and reach buyers directly. My income has improved significantly."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MU</div>
+            <div>
+              <div class="author-name">Marie Uwamahoro</div>
+              <div class="author-role">Smallholder Farmer — Musanze District</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+          </div>
+          <p class="testimonial-quote">"As a hotel procurement manager, sourcing consistent quality local produce was always a headache. SMARTSAVE connects us to verified suppliers we can actually rely on. It's transformed how we source our kitchen."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JK</div>
+            <div>
+              <div class="author-name">Jean-Paul Kagabo</div>
+              <div class="author-role">Procurement Manager — Kigali Hotel</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8 1.5 10 6 15 6.5 11.5 9.5 12.5 14.5 8 12 3.5 14.5 4.5 9.5 1 6.5 6 6"/></svg>
+          </div>
+          <p class="testimonial-quote">"The Innovation Hub gave me the opportunity to turn my thesis on cold chain logistics into an actual project. I'm now working with cooperatives across three districts. This is what youth entrepreneurship should look like."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AN</div>
+            <div>
+              <div class="author-name">Aline Niyonsenga</div>
+              <div class="author-role">Youth Innovator — University of Rwanda</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <div class="partners-section">
+    <div class="partners-inner">
+      <p class="partners-label">Trusted by government, NGOs, universities &amp; private sector</p>
+      <div class="partners-row">
+        <div class="partner-logo">RAB</div>
+        <div class="partner-logo">MINICOM</div>
+        <div class="partner-logo">MINAGRI</div>
+        <div class="partner-logo">University of Rwanda</div>
+        <div class="partner-logo">WFP Rwanda</div>
+        <div class="partner-logo">RDB</div>
+        <div class="partner-logo">NAEB</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div class="cta-box">
+        <div class="cta-content">
+          <div class="cta-eyebrow">🌱 Join the Movement</div>
+          <h2 class="cta-title">Join Rwanda's Circular<br/>Food Movement</h2>
+          <p class="cta-subtitle">Whether you're a farmer, buyer, innovator, institution, or partner; there's a place for you in Rwanda's food future.</p>
+          <div class="cta-actions">
+            <a href="register.html" class="btn-white">
+              Create Free Account
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="about.html" class="btn-outline-white">
+              Learn Our Story
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">SMART<span>SAVE</span> Rwanda</div>
+          <p class="footer-tagline">Connecting farmers, markets, technology, youth, and communities to reduce food loss and build Rwanda's circular food future — from harvest to hope.</p>
+          <div class="footer-badge">
+            <span class="footer-badge-dot"></span>
+            Platform Active · All 30 Districts
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <ul class="footer-links">
+            <li><a href="marketplace.html">Marketplace</a></li>
+            <li><a href="farmers.html">Farmers Portal</a></li>
+            <li><a href="recovery.html">Food Recovery</a></li>
+            <li><a href="innovation.html">Innovation Hub</a></li>
+            <li><a href="#">Analytics</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#partners">Our Partners</a></li>
+            <li><a href="about.html#mission">Our Mission</a></li>
+            <li><a href="about.html">Leadership</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Support</div>
+          <ul class="footer-links">
+            <li><a href="#">Careers</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 SMARTSAVE Rwanda.</div>
+        <div class="footer-copy">From Harvest to Hope 🌱</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    // Load live platform stats from API
+    async function loadHomeStats() {
+      try {
+        const stats = await API.getHomeStats();
+        // Map API stats to the data-target counters on the page
+        const counterMap = {
+          'active_farmers': 'farmers',
+          'active_buyers': 'buyers',
+        };
+        document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+          // Determine which stat this is by reading nearby label text
+          const label = (el.closest('.stat-item')?.textContent || '').toLowerCase();
+          let value = null;
+          if (label.includes('farmer')) value = stats.active_farmers;
+          else if (label.includes('product')) value = stats.products_available;
+          else if (label.includes('order') || label.includes('deliver')) value = stats.orders_delivered;
+          else if (label.includes('ngo')) value = stats.ngos_registered;
+          else if (label.includes('buyer')) value = stats.active_buyers;
+          if (value !== null) el.dataset.target = value;
+        });
+      } catch (err) {
+        console.warn('Could not load stats:', err.message);
+      }
+    }
+
+    // Nav scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    loadHomeStats();
+
+    // Counter animation
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.querySelector('span') ? el.querySelector('span').textContent : '';
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        const formatted = current >= 1000 ? current.toLocaleString() : current;
+        el.innerHTML = formatted + '<span>' + suffix + '</span>';
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Intersection Observer for counters
+    const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNumbers.forEach(el => counterObserver.observe(el));
+
+    // Fade-up scroll animations
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => fadeObserver.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — SMARTSAVE Rwanda</title>
+  <style>
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --blue:#1565C0; --blue-l:#E3F2FD;
+      --purple:#7B1FA2; --purple-l:#F3E5F5;
+      --red:#E53935; --red-l:#FFEBEE;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#fff; overflow-x:hidden; }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-secondary { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--gf); background:var(--gl); }
+    .btn-white { background:white; color:var(--gd); }
+    .btn-white:hover { box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+    .btn-outline-white { background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.45); }
+    .btn-outline-white:hover { background:rgba(255,255,255,0.1); }
+    .btn-sm { padding:9px 20px; font-size:14px; }
+    .btn-full { width:100%; justify-content:center; }
+
+    /* ── EYEBROW ── */
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gf); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:14px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:2px; background:var(--gf); border-radius:2px; }
+    .eyebrow.gold { color:var(--gold); }
+    .eyebrow.gold::before { background:var(--gold); }
+    .eyebrow.white { color:rgba(255,255,255,0.8); }
+    .eyebrow.white::before { background:rgba(255,255,255,0.5); }
+    .eyebrow.center { justify-content:center; }
+    .eyebrow.center::before { display:none; }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark { background:rgba(10,28,10,0.60); }
+    .photo-bg .ov-mid  { background:rgba(10,28,10,0.40); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+
+    .photo-slot { width:100%; height:100%; min-height:180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:16px; }
+    .ps-icon { width:40px; height:40px; background:rgba(27,94,32,0.12); border-radius:11px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:20px; height:20px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:10px; color:var(--tm); max-width:200px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:2px 8px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:9px; font-weight:700; color:var(--gd); }
+
+    /* ── FADE UP ── */
+    .fade-up { opacity:0; transform:translateY(22px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up:nth-child(2){transition-delay:0.08s}
+    .fade-up:nth-child(3){transition-delay:0.16s}
+    .fade-up:nth-child(4){transition-delay:0.24s}
+
+    /* ── FOOTER ── */
+    footer { background:var(--tp); color:rgba(255,255,255,0.65); padding:56px 5% 32px; }
+    .ft-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:44px; margin-bottom:40px; }
+    .ft-brand { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:white; margin-bottom:10px; }
+    .ft-brand span { color:var(--gf); }
+    .ft-tagline { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:16px; }
+    .ft-col-title { font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:white; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:12px; }
+    .ft-links { list-style:none; }
+    .ft-links li { margin-bottom:8px; }
+    .ft-links a { font-size:14px; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+    .ft-links a:hover { color:var(--gf); }
+    .ft-bottom { max-width:1200px; margin:0 auto; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .ft-copy { font-size:13px; color:rgba(255,255,255,0.35); }
+    .ft-dot { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; background:rgba(255,255,255,0.06); border-radius:50px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); }
+    .ft-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gf); }
+
+    /* ═══════════════════════════════
+       PAGE STYLES
+       ═══════════════════════════════ */
+
+    /* ── HERO ── */
+    .hero {
+      min-height:52vh;
+      padding:140px 5% 72px;
+      display:flex;
+      align-items:flex-end;
+      background-color:var(--gd);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::before { content:''; position:absolute; top:-120px; right:-80px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(67,160,71,0.18) 0%, transparent 70%); pointer-events:none; }
+    .hero::after  { content:''; position:absolute; bottom:-80px; left:-60px; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle, rgba(249,168,37,0.1) 0%, transparent 70%); pointer-events:none; }
+    .hero-inner { max-width:1200px; margin:0 auto; width:100%; position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:flex-end; }
+    .hero h1 { font-size:clamp(36px,5vw,58px); font-weight:800; color:white; letter-spacing:-1.2px; line-height:1.1; margin-bottom:16px; }
+    .hero h1 span { color:var(--gold); }
+    .hero-sub { font-size:17px; color:rgba(255,255,255,0.72); line-height:1.65; max-width:460px; }
+    .hero-contact-strip { display:flex; flex-direction:column; gap:14px; }
+    .hcs-item { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:var(--rm); padding:14px 18px; backdrop-filter:blur(4px); transition:background 0.2s; }
+    .hcs-item:hover { background:rgba(255,255,255,0.13); }
+    .hcs-icon { width:40px; height:40px; border-radius:11px; background:rgba(249,168,37,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .hcs-icon svg { width:19px; height:19px; color:var(--gold); }
+    .hcs-label { font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:2px; }
+    .hcs-value { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:white; }
+
+    /* ── ROUTE TABS ── */
+    .route-section { background:var(--gp); border-bottom:1px solid var(--border); padding:0 5%; }
+    .route-inner { max-width:1200px; margin:0 auto; display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; }
+    .route-inner::-webkit-scrollbar { display:none; }
+    .route-tab { padding:18px 20px; display:flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; color:var(--tm); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; transition:color 0.2s, border-color 0.2s; background:none; border-top:none; border-left:none; border-right:none; }
+    .route-tab svg { width:16px; height:16px; flex-shrink:0; }
+    .route-tab:hover { color:var(--gd); }
+    .route-tab.active { color:var(--gd); border-bottom-color:var(--gd); }
+    .route-home { margin-left:auto; align-self:center; text-decoration:none; }
+
+    /* ── MAIN CONTACT GRID ── */
+    .contact-section { padding:56px 5% 80px; }
+    .contact-inner { max-width:1200px; margin:0 auto; }
+    .contact-grid { display:grid; grid-template-columns:1fr 420px; gap:48px; align-items:start; }
+
+    /* ── LEFT: FORM ── */
+    .form-card { background:white; border:1px solid var(--border); border-radius:var(--rxl); padding:40px; }
+    .form-card-title { font-size:22px; font-weight:800; letter-spacing:-0.4px; margin-bottom:6px; }
+    .form-card-sub   { font-size:14px; color:var(--tm); margin-bottom:28px; }
+
+    /* Role selector */
+    .role-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:24px; }
+    .role-chip { background:white; border:1.5px solid var(--border); border-radius:var(--rm); padding:13px 10px; text-align:center; cursor:pointer; transition:all 0.2s; }
+    .role-chip:hover { border-color:var(--gf); background:var(--gl); }
+    .role-chip.selected { border-color:var(--gd); background:var(--gl); }
+    .rc-emoji { font-size:22px; margin-bottom:6px; display:block; }
+    .rc-label { font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--tp); }
+
+    /* Form fields */
+    .form-divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
+    .form-section-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); margin-bottom:16px; display:flex; align-items:center; gap:7px; }
+    .form-section-title svg { width:16px; height:16px; color:var(--gf); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-group { margin-bottom:16px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-label .opt { font-weight:400; color:var(--tm); font-size:12px; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--gf); box-shadow:0 0 0 3px rgba(67,160,71,0.11); }
+    .form-textarea { resize:vertical; min-height:110px; }
+    .form-hint { font-size:12px; color:var(--tm); margin-top:5px; }
+    .char-count { float:right; font-size:11px; color:var(--tm); }
+
+    /* Priority selector */
+    .priority-row { display:flex; gap:8px; }
+    .priority-btn { flex:1; padding:10px; border-radius:var(--r); border:1.5px solid var(--border); background:white; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; cursor:pointer; text-align:center; transition:all 0.2s; }
+    .priority-btn:hover { border-color:var(--border2); }
+    .priority-btn.low    { }
+    .priority-btn.medium { }
+    .priority-btn.high   { }
+    .priority-btn.selected.low    { background:var(--gl); border-color:var(--gf); color:var(--gd); }
+    .priority-btn.selected.medium { background:var(--gold-l); border-color:var(--gold); color:#B37A00; }
+    .priority-btn.selected.high   { background:var(--red-l); border-color:var(--red); color:var(--red); }
+
+    /* File upload */
+    .file-upload { border:1.5px dashed var(--border); border-radius:var(--r); padding:20px; text-align:center; cursor:pointer; transition:border-color 0.2s, background 0.2s; background:var(--gp); }
+    .file-upload:hover { border-color:var(--gf); background:var(--gl); }
+    .file-upload svg { width:24px; height:24px; color:var(--tm); margin:0 auto 8px; }
+    .file-upload p { font-size:13px; color:var(--tm); }
+    .file-upload span { font-size:12px; color:var(--tm); }
+
+    /* Checkbox */
+    .checkbox-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; }
+    .checkbox-row input[type="checkbox"] { width:16px; height:16px; margin-top:3px; accent-color:var(--gd); cursor:pointer; flex-shrink:0; }
+    .checkbox-row label { font-size:13px; color:var(--tb); line-height:1.55; cursor:pointer; }
+    .checkbox-row label a { color:var(--gd); font-weight:600; }
+
+    /* Success state */
+    .form-success { display:none; text-align:center; padding:32px 0; }
+    .form-success.show { display:block; }
+    .success-icon { width:72px; height:72px; background:var(--gl); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+    .success-icon svg { width:36px; height:36px; color:var(--gd); }
+    .success-title { font-size:22px; font-weight:800; margin-bottom:10px; }
+    .success-desc  { font-size:14px; color:var(--tm); max-width:360px; margin:0 auto 24px; line-height:1.65; }
+
+    /* ── RIGHT: INFO ── */
+    .contact-right { display:flex; flex-direction:column; gap:20px; }
+
+    /* Info card */
+    .info-card { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:24px; }
+    .info-card-title { font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); margin-bottom:18px; }
+    .info-rows { display:flex; flex-direction:column; gap:14px; }
+    .info-row { display:flex; align-items:flex-start; gap:12px; }
+    .ir-icon { width:38px; height:38px; border-radius:10px; background:var(--gl); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ir-icon svg { width:18px; height:18px; color:var(--gd); }
+    .ir-label { font-size:11px; font-weight:700; color:var(--tm); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:3px; }
+    .ir-value { font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; color:var(--tp); }
+    .ir-sub   { font-size:12px; color:var(--tm); margin-top:1px; }
+
+    /* Response time card */
+    .response-card { background:var(--gp); border:1px solid var(--border); border-radius:var(--rl); padding:22px; }
+    .response-card-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); margin-bottom:14px; }
+    .rt-rows { display:flex; flex-direction:column; gap:10px; }
+    .rt-row { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:white; border-radius:var(--r); border:1px solid var(--border); }
+    .rt-channel { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--tb); font-weight:500; }
+    .rt-channel svg { width:14px; height:14px; color:var(--gd); flex-shrink:0; }
+    .rt-time { font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--gd); }
+
+    /* Map card */
+    .map-card { background:white; border:1px solid var(--border); border-radius:var(--rl); overflow:hidden; }
+    .map-frame { height:200px; background:var(--gl); }
+    .map-frame .photo-slot { min-height:unset; height:100%; background:linear-gradient(145deg,#E8F5E9,#DCEDC8); }
+    .map-footer { padding:16px 20px; }
+    .map-address { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); margin-bottom:4px; }
+    .map-directions { display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:600; color:var(--gd); }
+    .map-directions svg { width:13px; height:13px; }
+    .map-directions:hover { color:var(--gf); }
+
+    /* Social card */
+    .social-card { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:22px; }
+    .social-card-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); margin-bottom:14px; }
+    .social-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .social-btn { display:flex; align-items:center; gap:10px; padding:12px 14px; background:var(--gp); border:1px solid var(--border); border-radius:var(--rm); transition:box-shadow 0.2s, border-color 0.2s; cursor:pointer; }
+    .social-btn:hover { border-color:var(--border2); box-shadow:0 2px 12px rgba(27,94,32,0.08); }
+    .social-btn-icon { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .social-btn-icon svg { width:17px; height:17px; }
+    .si-twitter  { background:#E8F5FD; }
+    .si-twitter svg  { color:#1D9BF0; }
+    .si-linkedin { background:#E8F0FB; }
+    .si-linkedin svg { color:#0A66C2; }
+    .si-facebook { background:#E8EBF8; }
+    .si-facebook svg { color:#1877F2; }
+    .si-whatsapp { background:#E8F8E8; }
+    .si-whatsapp svg { color:#25D366; }
+    .social-btn-name { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--tp); }
+    .social-btn-handle { font-size:11px; color:var(--tm); }
+
+    /* ── DEPT CARDS ── */
+    .dept-section { background:var(--gp); padding:64px 5%; border-top:1px solid var(--border); }
+    .dept-inner { max-width:1200px; margin:0 auto; }
+    .dept-header { text-align:center; margin-bottom:40px; }
+    .dept-header h2 { font-size:clamp(24px,3vw,36px); font-weight:800; letter-spacing:-0.6px; margin-bottom:10px; }
+    .dept-header p  { font-size:16px; color:var(--tm); max-width:480px; margin:0 auto; }
+    .dept-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .dept-card { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:28px; transition:box-shadow 0.25s, transform 0.25s, border-color 0.25s; cursor:pointer; }
+    .dept-card:hover { box-shadow:var(--sh); transform:translateY(-3px); border-color:var(--border2); }
+    .dc-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+    .dc-icon svg { width:24px; height:24px; }
+    .dci-green  { background:var(--gl); }
+    .dci-green svg  { color:var(--gd); }
+    .dci-blue   { background:var(--blue-l); }
+    .dci-blue svg   { color:var(--blue); }
+    .dci-gold   { background:var(--gold-l); }
+    .dci-gold svg   { color:#B37A00; }
+    .dci-purple { background:var(--purple-l); }
+    .dci-purple svg { color:var(--purple); }
+    .dci-red    { background:var(--red-l); }
+    .dci-red svg    { color:var(--red); }
+    .dci-tp     { background:#ECEFF1; }
+    .dci-tp svg     { color:#455A64; }
+    .dc-title { font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); margin-bottom:6px; }
+    .dc-desc  { font-size:13px; color:var(--tm); line-height:1.6; margin-bottom:14px; }
+    .dc-email { font-size:13px; font-weight:600; color:var(--gd); display:flex; align-items:center; gap:5px; }
+    .dc-email svg { width:13px; height:13px; }
+    .dc-email:hover { color:var(--gf); }
+
+    /* ── FAQ SECTION ── */
+    .faq-section { background:white; padding:64px 5%; }
+    .faq-inner { max-width:820px; margin:0 auto; }
+    .faq-header { text-align:center; margin-bottom:40px; }
+    .faq-header h2 { font-size:clamp(24px,3vw,36px); font-weight:800; letter-spacing:-0.6px; margin-bottom:10px; }
+    .faq-header p  { font-size:16px; color:var(--tm); }
+    .faq-list { display:flex; flex-direction:column; gap:10px; }
+    .faq-item { background:white; border:1px solid var(--border); border-radius:var(--rm); overflow:hidden; }
+    .faq-q { padding:18px 22px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); gap:16px; }
+    .faq-q svg { width:18px; height:18px; color:var(--tm); flex-shrink:0; transition:transform 0.25s; }
+    .faq-item.open .faq-q svg { transform:rotate(180deg); }
+    .faq-item.open .faq-q { color:var(--gd); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-a { max-height:240px; }
+    .faq-a-inner { padding:0 22px 20px; font-size:14px; color:var(--tm); line-height:1.7; border-top:1px solid var(--border); padding-top:16px; }
+    .faq-a-inner a { color:var(--gd); font-weight:600; }
+
+    /* ── CTA ── */
+    .cta-section { background:var(--gp); padding:72px 5%; }
+    .cta-inner { max-width:1200px; margin:0 auto; }
+    .cta-box { background:var(--gd); border-radius:var(--rxl); padding:72px 56px; text-align:center; position:relative; overflow:hidden; }
+    .cta-box::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; border-radius:50%; background:rgba(67,160,71,0.13); pointer-events:none; }
+    .cta-box::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:260px; height:260px; border-radius:50%; background:rgba(249,168,37,0.07); pointer-events:none; }
+    .cta-box > * { position:relative; z-index:1; }
+    .cta-box h2 { font-size:clamp(26px,3.5vw,40px); font-weight:800; color:white; letter-spacing:-0.6px; margin-bottom:12px; }
+    .cta-box p  { font-size:16px; color:rgba(255,255,255,0.65); max-width:460px; margin:0 auto 28px; line-height:1.65; }
+    .cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .hero-inner   { grid-template-columns:1fr; }
+      .hero-contact-strip { display:none; }
+      .contact-grid { grid-template-columns:1fr; }
+      .contact-right { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+      .dept-grid    { grid-template-columns:1fr 1fr; }
+      .ft-grid      { grid-template-columns:1fr 1fr; gap:28px; }
+    }
+    @media(max-width:640px){
+      nav { padding:0 4%; }
+      .nav-links { display:none; }
+      .hero { padding:120px 4% 56px; }
+      .form-row   { grid-template-columns:1fr; }
+      .role-grid  { grid-template-columns:repeat(2,1fr); }
+      .contact-right { grid-template-columns:1fr; }
+      .dept-grid  { grid-template-columns:1fr; }
+      .social-grid{ grid-template-columns:1fr 1fr; }
+      .cta-box    { padding:44px 24px; }
+      .ft-grid    { grid-template-columns:1fr; gap:24px; }
+      .priority-row { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="btn btn-white btn-sm">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="farmers.html">Farmers</a></li>
+    <li><a href="recovery.html">Food Recovery</a></li>
+    <li><a href="innovation.html">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+</nav>
+
+<!-- ── HERO ──
+  📸 PHOTO SLOT — Hero background
+  Save as: assets/images/contact-hero.jpg
+  Add inside .hero, BEFORE .hero::before styles take effect,
+  by adding <img class="bg-img" src="assets/images/contact-hero.jpg" alt="SMARTSAVE team" />
+  as a child of .hero, then adding a .ov .ov-mid div after it.
+  SHOOT: The SMARTSAVE team gathered — possibly in an office or
+  outdoor setting. Warm, collaborative, professional. Wide landscape.
+-->
+<div class="hero photo-bg">
+  <div class="ov ov-dark"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow gold">Talk to Us</div>
+      <h1>We'd love to<br/>hear from <span>you.</span></h1>
+      <p class="hero-sub">Whether you're a farmer, buyer, NGO, investor, partner, or just curious — our team is here. We respond to every message.</p>
+    </div>
+    <div class="hero-contact-strip">
+      <div class="hcs-item">
+        <div class="hcs-icon">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M3 5l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="15" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div>
+          <div class="hcs-label">Email</div>
+          <div class="hcs-value">hello@smartsave.rw</div>
+        </div>
+      </div>
+      <div class="hcs-item">
+        <div class="hcs-icon">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M16 12.5v2a1.5 1.5 0 0 1-1.6 1.5 14.9 14.9 0 0 1-6.5-2.3 14.7 14.7 0 0 1-4.5-4.5A14.9 14.9 0 0 1 1.1 2.6 1.5 1.5 0 0 1 2.5 1h2a1.5 1.5 0 0 1 1.5 1.3c.1.8.3 1.5.5 2.2a1.5 1.5 0 0 1-.4 1.6l-.8.8a12 12 0 0 0 4.5 4.5l.8-.8a1.5 1.5 0 0 1 1.6-.4c.7.2 1.4.4 2.2.5A1.5 1.5 0 0 1 16 12.5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="hcs-label">WhatsApp</div>
+          <div class="hcs-value">+250 788 000 000</div>
+        </div>
+      </div>
+      <div class="hcs-item">
+        <div class="hcs-icon">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5C5.7 1.5 3 4.2 3 7.5c0 5.3 6 9 6 9s6-3.7 6-9c0-3.3-2.7-6-6-6z" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="7.5" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div>
+          <div class="hcs-label">Office</div>
+          <div class="hcs-value">Kigali Innovation City, Rwanda</div>
+        </div>
+      </div>
+      <div class="hcs-item">
+        <div class="hcs-icon">
+          <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M9 5v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="hcs-label">Response Time</div>
+          <div class="hcs-value">Within 4 business hours</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ROUTE TABS ── -->
+<div class="route-section">
+  <div class="route-inner">
+    <button class="route-tab active" onclick="setTab('general', this)">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3l-2 2V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      General Enquiry
+    </button>
+    <button class="route-tab" onclick="setTab('partnership', this)">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="12" cy="4" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="4" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M6 7.5l4-2.5M6 9l4 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      Partnerships
+    </button>
+    <button class="route-tab" onclick="setTab('press', this)">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      Press &amp; Media
+    </button>
+    <button class="route-tab" onclick="setTab('support', this)">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M6 6a2 2 0 1 1 2 2v1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="12" r=".8" fill="currentColor"/></svg>
+      Support
+    </button>
+    <button class="route-tab" onclick="setTab('investment', this)">
+      <svg viewBox="0 0 16 16" fill="none"><polyline points="1 12 5 7 9 10 12 6 15 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Investment
+    </button>
+    <a href="index.html" class="btn btn-primary btn-sm route-home" title="Home">Home</a>
+  </div>
+</div>
+
+<!-- ── MAIN CONTACT ── -->
+<div class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-grid">
+
+      <!-- ── FORM ── -->
+      <div class="form-card fade-up">
+        <div id="formWrap">
+          <h2 class="form-card-title" id="formTitle">Send Us a Message</h2>
+          <p class="form-card-sub" id="formSub">Fill in the form below and we'll get back to you within a few hours.</p>
+
+          <!-- Who are you? -->
+          <div class="form-section-title">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Who are you?
+          </div>
+          <div class="role-grid" id="roleGrid">
+            <div class="role-chip" onclick="selectRole(this)">
+              <span class="rc-emoji">🌱</span>
+              <div class="rc-label">Farmer</div>
+            </div>
+            <div class="role-chip" onclick="selectRole(this)">
+              <span class="rc-emoji">🏪</span>
+              <div class="rc-label">Buyer</div>
+            </div>
+            <div class="role-chip" onclick="selectRole(this)">
+              <span class="rc-emoji">🤝</span>
+              <div class="rc-label">NGO</div>
+            </div>
+            <div class="role-chip" onclick="selectRole(this)">
+              <span class="rc-emoji">💡</span>
+              <div class="rc-label">Innovator</div>
+            </div>
+            <div class="role-chip" onclick="selectRole(this)">
+              <span class="rc-emoji">🏢</span>
+              <div class="rc-label">Partner</div>
+            </div>
+            <div class="role-chip" onclick="selectRole(this)">
+              <span class="rc-emoji">📰</span>
+              <div class="rc-label">Press</div>
+            </div>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Contact details -->
+          <div class="form-section-title">
+            <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M1 6l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Your Details
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" placeholder="Your full name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email <span class="opt">(optional)</span></label>
+              <input type="email" class="form-input" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Organisation <span class="opt">(optional)</span></label>
+              <input type="text" class="form-input" placeholder="Your org or cooperative" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">District / Location <span class="opt">(optional)</span></label>
+            <select class="form-select">
+              <option value="">Select your district</option>
+              <option>Gasabo</option><option>Kicukiro</option><option>Nyarugenge</option>
+              <option>Musanze</option><option>Huye</option><option>Nyanza</option>
+              <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
+              <option>Bugesera</option><option>Outside Rwanda</option>
+            </select>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Message -->
+          <div class="form-section-title">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M2 3h12a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4l-3 3V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Your Message
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" id="subjectField" placeholder="What is this about?" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message <span class="char-count" id="charCount">0 / 1000</span></label>
+            <textarea class="form-textarea" id="messageField" placeholder="Tell us how we can help, what you'd like to discuss, or share your idea. The more detail, the faster we can respond." maxlength="1000" oninput="updateCharCount()"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <div class="priority-row">
+              <button class="priority-btn low selected" onclick="selectPriority(this)">🟢 Low — Not urgent</button>
+              <button class="priority-btn medium" onclick="selectPriority(this)">🟡 Medium — Within 48h</button>
+              <button class="priority-btn high" onclick="selectPriority(this)">🔴 High — Urgent</button>
+            </div>
+            <div class="form-hint">We prioritise urgent matters and respond to all messages within 4 business hours.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Attachment <span class="opt">(optional)</span></label>
+            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <p>Click to upload a file</p>
+              <span>PDF, JPG, PNG — max 5MB</span>
+              <input type="file" id="fileInput" style="display:none" accept=".pdf,.jpg,.jpeg,.png" onchange="showFileName(this)" />
+            </div>
+            <div class="form-hint" id="fileName"></div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="consentCheck" />
+            <label for="consentCheck">I agree that SMARTSAVE may use my contact details to respond to this enquiry, in accordance with the <a href="#">Privacy Policy</a>. I understand my details will not be shared with third parties.</label>
+          </div>
+
+          <button class="btn btn-primary btn-full" onclick="submitForm()">
+            Send Message
+            <svg viewBox="0 0 16 16" fill="none"><path d="M14 2L2 8l4 2 2 4 6-12zM6 10l8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Success state -->
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="success-title">Message Sent!</h3>
+          <p class="success-desc">Thank you for reaching out. Our team will review your message and get back to you within 4 business hours.</p>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
+            <button class="btn btn-secondary" onclick="resetForm()">Send Another</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT INFO ── -->
+      <div class="contact-right">
+
+        <!-- Info card -->
+        <div class="info-card fade-up">
+          <div class="info-card-title">Our Contact Details</div>
+          <div class="info-rows">
+            <div class="info-row">
+              <div class="ir-icon">
+                <svg viewBox="0 0 18 18" fill="none"><path d="M3 5l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.5" y="3" width="15" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+              </div>
+              <div>
+                <div class="ir-label">Email</div>
+                <div class="ir-value">hello@smartsave.rw</div>
+                <div class="ir-sub">General enquiries &amp; partnerships</div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="ir-icon">
+                <svg viewBox="0 0 18 18" fill="none"><path d="M16 12.5v2a1.5 1.5 0 0 1-1.6 1.5 14.9 14.9 0 0 1-6.5-2.3 14.7 14.7 0 0 1-4.5-4.5A14.9 14.9 0 0 1 1.1 2.6 1.5 1.5 0 0 1 2.5 1h2a1.5 1.5 0 0 1 1.5 1.3c.1.8.3 1.5.5 2.2a1.5 1.5 0 0 1-.4 1.6l-.8.8a12 12 0 0 0 4.5 4.5l.8-.8a1.5 1.5 0 0 1 1.6-.4c.7.2 1.4.4 2.2.5A1.5 1.5 0 0 1 16 12.5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="ir-label">WhatsApp</div>
+                <div class="ir-value">+250 788 000 000</div>
+                <div class="ir-sub">Mon–Fri · 8 AM – 6 PM EAT</div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="ir-icon">
+                <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5C5.7 1.5 3 4.2 3 7.5c0 5.3 6 9 6 9s6-3.7 6-9c0-3.3-2.7-6-6-6z" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="7.5" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
+              </div>
+              <div>
+                <div class="ir-label">Office</div>
+                <div class="ir-value">Kigali Innovation City</div>
+                <div class="ir-sub">KG 7 Ave, Gasabo, Kigali, Rwanda</div>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="ir-icon">
+                <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M9 5v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="ir-label">Office Hours</div>
+                <div class="ir-value">Mon–Fri: 8:00 AM – 6:00 PM</div>
+                <div class="ir-sub">Sat: 9:00 AM – 1:00 PM · EAT (UTC+3)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Response times -->
+        <div class="response-card fade-up">
+          <div class="response-card-title">Expected Response Times</div>
+          <div class="rt-rows">
+            <div class="rt-row">
+              <div class="rt-channel">
+                <svg viewBox="0 0 14 14" fill="none"><path d="M2 3h10a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3l-2 2V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Contact Form
+              </div>
+              <div class="rt-time">Within 4 hours</div>
+            </div>
+            <div class="rt-row">
+              <div class="rt-channel">
+                <svg viewBox="0 0 14 14" fill="none"><path d="M1 3h12a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2l-2 2V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4"/><path d="M1 6l6 4 6-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                Email
+              </div>
+              <div class="rt-time">Same business day</div>
+            </div>
+            <div class="rt-row">
+              <div class="rt-channel">
+                <svg viewBox="0 0 14 14" fill="none"><path d="M13 9.5v1.5A1.3 1.3 0 0 1 11.6 12.4a12.5 12.5 0 0 1-5.5-2A12.3 12.3 0 0 1 2.3 6.5 12.5 12.5 0 0 1 .3 1 1.3 1.3 0 0 1 1.5 0h1.7a1.3 1.3 0 0 1 1.3 1.1c.1.6.3 1.3.5 1.9a1.3 1.3 0 0 1-.3 1.3l-.7.7a10 10 0 0 0 3.8 3.8l.7-.7a1.3 1.3 0 0 1 1.3-.3c.6.2 1.3.4 1.9.5A1.3 1.3 0 0 1 13 9.5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                WhatsApp
+              </div>
+              <div class="rt-time">Within 2 hours</div>
+            </div>
+            <div class="rt-row">
+              <div class="rt-channel">
+                <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C3.7 1 1 3.7 1 7s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 6.5A2.5 2.5 0 0 1 7 4c1.7 0 2.5 1.5 2.5 2.5 0 2-2.5 3-2.5 3M7 12v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                Help Center
+              </div>
+              <div class="rt-time">Instant (self-serve)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="map-card fade-up">
+          <div class="map-frame">
+            <!--
+              📸 / MAP SLOT
+              Option A: Replace .photo-slot with a Google Maps embed:
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=..."
+                  width="100%" height="200" style="border:0;"
+                  allowfullscreen="" loading="lazy">
+                </iframe>
+              Option B: Replace with a photo of your office exterior.
+              Save as: assets/images/office-location.jpg
+            -->
+            <div class="photo-slot">
+              <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 1C7.1 1 4 4.1 4 8c0 5.8 7 13 7 13s7-7.2 7-13c0-3.9-3.1-7-7-7z" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+              <div class="ps-title">Office Location Map</div>
+              <div class="ps-hint">Embed a Google Map iframe here, or add an office photo</div>
+              <span class="ps-tag">📸 Replace with Google Maps embed or office photo</span>
+            </div>
+          </div>
+          <div class="map-footer">
+            <div class="map-address">Kigali Innovation City, KG 7 Ave</div>
+            <a href="https://maps.google.com" target="_blank" class="map-directions">
+              Get Directions
+              <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Social -->
+        <div class="social-card fade-up">
+          <div class="social-card-title">Find Us Online</div>
+          <div class="social-grid">
+            <a href="#" class="social-btn">
+              <div class="social-btn-icon si-twitter">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M2 3h3.5l2 3.5L10 3h4L9.5 8.5 14 13h-3.5L8 9.5 5.5 13H2l4.5-5L2 3z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="social-btn-name">Twitter / X</div>
+                <div class="social-btn-handle">@smartsaverw</div>
+              </div>
+            </a>
+            <a href="#" class="social-btn">
+              <div class="social-btn-icon si-linkedin">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M5 7v4M5 5.5v.5M8 11V8.5a1.5 1.5 0 0 1 3 0V11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="social-btn-name">LinkedIn</div>
+                <div class="social-btn-handle">SMARTSAVE Rwanda</div>
+              </div>
+            </a>
+            <a href="#" class="social-btn">
+              <div class="social-btn-icon si-facebook">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M12 1H9.5A3.5 3.5 0 0 0 6 4.5V7H4v3h2v6h3v-6h2.5L12 7H9V4.5c0-.3.2-.5.5-.5H12V1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="social-btn-name">Facebook</div>
+                <div class="social-btn-handle">SMARTSAVERwanda</div>
+              </div>
+            </a>
+            <a href="#" class="social-btn">
+              <div class="social-btn-icon si-whatsapp">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M5 6a2 2 0 0 0 2 2 2 2 0 0 0 2 2l1-1-1.5-1.5L7.5 8 6 6.5 5 6z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="social-btn-name">WhatsApp</div>
+                <div class="social-btn-handle">+250 788 000 000</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /contact-right -->
+    </div><!-- /contact-grid -->
+  </div>
+</div>
+
+<!-- ── DEPARTMENTS ── -->
+<div class="dept-section">
+  <div class="dept-inner">
+    <div class="dept-header fade-up">
+      <div class="eyebrow center">Direct Contacts</div>
+      <h2>Reach the right team</h2>
+      <p>Have a specific request? Go straight to the team that handles it.</p>
+    </div>
+    <div class="dept-grid">
+
+      <div class="dept-card fade-up">
+        <div class="dc-icon dci-green">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M11 2C7 2 4 5 4 9c0 5.5 7 11 7 11s7-5.5 7-11c0-4-3-7-7-7z" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div class="dc-title">Farmer Support</div>
+        <div class="dc-desc">Registration, listings, market prices, dashboard issues, cooperative onboarding, and payment help for farmers.</div>
+        <a href="mailto:farmers@smartsave.rw" class="dc-email">
+          <svg viewBox="0 0 13 13" fill="none"><path d="M1 3h11l-5.5 5L1 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 3v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          farmers@smartsave.rw
+        </a>
+      </div>
+
+      <div class="dept-card fade-up">
+        <div class="dc-icon dci-blue">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M5 3h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.8"/><path d="M3 8h16M9 3v16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="dc-title">Buyer &amp; Procurement</div>
+        <div class="dc-desc">Supplier sourcing, order management, invoice queries, delivery issues, and standing supply agreements.</div>
+        <a href="mailto:buyers@smartsave.rw" class="dc-email">
+          <svg viewBox="0 0 13 13" fill="none"><path d="M1 3h11l-5.5 5L1 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 3v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          buyers@smartsave.rw
+        </a>
+      </div>
+
+      <div class="dept-card fade-up">
+        <div class="dc-icon dci-red">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M11 20s-8-6-8-12a8 8 0 1 1 16 0c0 6-8 12-8 12z" stroke="currentColor" stroke-width="1.8"/><path d="M11 10l-2-2 2-2 2 2-2 2zM11 10v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="dc-title">Food Recovery</div>
+        <div class="dc-desc">Donation listings, NGO registration and verification, surplus food matching, and distribution coordination.</div>
+        <a href="mailto:recovery@smartsave.rw" class="dc-email">
+          <svg viewBox="0 0 13 13" fill="none"><path d="M1 3h11l-5.5 5L1 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 3v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          recovery@smartsave.rw
+        </a>
+      </div>
+
+      <div class="dept-card fade-up">
+        <div class="dc-icon dci-purple">
+          <svg viewBox="0 0 22 22" fill="none"><polygon points="11 2 14.09 8.26 21 9.27 16 14.14 17.18 21.02 11 17.77 4.82 21.02 6 14.14 1 9.27 7.91 8.26 11 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="dc-title">Innovation Hub</div>
+        <div class="dc-desc">Hackathon registrations, research grant applications, mentorship requests, startup acceleration, and partnerships.</div>
+        <a href="mailto:innovation@smartsave.rw" class="dc-email">
+          <svg viewBox="0 0 13 13" fill="none"><path d="M1 3h11l-5.5 5L1 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 3v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          innovation@smartsave.rw
+        </a>
+      </div>
+
+      <div class="dept-card fade-up">
+        <div class="dc-icon dci-gold">
+          <svg viewBox="0 0 22 22" fill="none"><circle cx="12" cy="5" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="5" cy="11" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="17" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 9.5l3-2.5M7.5 12.5l3 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="dc-title">Partnerships &amp; Investment</div>
+        <div class="dc-desc">Government agencies, NGOs, private sector, international organisations, impact investors, and donor partnerships.</div>
+        <a href="mailto:partners@smartsave.rw" class="dc-email">
+          <svg viewBox="0 0 13 13" fill="none"><path d="M1 3h11l-5.5 5L1 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 3v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          partners@smartsave.rw
+        </a>
+      </div>
+
+      <div class="dept-card fade-up">
+        <div class="dc-icon dci-tp">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="dc-title">Press &amp; Media</div>
+        <div class="dc-desc">Interview requests, media enquiries, press kits, fact-checking, and editorial collaboration with journalists and researchers.</div>
+        <a href="mailto:press@smartsave.rw" class="dc-email">
+          <svg viewBox="0 0 13 13" fill="none"><path d="M1 3h11l-5.5 5L1 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 3v7a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          press@smartsave.rw
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ── -->
+<div class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-header fade-up">
+      <div class="eyebrow center">Before You Write</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>You might find your answer here first.</p>
+    </div>
+    <div class="faq-list fade-up">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How long does it take to receive a response?
+          <svg viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">For messages submitted through the contact form, we respond within 4 business hours Monday–Friday. WhatsApp enquiries are usually answered within 2 hours during office hours (8 AM–6 PM EAT). If you submit outside of office hours, you will receive a response first thing the next working morning.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          I'm a farmer and I'm having trouble with my dashboard. Who should I contact?
+          <svg viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Email <a href="mailto:farmers@smartsave.rw">farmers@smartsave.rw</a> or WhatsApp us at +250 788 000 000. Include your registered email address and a brief description of the issue and our farmer support team will resolve it within a few hours. For registration questions, you can also visit the <a href="farmers.html">Farmers Portal</a> page.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          I represent an NGO. How do I access available food donations?
+          <svg viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Start by registering your organisation at <a href="register-ngo.html">register-ngo.html</a>. Once your account is verified (usually within 24–48 hours), you can access the live donation feed on the <a href="recovery.html">Food Recovery page</a>. For urgent food requests, contact <a href="mailto:recovery@smartsave.rw">recovery@smartsave.rw</a> directly.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          I'm a journalist writing about food systems in Rwanda. How do I request an interview?
+          <svg viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Email <a href="mailto:press@smartsave.rw">press@smartsave.rw</a> with your publication name, the angle of your story, your preferred interview format, and your deadline. We respond to press enquiries within 24 hours and can usually accommodate interviews within 48–72 hours. We also have a press kit with key statistics, photography, and spokesperson bios available on request.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          My organisation would like to partner with SMARTSAVE. What's the first step?
+          <svg viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Send a brief introduction to <a href="mailto:partners@smartsave.rw">partners@smartsave.rw</a> — one or two paragraphs describing your organisation, what you work on, and what kind of collaboration you have in mind. We review all partnership enquiries and follow up within 48 hours to explore alignment and next steps.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is SMARTSAVE available outside Rwanda?
+          <svg viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">SMARTSAVE currently operates within Rwanda across all 30 districts. We welcome enquiries from organisations in other East African countries who are interested in the model, potential licensing, or research collaboration. If you're from outside Rwanda, select "Partner" in the contact form and describe your interest — our partnerships team will follow up.</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-box fade-up">
+      <div class="eyebrow gold center" style="margin-bottom:14px;">Not sure where to start?</div>
+      <h2>Just say hello.</h2>
+      <p>You don't need a formal request to reach out. Whether you have a quick question, a big idea, or just want to understand more about what we're building — we want to hear from you.</p>
+      <div class="cta-btns">
+        <a href="mailto:hello@smartsave.rw" class="btn btn-white">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 4l6 5 6-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          hello@smartsave.rw
+        </a>
+        <a href="register.html" class="btn btn-outline-white">Create an Account</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">SMART<span>SAVE</span> Rwanda</div>
+      <p class="ft-tagline">Connecting farmers, markets, technology, youth, and communities to reduce food loss across Rwanda.</p>
+      <div class="ft-dot" style="margin-top:14px;">Platform Active · All 30 Districts</div>
+    </div>
+    <div>
+      <div class="ft-col-title">Platform</div>
+      <ul class="ft-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="farmers.html">Farmers Portal</a></li>
+        <li><a href="recovery.html">Food Recovery</a></li>
+        <li><a href="innovation.html">Innovation Hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Company</div>
+      <ul class="ft-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Support</div>
+      <ul class="ft-links">
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 SMARTSAVE Rwanda.</div>
+    <div class="ft-copy">From Harvest to Hope 🌱</div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Route tabs
+  const tabConfigs = {
+    general    : { title:'Send Us a Message',         sub:'Fill in the form and we\'ll get back to you within 4 business hours.', subject:'' },
+    partnership: { title:'Partnership Enquiry',        sub:'Tell us about your organisation and the collaboration you have in mind.', subject:'Partnership enquiry' },
+    press      : { title:'Press & Media Request',      sub:'Please include your publication, story angle, and deadline.', subject:'Press / media request' },
+    support    : { title:'Platform Support',           sub:'Describe the issue you\'re experiencing and your registered email address.', subject:'Platform support request' },
+    investment : { title:'Investment & Funding',       sub:'Tell us about your organisation and your area of interest.', subject:'Investment / funding enquiry' },
+  };
+
+  function setTab(key, btn) {
+    document.querySelectorAll('.route-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const cfg = tabConfigs[key];
+    if (!cfg) return;
+    document.getElementById('formTitle').textContent = cfg.title;
+    document.getElementById('formSub').textContent = cfg.sub;
+    if (cfg.subject) document.getElementById('subjectField').value = cfg.subject;
+  }
+
+  // Role chip select
+  function selectRole(chip) {
+    document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('selected'));
+    chip.classList.add('selected');
+  }
+
+  // Priority select
+  function selectPriority(btn) {
+    document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // File name display
+  function showFileName(input) {
+    if (input.files.length > 0) {
+      document.getElementById('fileName').textContent = '📎 ' + input.files[0].name;
+    }
+  }
+
+  // Character count
+  function updateCharCount() {
+    const field = document.getElementById('messageField');
+    document.getElementById('charCount').textContent = field.value.length + ' / 1000';
+  }
+
+  // Form submit — real backend via SMARTSAVE REST API
+  async function submitForm() {
+    const formCard = document.querySelector('.form-card');
+    const inputs = formCard.querySelectorAll('.form-input');
+    const consent = document.getElementById('consentCheck');
+    const name = inputs[0] ? inputs[0].value.trim() : '';
+    const email = inputs[1] ? inputs[1].value.trim() : '';
+    const subject = document.getElementById('subjectField').value.trim() || 'General enquiry';
+    const message = document.getElementById('messageField').value.trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill in your name, email and message.');
+      return;
+    }
+    if (consent && !consent.checked) {
+      alert('Please tick the consent box so we may respond to you.');
+      return;
+    }
+
+    try {
+      await API.submitContact({ name, email, subject, message });
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+      window.scrollTo({ top: document.querySelector('.form-card').offsetTop - 90, behavior:'smooth' });
+    } catch (err) {
+      alert(err.message || 'Sorry, there was a problem sending your message. Please try again or email us directly.');
+    }
+  }
+
+  function resetForm() {
+    document.getElementById('formWrap').style.display = 'block';
+    document.getElementById('formSuccess').classList.remove('show');
+    document.getElementById('messageField').value = '';
+    updateCharCount();
+  }
+
+  // FAQ accordion
+  function toggleFaq(q) {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Fade up
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold:0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

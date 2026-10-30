@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register as an NGO — SMARTSAVE Rwanda</title>
+  <style>
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --pur:#6A1B9A; --pur-m:#7B1FA2; --pur-l:#F3E5F5; --pur-border:#CE93D8;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --red:#E53935; --red-l:#FFEBEE;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#E1BEE7;
+      --sh:0 4px 24px rgba(106,27,154,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#FAF5FF; overflow-x:hidden; min-height:100vh; }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(206,147,216,0.4); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-right { font-size:14px; color:var(--tm); }
+    .nav-right a { color:var(--pur); font-weight:700; }
+    .nav-right a:hover { color:var(--pur-m); }
+
+    /* BUTTONS */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary { background:var(--pur); color:white; }
+    .btn-primary:hover { background:var(--pur-m); box-shadow:0 8px 24px rgba(106,27,154,0.25); }
+    .btn-outline { background:white; color:var(--pur); border:1.5px solid var(--pur-border); }
+    .btn-outline:hover { background:var(--pur-l); border-color:var(--pur); }
+    .btn-green { background:var(--gd); color:white; }
+    .btn-green:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+
+    /* PHOTO SYSTEM */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark { background:rgba(25,10,40,0.60); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+
+    /* PAGE LAYOUT */
+    .reg-wrap { min-height:100vh; display:grid; grid-template-columns:1fr 1.15fr; padding-top:68px; }
+
+    /* Left visual */
+    .reg-visual { background-color:var(--pur); position:relative; display:flex; flex-direction:column; justify-content:space-between; padding:48px; min-height:calc(100vh - 68px); }
+    .rv-top { position:relative; z-index:2; }
+    .rv-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gold); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:18px; }
+    .rv-title { font-size:clamp(26px,2.8vw,34px); font-weight:800; color:white; letter-spacing:-0.7px; line-height:1.25; margin-bottom:16px; max-width:380px; }
+    .rv-desc { font-size:14px; color:rgba(255,255,255,0.68); max-width:340px; line-height:1.65; }
+    .rv-benefits { position:relative; z-index:2; display:flex; flex-direction:column; gap:14px; }
+    .rv-benefit { display:flex; align-items:flex-start; gap:14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:var(--rm); padding:16px 18px; }
+    .rv-b-icon { width:36px; height:36px; border-radius:10px; background:rgba(249,168,37,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .rv-b-icon svg { width:18px; height:18px; color:var(--gold); }
+    .rv-b-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:white; margin-bottom:2px; }
+    .rv-b-desc { font-size:12px; color:rgba(255,255,255,0.55); line-height:1.5; }
+
+    /* Right form panel */
+    .reg-form-panel { display:flex; align-items:flex-start; justify-content:center; padding:48px 6% 80px; }
+    .reg-form-box { width:100%; max-width:560px; }
+
+    /* Progress */
+    .progress-label { display:flex; justify-content:space-between; margin-bottom:8px; }
+    .progress-label span { font-size:12px; font-weight:600; color:var(--tm); }
+    .progress-label span.current { color:var(--pur); }
+    .progress-row { display:flex; align-items:center; gap:8px; margin-bottom:36px; }
+    .progress-step { flex:1; height:4px; border-radius:4px; background:var(--pur-border); opacity:0.4; transition:background 0.3s, opacity 0.3s; }
+    .progress-step.active, .progress-step.done { background:var(--pur); opacity:1; }
+
+    .reg-form-header { margin-bottom:28px; }
+    .reg-form-title { font-size:26px; font-weight:800; letter-spacing:-0.5px; margin-bottom:8px; }
+    .reg-form-sub { font-size:14px; color:var(--tm); }
+    .reg-form-sub a { color:var(--pur); font-weight:700; }
+
+    /* Form */
+    .form-step { display:none; }
+    .form-step.active { display:block; }
+    .form-section-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .form-section-title svg { width:18px; height:18px; color:var(--pur); }
+    .form-group { margin-bottom:18px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-label .optional { font-weight:400; color:var(--tm); font-size:12px; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--pur); box-shadow:0 0 0 3px rgba(106,27,154,0.1); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-hint { font-size:12px; color:var(--tm); margin-top:6px; }
+    .form-textarea { resize:vertical; min-height:90px; }
+
+    /* Focus area chips */
+    .chip-group { display:flex; flex-wrap:wrap; gap:8px; }
+    .focus-chip { padding:8px 16px; border-radius:50px; border:1.5px solid var(--border); background:white; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--tb); cursor:pointer; transition:all 0.2s; }
+    .focus-chip:hover { border-color:var(--pur); }
+    .focus-chip.selected { background:var(--pur); border-color:var(--pur); color:white; }
+
+    /* District multi-select */
+    .district-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .dist-chip { padding:8px 12px; border-radius:var(--r); border:1.5px solid var(--border); background:white; font-family:'Inter',sans-serif; font-size:12px; font-weight:600; color:var(--tb); cursor:pointer; text-align:center; transition:all 0.2s; }
+    .dist-chip:hover { border-color:var(--pur); }
+    .dist-chip.selected { background:var(--pur); border-color:var(--pur); color:white; }
+
+    /* Info callout */
+    .info-box { background:var(--pur-l); border:1px solid var(--pur-border); border-radius:var(--rm); padding:18px 20px; margin-bottom:18px; }
+    .info-box p { font-size:13px; color:var(--pur); line-height:1.6; }
+    .info-box strong { color:var(--pur); }
+
+    /* Step nav */
+    .step-nav { display:flex; gap:12px; margin-top:32px; }
+    .step-nav .btn { flex:1; }
+
+    /* Success */
+    .success-box { display:none; text-align:center; padding:20px 0; }
+    .success-box.show { display:block; }
+    .success-icon { width:72px; height:72px; background:var(--pur-l); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; }
+    .success-icon svg { width:36px; height:36px; color:var(--pur); }
+    .success-title { font-size:24px; font-weight:800; margin-bottom:10px; }
+    .success-desc { font-size:14px; color:var(--tm); max-width:420px; margin:0 auto 28px; line-height:1.65; }
+
+    .reg-footer-note { text-align:center; font-size:12px; color:var(--tm); margin-top:24px; line-height:1.6; }
+    .reg-footer-note a { color:var(--pur); font-weight:600; }
+
+    @media(max-width:980px){ .reg-wrap { grid-template-columns:1fr; } .reg-visual { display:none; } }
+    @media(max-width:640px){ nav { padding:0 4%; } .reg-form-panel { padding:36px 5% 56px; } .form-row { grid-template-columns:1fr; } .district-grid { grid-template-columns:repeat(2,1fr); } .step-nav { flex-direction:column-reverse; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <div class="nav-right">Already have an account? <a href="login.html">Sign in</a></div>
+</nav>
+
+<div class="reg-wrap">
+
+  <!-- LEFT VISUAL PANEL
+    📸 PHOTO SLOT
+    Save as: assets/images/register-ngo-visual.jpg
+    Add inside this div, BEFORE the .ov div:
+      <img class="bg-img" src="assets/images/register-ngo-visual.jpg" alt="NGO food recovery" />
+    SHOOT: NGO volunteers distributing food to a community — warm
+    interaction, food visible, sense of purpose and dignity. Not
+    staged. Portrait / tall orientation preferred.
+  -->
+  <div class="reg-visual photo-bg">
+    <div class="ov ov-dark"></div>
+    <div class="rv-top">
+      <div class="rv-eyebrow">NGO Registration</div>
+      <h1 class="rv-title">Connect your community to the food it deserves.</h1>
+      <p class="rv-desc">Join 84+ NGOs and community organisations receiving verified food donations across Rwanda every week.</p>
+    </div>
+    <div class="rv-benefits">
+      <div class="rv-benefit">
+        <div class="rv-b-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C7 2 4 5 4 9c0 5.5 6 9 6 9s6-3.5 6-9c0-4-3-7-6-7z" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div>
+          <div class="rv-b-title">Live district-based feed</div>
+          <div class="rv-b-desc">See available donations in your area and claim them instantly</div>
+        </div>
+      </div>
+      <div class="rv-benefit">
+        <div class="rv-b-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M2 7l3.5 3.5L18 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="rv-b-title">Admin-verified matching</div>
+          <div class="rv-b-desc">Every transfer is reviewed by SMARTSAVE staff for safety and fairness</div>
+        </div>
+      </div>
+      <div class="rv-benefit">
+        <div class="rv-b-icon">
+          <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="rv-b-title">Impact reports included</div>
+          <div class="rv-b-desc">Auto-generated reports to share with your donors and stakeholders</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT FORM PANEL -->
+  <div class="reg-form-panel">
+    <div class="reg-form-box">
+
+      <div id="formWrap">
+        <div class="progress-label">
+          <span id="stepLabel1" class="current">1. Organisation</span>
+          <span id="stepLabel2">2. Coverage &amp; Needs</span>
+          <span id="stepLabel3">3. Verification</span>
+        </div>
+        <div class="progress-row">
+          <div class="progress-step active" id="bar1"></div>
+          <div class="progress-step" id="bar2"></div>
+          <div class="progress-step" id="bar3"></div>
+        </div>
+
+        <div class="reg-form-header">
+          <h2 class="reg-form-title">Register as an NGO</h2>
+          <p class="reg-form-sub">Already registered? <a href="login.html">Sign in instead</a></p>
+        </div>
+
+        <form id="ngoForm" method="post" action="/accounts/register/">
+          
+          <input type="hidden" name="role" value="ngo" />
+
+          <!-- STEP 1 — Organisation details -->
+          <div class="form-step active" id="step1">
+            <div class="form-section-title">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M16 17v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+              Organisation Details
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Organisation Name</label>
+              <input type="text" class="form-input" name="organization" placeholder="e.g. Inshuti z'Abana Rwanda" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Organisation Type</label>
+              <select class="form-select" required>
+                <option value="">Select type</option>
+                <option>Non-Governmental Organisation (NGO)</option>
+                <option>Community-Based Organisation (CBO)</option>
+                <option>Church / Faith-Based Organisation</option>
+                <option>Government Agency / Programme</option>
+                <option>School Nutrition Programme</option>
+                <option>Hospital / Health Facility</option>
+                <option>Refugee / Displacement Support</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Contact Person</label>
+                <input type="text" class="form-input" name="contact_name" placeholder="Full name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Job Title / Role</label>
+                <input type="text" class="form-input" name="job_title" placeholder="e.g. Programme Coordinator" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" name="email" placeholder="info@yourorg.rw" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" name="email" placeholder="info@yourorg.rw" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Website or Social Media <span class="optional">(optional)</span></label>
+              <input type="text" class="form-input" placeholder="https://yourorg.rw or Facebook/Twitter page" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Number of Beneficiaries Served</label>
+              <select class="form-select" required>
+                <option value="">Select range</option>
+                <option>Under 100 beneficiaries</option>
+                <option>100 – 500 beneficiaries</option>
+                <option>500 – 2,000 beneficiaries</option>
+                <option>2,000 – 10,000 beneficiaries</option>
+                <option>More than 10,000 beneficiaries</option>
+              </select>
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="btn btn-primary" onclick="goToStep(2)">
+                Continue
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2 — Coverage & needs -->
+          <div class="form-step" id="step2">
+            <div class="form-section-title">
+              <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M9 5v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Coverage &amp; Food Needs
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Which districts do you operate in? <span class="optional">(select all that apply)</span></label>
+              <div class="district-grid">
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Gasabo</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Kicukiro</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Nyarugenge</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Musanze</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Huye</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Nyanza</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Rubavu</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Rusizi</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Rwamagana</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Bugesera</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Ruhango</div>
+                <div class="dist-chip" onclick="this.classList.toggle('selected')">Muhanga</div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:18px;">
+              <label class="form-label">What is the focus of your food programme? <span class="optional">(select all that apply)</span></label>
+              <div class="chip-group" id="focusChips">
+                <button type="button" class="focus-chip">Child nutrition</button>
+                <button type="button" class="focus-chip">Elderly support</button>
+                <button type="button" class="focus-chip">Refugee / displaced persons</button>
+                <button type="button" class="focus-chip">School feeding</button>
+                <button type="button" class="focus-chip">Hospital patients</button>
+                <button type="button" class="focus-chip">Widows &amp; single parents</button>
+                <button type="button" class="focus-chip">General food insecurity</button>
+                <button type="button" class="focus-chip">Disaster / emergency response</button>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top:18px;">
+              <div class="form-group">
+                <label class="form-label">Food Collection Capacity</label>
+                <select class="form-select">
+                  <option>Up to 50 kg per collection</option>
+                  <option>50 – 150 kg per collection</option>
+                  <option>150 – 500 kg per collection</option>
+                  <option>500 kg + per collection</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Do you have transport?</label>
+                <select class="form-select">
+                  <option>Yes — we have our own vehicle</option>
+                  <option>Sometimes — borrowed / rented</option>
+                  <option>No — we need collection support</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Types of food you can accept</label>
+              <div class="chip-group" id="foodTypeChips">
+                <button type="button" class="focus-chip">Cooked meals</button>
+                <button type="button" class="focus-chip">Fresh produce</button>
+                <button type="button" class="focus-chip">Dry goods</button>
+                <button type="button" class="focus-chip">Baked goods</button>
+                <button type="button" class="focus-chip">Dairy products</button>
+                <button type="button" class="focus-chip">Any / all types</button>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:18px;">
+              <label class="form-label">Briefly describe your organisation's work <span class="optional">(optional)</span></label>
+              <textarea class="form-textarea" placeholder="How do you distribute food to your beneficiaries? What challenges do you face in sourcing food?"></textarea>
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="btn btn-outline" onclick="goToStep(1)">Back</button>
+              <button type="button" class="btn btn-primary" onclick="goToStep(3)">
+                Continue
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3 — Verification -->
+          <div class="form-step" id="step3">
+            <div class="form-section-title">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M9 2l2 4.5H16l-3.9 3 1.5 4.6L9 11.6l-4.6 2.5L6 9.5 2 6.5h5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Account &amp; Verification
+            </div>
+
+            <p style="font-size:14px; color:var(--tm); margin-bottom:20px;">To ensure food reaches those who genuinely need it, we verify all NGO and community organisation accounts before activation.</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Create Password</label>
+                <input type="password" class="form-input" name="password1" placeholder="At least 8 characters" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-input" name="password2" placeholder="Repeat password" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Organisation Registration Number <span class="optional">(if applicable)</span></label>
+              <input type="text" class="form-input" placeholder="e.g. RCA registration number or equivalent" />
+              <div class="form-hint">Church-based or informal CBOs can note this and still apply.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Reference Contact <span class="optional">(optional but helps speed up verification)</span></label>
+              <input type="text" class="form-input" placeholder="Name and email of a partner NGO, government contact, or donor" />
+              <div class="form-hint">Someone who can confirm your organisation's work if needed.</div>
+            </div>
+
+            <div class="info-box">
+              <p><strong>What happens after you submit:</strong> Our team reviews your application within 24–48 hours. We may contact you briefly to confirm your details. Once verified, you'll receive an email and can immediately access the live donation feed in your district.</p>
+            </div>
+
+            <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:18px;">
+              <input type="checkbox" style="width:16px; height:16px; margin-top:3px; accent-color:var(--pur); cursor:pointer;" />
+              <label style="font-size:13px; color:var(--tb); line-height:1.6; cursor:pointer;">I confirm that my organisation genuinely serves vulnerable beneficiaries and that the information provided is accurate. I agree to SMARTSAVE's <a href="#" style="color:var(--pur); font-weight:600;">Terms of Use</a> and <a href="#" style="color:var(--pur); font-weight:600;">Privacy Policy</a>.</label>
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="btn btn-outline" onclick="goToStep(2)">Back</button>
+              <button type="submit" class="btn btn-primary">
+                Submit Application
+                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </form>
+        <p class="reg-footer-note">Need help? Contact us at <a href="mailto:hello@smartsave.rw">hello@smartsave.rw</a></p>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="success-box" id="successBox">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 class="success-title">Application Received!</h2>
+        <p class="success-desc">Thank you for registering. Our team will review your organisation's details within 24–48 hours. You'll receive an SMS confirmation once your account is activated and you can start claiming food donations in your district.</p>
+        <a href="recovery.html" class="btn btn-green">
+          View Food Recovery Programme
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  document.querySelectorAll('.focus-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('selected'));
+  });
+
+  function goToStep(step) {
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+    for (let i = 1; i <= 3; i++) {
+      const bar = document.getElementById('bar' + i);
+      const lbl = document.getElementById('stepLabel' + i);
+      bar.classList.remove('active','done');
+      lbl.classList.remove('current');
+      if (i < step) bar.classList.add('done');
+      if (i === step) { bar.classList.add('active'); lbl.classList.add('current'); }
+    }
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  // Real backend registration via SMARTSAVE REST API
+  document.getElementById('ngoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const form = new FormData(this);
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Submitting...';
+
+    const payload = {
+      email: form.get('email'),
+      username: form.get('email').split('@')[0],
+      first_name: form.get('contact_name') || '',
+      last_name: form.get('job_title') || '',
+      password: form.get('password1') || '',
+      password2: form.get('password2') || '',
+      role: 'ngo',
+    };
+
+    try {
+      await API.registerNGO(payload);
+      // Auto-login after registration
+      try {
+        await API.login(payload.email, payload.password);
+      } catch (e) {}
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('successBox').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      alert(err.message || 'Registration failed. Please check your details and try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
+</script>
+</body>
+</html>

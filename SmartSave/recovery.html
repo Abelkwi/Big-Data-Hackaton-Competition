@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Recovery — SMARTSAVE Rwanda</title>
+  <style>
+    /* ── FONTS ── */
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    /* ── TOKENS ── */
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --red:#E53935; --red-l:#FFEBEE;
+      --sky:#E3F2FD; --sky-d:#1565C0;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#fff; overflow-x:hidden; }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:100%; height:100%; object-fit:contain; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary   { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-secondary { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--gf); background:var(--gl); }
+    .btn-white { background:white; color:var(--gd); }
+    .btn-white:hover { box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+    .btn-outline-white { background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.45); }
+    .btn-outline-white:hover { background:rgba(255,255,255,0.1); }
+    .btn-gold { background:var(--gold); color:var(--tp); }
+    .btn-gold:hover { background:#F57F17; box-shadow:0 8px 24px rgba(249,168,37,0.3); }
+    .btn-sm  { padding:9px 20px; font-size:14px; }
+    .btn-lg  { padding:16px 34px; font-size:16px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gf); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:14px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:2px; background:var(--gf); border-radius:2px; }
+    .eyebrow.gold  { color:var(--gold); }
+    .eyebrow.gold::before  { background:var(--gold); }
+    .eyebrow.red   { color:#EF5350; }
+    .eyebrow.red::before   { background:#EF5350; }
+    .eyebrow.white { color:rgba(255,255,255,0.8); }
+    .eyebrow.white::before { background:rgba(255,255,255,0.5); }
+    .eyebrow.center { justify-content:center; }
+    .eyebrow.center::before { display:none; }
+
+    /* ── LAYOUT ── */
+    .sec  { padding:80px 5%; }
+    .inner { max-width:1200px; margin:0 auto; }
+    .sec-title { font-size:clamp(28px,3.8vw,44px); font-weight:800; letter-spacing:-0.8px; margin-bottom:14px; }
+    .sec-title.white { color:white; }
+    .sec-desc { font-size:17px; color:var(--tm); max-width:520px; line-height:1.7; }
+    .sec-desc.white  { color:rgba(255,255,255,0.65); }
+    .sec-desc.center { margin:0 auto; text-align:center; }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov       { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark  { background:rgba(10,28,10,0.62); }
+    .photo-bg .ov-mid   { background:rgba(10,28,10,0.44); }
+    .photo-bg .ov-light { background:rgba(10,28,10,0.22); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+    .photo-frame { border-radius:var(--rl); overflow:hidden; background:var(--gl); }
+    .photo-frame img { width:100%; height:100%; object-fit:cover; }
+
+    /* ── PHOTO PLACEHOLDER ── */
+    .photo-slot { width:100%; height:100%; min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:20px; }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:11px; color:var(--tm); max-width:170px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* ── CARD BASE ── */
+    .card { background:white; border:1px solid var(--border); border-radius:var(--rm); padding:28px; transition:box-shadow 0.25s, transform 0.25s, border-color 0.25s; }
+    .card:hover { box-shadow:var(--sh); transform:translateY(-3px); border-color:var(--border2); }
+
+    /* ── CTA BOX ── */
+    .cta-box { background:var(--gd); border-radius:var(--rxl); padding:76px 56px; text-align:center; position:relative; overflow:hidden; }
+    .cta-box::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; border-radius:50%; background:rgba(67,160,71,0.13); pointer-events:none; }
+    .cta-box::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:260px; height:260px; border-radius:50%; background:rgba(249,168,37,0.07); pointer-events:none; }
+    .cta-box > * { position:relative; z-index:1; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--tp); color:rgba(255,255,255,0.65); padding:56px 5% 32px; }
+    .ft-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:44px; margin-bottom:40px; }
+    .ft-brand { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:white; margin-bottom:10px; }
+    .ft-brand span { color:var(--gf); }
+    .ft-tagline { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:16px; }
+    .ft-col-title { font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:white; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:12px; }
+    .ft-links { list-style:none; }
+    .ft-links li { margin-bottom:8px; }
+    .ft-links a { font-size:14px; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+    .ft-links a:hover { color:var(--gf); }
+    .ft-bottom { max-width:1200px; margin:0 auto; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .ft-copy { font-size:13px; color:rgba(255,255,255,0.35); }
+    .ft-dot { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; background:rgba(255,255,255,0.06); border-radius:50px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); }
+    .ft-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gf); }
+
+    /* ── FADE UP ── */
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up:nth-child(2){transition-delay:0.09s}
+    .fade-up:nth-child(3){transition-delay:0.18s}
+    .fade-up:nth-child(4){transition-delay:0.27s}
+    .fade-up:nth-child(5){transition-delay:0.36s}
+
+    /* ════════════════════════════
+       PAGE STYLES
+       ════════════════════════════ */
+
+    /* ── HERO (photo-bg, full height) ── */
+    .hero {
+      min-height:100vh;
+      padding:140px 5% 80px;
+      display:flex; align-items:flex-end;
+      background-color:var(--gd);
+    }
+    .hero-inner { max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:flex-end; }
+    .hero h1 { font-size:clamp(38px,5.2vw,64px); font-weight:800; color:white; letter-spacing:-1.4px; line-height:1.08; margin-bottom:20px; }
+    .hero h1 span { color:var(--gold); }
+    .hero-sub { font-size:18px; color:rgba(255,255,255,0.75); line-height:1.65; max-width:460px; margin-bottom:32px; }
+    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px; }
+    .hero-badges { display:flex; gap:12px; flex-wrap:wrap; }
+    .hero-badge { display:inline-flex; align-items:center; gap:7px; padding:8px 16px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); border-radius:50px; font-size:13px; font-weight:600; color:white; backdrop-filter:blur(4px); }
+    .hero-badge svg { width:14px; height:14px; color:var(--gold); flex-shrink:0; }
+
+    /* Hero right — impact numbers panel */
+    .hero-impact { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:var(--rl); padding:32px; backdrop-filter:blur(8px); }
+    .hi-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:24px; }
+    .hi-row { display:flex; flex-direction:column; gap:16px; }
+    .hi-item { display:flex; align-items:center; gap:16px; padding:16px; background:rgba(255,255,255,0.07); border-radius:var(--rm); border:1px solid rgba(255,255,255,0.1); }
+    .hi-icon { width:44px; height:44px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .hi-icon svg { width:22px; height:22px; }
+    .hi-icon.green { background:rgba(67,160,71,0.25); }
+    .hi-icon.green svg { color:#81C784; }
+    .hi-icon.gold  { background:rgba(249,168,37,0.2); }
+    .hi-icon.gold svg  { color:var(--gold); }
+    .hi-icon.red   { background:rgba(239,83,80,0.2); }
+    .hi-icon.red svg   { color:#EF9A9A; }
+    .hi-num  { font-family:'Manrope',sans-serif; font-size:22px; font-weight:800; color:white; line-height:1; }
+    .hi-lbl  { font-size:12px; color:rgba(255,255,255,0.55); margin-top:3px; }
+
+    /* ── URGENCY BANNER ── */
+    .urgency-bar { background:var(--red-l); border-bottom:2px solid #FFCDD2; padding:18px 5%; }
+    .urgency-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .urgency-icon { width:36px; height:36px; background:var(--red); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .urgency-icon svg { width:18px; height:18px; color:white; }
+    .urgency-text { font-size:15px; color:#B71C1C; font-weight:600; flex:1; }
+    .urgency-text span { font-weight:800; }
+    .urgency-btn { padding:8px 20px; background:var(--red); color:white; border-radius:50px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; white-space:nowrap; transition:background 0.2s; }
+    .urgency-btn:hover { background:#C62828; }
+
+    /* ── HOW IT WORKS (3-actor flow) ── */
+    .how-section { background:var(--gp); }
+    .how-header { text-align:center; margin-bottom:56px; }
+    .actors-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px; }
+    .actor-card { border-radius:var(--rl); overflow:hidden; }
+    .actor-top { padding:32px 28px 24px; }
+    .actor-emoji { font-size:36px; margin-bottom:16px; display:block; }
+    .actor-title { font-family:'Manrope',sans-serif; font-size:20px; font-weight:800; margin-bottom:10px; }
+    .actor-desc  { font-size:14px; line-height:1.65; }
+    .actor-steps { padding:0 28px 28px; display:flex; flex-direction:column; gap:10px; }
+    .actor-step  { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--tb); }
+    .actor-step-num { width:22px; height:22px; border-radius:50%; font-family:'Manrope',sans-serif; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+
+    /* Donor card (restaurants/hotels) */
+    .actor-card.donor .actor-top  { background:var(--gold-l); }
+    .actor-card.donor .actor-title { color:#5D4037; }
+    .actor-card.donor .actor-desc  { color:#795548; }
+    .actor-card.donor .actor-steps { background:#FFF8E1; border-top:1px solid #FFE082; }
+    .actor-card.donor .actor-step-num { background:var(--gold); color:var(--tp); }
+
+    /* NGO card */
+    .actor-card.ngo .actor-top  { background:var(--sky); }
+    .actor-card.ngo .actor-title { color:#0D47A1; }
+    .actor-card.ngo .actor-desc  { color:#1565C0; }
+    .actor-card.ngo .actor-steps { background:#E3F2FD; border-top:1px solid #BBDEFB; }
+    .actor-card.ngo .actor-step-num { background:var(--sky-d); color:white; }
+
+    /* Admin card */
+    .actor-card.admin .actor-top  { background:var(--gl); }
+    .actor-card.admin .actor-title { color:var(--gd); }
+    .actor-card.admin .actor-desc  { color:var(--gm); }
+    .actor-card.admin .actor-steps { background:#F1F8F2; border-top:1px solid var(--border); }
+    .actor-card.admin .actor-step-num { background:var(--gd); color:white; }
+
+    /* Flow arrows between actors */
+    .actor-flow { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:48px; flex-wrap:wrap; row-gap:16px; }
+    .af-node { text-align:center; flex:1; min-width:120px; max-width:160px; }
+    .af-circle { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+    .af-circle svg { width:28px; height:28px; }
+    .af-circle.donor { background:var(--gold-l); }
+    .af-circle.donor svg { color:#B37A00; }
+    .af-circle.platform { background:var(--gd); }
+    .af-circle.platform svg { color:white; }
+    .af-circle.ngo { background:var(--sky); }
+    .af-circle.ngo svg { color:var(--sky-d); }
+    .af-circle.community { background:var(--red-l); }
+    .af-circle.community svg { color:var(--red); }
+    .af-label { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--tp); }
+    .af-sub   { font-size:12px; color:var(--tm); margin-top:3px; }
+    .af-arrow { color:var(--border2); flex-shrink:0; padding:0 4px; }
+    .af-arrow svg { width:20px; height:20px; }
+
+    /* ── ACTIVE DONATIONS FEED ── */
+    .feed-section { background:white; }
+    .feed-header { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:36px; flex-wrap:wrap; }
+    .feed-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:40px; }
+    .donation-card { background:white; border:1px solid var(--border); border-radius:var(--rm); overflow:hidden; transition:box-shadow 0.25s, transform 0.25s; }
+    .donation-card:hover { box-shadow:var(--sh); transform:translateY(-3px); }
+
+    /* Donation card image (photo-bg with overlay) */
+    .dc-img { height:180px; position:relative; overflow:hidden; }
+    .dc-img .photo-slot { min-height:unset; height:100%; }
+    .dc-img .ps-icon { width:36px; height:36px; }
+    .dc-img .ps-icon svg { width:18px; height:18px; }
+    .dc-img .ps-title { font-size:12px; }
+    .dc-img .ps-hint  { font-size:10px; max-width:140px; }
+
+    .dc-status-badge { position:absolute; top:12px; right:12px; padding:5px 12px; border-radius:50px; font-size:11px; font-weight:700; }
+    .ds-available  { background:var(--gl);   color:var(--gd); }
+    .ds-claimed    { background:var(--gold-l); color:#B37A00; }
+    .ds-urgent     { background:var(--red-l); color:var(--red); }
+
+    .dc-body { padding:18px 20px; }
+    .dc-title { font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); margin-bottom:6px; }
+    .dc-donor { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--tm); margin-bottom:12px; }
+    .dc-donor svg { width:13px; height:13px; flex-shrink:0; }
+    .dc-tags  { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+    .dc-tag   { padding:4px 10px; border-radius:50px; font-size:11px; font-weight:600; background:var(--gp); color:var(--tm); }
+    .dc-footer { display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--border); }
+    .dc-qty   { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:var(--gd); }
+    .dc-qty-unit { font-size:12px; color:var(--tm); font-weight:400; }
+    .dc-expires   { font-size:12px; color:var(--tm); }
+    .dc-expires.soon { color:var(--red); font-weight:600; }
+    .dc-claim-btn { padding:8px 18px; background:var(--gd); color:white; border-radius:50px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; border:none; cursor:pointer; transition:background 0.2s, transform 0.15s; }
+    .dc-claim-btn:hover { background:var(--gf); transform:scale(1.03); }
+    .dc-claimed-btn { padding:8px 18px; background:var(--gold-l); color:#B37A00; border-radius:50px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; border:none; cursor:default; }
+
+    /* ── IMPACT NUMBERS ── */
+    .impact-section { background:var(--gd); padding:80px 5%; position:relative; overflow:hidden; }
+    .impact-section::before { content:''; position:absolute; top:-120px; right:-120px; width:480px; height:480px; border-radius:50%; background:rgba(67,160,71,0.12); pointer-events:none; }
+    .impact-section::after  { content:''; position:absolute; bottom:-80px; left:-80px; width:320px; height:320px; border-radius:50%; background:rgba(249,168,37,0.07); pointer-events:none; }
+    .impact-inner { max-width:1200px; margin:0 auto; position:relative; z-index:2; }
+    .impact-header { text-align:center; margin-bottom:56px; }
+    .impact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:56px; }
+    .impact-num-card { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:var(--rl); padding:32px 24px; text-align:center; }
+    .inc-icon { width:52px; height:52px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+    .inc-icon svg { width:26px; height:26px; }
+    .inc-icon.green  { background:rgba(67,160,71,0.2);  }
+    .inc-icon.green svg  { color:#81C784; }
+    .inc-icon.gold   { background:rgba(249,168,37,0.2); }
+    .inc-icon.gold svg   { color:var(--gold); }
+    .inc-icon.red    { background:rgba(239,83,80,0.15); }
+    .inc-icon.red svg    { color:#EF9A9A; }
+    .inc-icon.sky    { background:rgba(100,181,246,0.2);}
+    .inc-icon.sky svg    { color:#90CAF9; }
+    .inc-num  { font-family:'Manrope',sans-serif; font-size:40px; font-weight:800; color:white; line-height:1; margin-bottom:8px; }
+    .inc-num span { color:var(--gold); }
+    .inc-lbl  { font-size:14px; color:rgba(255,255,255,0.6); font-weight:500; line-height:1.4; }
+
+    /* Impact photo strip */
+    .impact-photo-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .ips-card { border-radius:var(--rm); overflow:hidden; height:220px; }
+    .ips-card .photo-slot { min-height:unset; height:100%; }
+    .ips-card .ps-icon { width:38px; height:38px; }
+    .ips-card .ps-icon svg { width:19px; height:19px; }
+
+    /* ── DONATE FORM ── */
+    .donate-section { background:var(--gp); }
+    .donate-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+    .donate-photo { border-radius:var(--rl); overflow:hidden; aspect-ratio:4/5; position:sticky; top:88px; }
+    .form-group { margin-bottom:18px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--gf); box-shadow:0 0 0 3px rgba(67,160,71,0.11); }
+    .form-textarea { resize:vertical; min-height:90px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-hint { font-size:12px; color:var(--tm); margin-top:6px; }
+    .form-divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
+    .form-section-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:16px; }
+
+    /* Org type tabs */
+    .org-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .org-tab { padding:9px 18px; border-radius:50px; border:1.5px solid var(--border); background:white; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--tb); cursor:pointer; transition:all 0.2s; }
+    .org-tab:hover { border-color:var(--gf); color:var(--gd); }
+    .org-tab.active { background:var(--gd); border-color:var(--gd); color:white; }
+
+    /* ── REQUEST FORM (NGO tab) ── */
+    .request-panel { background:var(--sky); border:1px solid #BBDEFB; border-radius:var(--rl); padding:32px; }
+    .request-panel .sec-title { font-size:22px; color:var(--sky-d); margin-bottom:8px; }
+    .request-panel .sec-desc  { font-size:15px; color:#1976D2; margin-bottom:24px; }
+    .request-panel .form-input, .request-panel .form-select, .request-panel .form-textarea { border-color:#BBDEFB; }
+    .request-panel .form-input:focus, .request-panel .form-select:focus, .request-panel .form-textarea:focus { border-color:var(--sky-d); box-shadow:0 0 0 3px rgba(21,101,192,0.1); }
+    .btn-sky { background:var(--sky-d); color:white; }
+    .btn-sky:hover { background:#0D47A1; box-shadow:0 8px 24px rgba(21,101,192,0.25); }
+
+    /* ── PARTNERS ── */
+    .partners-section { background:white; padding:60px 5%; }
+    .partners-inner { max-width:1200px; margin:0 auto; }
+    .partners-lbl { text-align:center; font-size:12px; font-weight:700; color:var(--tm); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:28px; }
+    .partners-row { display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
+    .p-chip { padding:10px 22px; background:var(--gp); border-radius:var(--r); font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--tm); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .hero-inner    { grid-template-columns:1fr; }
+      .hero-impact   { display:none; }
+      .actors-grid   { grid-template-columns:1fr; }
+      .feed-grid     { grid-template-columns:repeat(2,1fr); }
+      .impact-grid   { grid-template-columns:repeat(2,1fr); }
+      .impact-photo-strip { grid-template-columns:1fr 1fr; }
+      .donate-grid   { grid-template-columns:1fr; gap:40px; }
+      .donate-photo  { display:none; }
+      .ft-grid       { grid-template-columns:1fr 1fr; gap:28px; }
+    }
+    @media(max-width:640px){
+      nav { padding:0 4%; }
+      .nav-links { display:none; }
+      .sec { padding:64px 4%; }
+      .hero { padding:120px 4% 60px; }
+      .feed-grid     { grid-template-columns:1fr; }
+      .impact-grid   { grid-template-columns:1fr 1fr; }
+      .impact-photo-strip { grid-template-columns:1fr; }
+      .form-row      { grid-template-columns:1fr; }
+      .cta-box       { padding:44px 24px; }
+      .ft-grid       { grid-template-columns:1fr; gap:24px; }
+      .urgency-inner { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="farmers.html">Farmers</a></li>
+    <li><a href="recovery.html" class="active">Food Recovery</a></li>
+    <li><a href="innovation.html">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="#donate" class="btn btn-primary btn-sm">Donate Food</a>
+  </div>
+</nav>
+
+<!-- ── HERO (photo-bg) ──
+  📸 PHOTO SLOT — Hero background
+  Save as: assets/images/recovery-hero.jpg
+  Add inside this div, BEFORE the .ov div:
+    <img class="bg-img" src="assets/images/recovery-hero.jpg" alt="Food recovery" />
+  SHOOT: Volunteers or NGO staff sorting and packing food donations
+  indoors — crates of produce, warm light, sense of organised care.
+  Landscape, wide (16:9 or wider).
+-->
+<div class="hero photo-bg">
+  <div class="ov ov-dark"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow gold">Food Recovery Program</div>
+      <h1>No edible food<br/>should be wasted<br/>while people<br/><span>go hungry.</span></h1>
+      <p class="hero-sub">SMARTSAVE connects restaurants, hotels, schools, and food businesses with NGOs and vulnerable communities — turning surplus food into nourishment, every day.</p>
+      <div class="hero-actions">
+        <a href="#donate" class="btn btn-gold btn-lg">
+          Donate Surplus Food
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#request" class="btn btn-outline-white btn-lg">Request Food (NGO)</a>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Free to participate
+        </div>
+        <div class="hero-badge">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Admin-verified matching
+        </div>
+        <div class="hero-badge">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All 30 districts
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact panel -->
+    <div class="hero-impact">
+      <div class="hi-title">Program Impact This Month</div>
+      <div class="hi-row">
+        <div class="hi-item">
+          <div class="hi-icon green">
+            <svg viewBox="0 0 22 22" fill="none"><path d="M11 2C7 2 4 5 4 9c0 5.5 7 11 7 11s7-5.5 7-11c0-4-3-7-7-7z" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div>
+            <div class="hi-num">8,400 kg</div>
+            <div class="hi-lbl">Surplus food recovered</div>
+          </div>
+        </div>
+        <div class="hi-item">
+          <div class="hi-icon gold">
+            <svg viewBox="0 0 22 22" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div>
+            <div class="hi-num">3,200</div>
+            <div class="hi-lbl">People nourished</div>
+          </div>
+        </div>
+        <div class="hi-item">
+          <div class="hi-icon red">
+            <svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M11 7v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div class="hi-num">47</div>
+            <div class="hi-lbl">Active donations this week</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── URGENCY BANNER ── -->
+<div class="urgency-bar">
+  <div class="urgency-inner">
+    <div class="urgency-icon">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L2 15h14L9 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 8v3M9 13v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+    <div class="urgency-text"><span>47 active food donations</span> are available right now across 12 districts — NGOs and community organisations can claim them today.</div>
+    <a href="#feed" class="urgency-btn">View Available Donations</a>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="sec how-section">
+  <div class="inner">
+    <div class="how-header fade-up">
+      <div class="eyebrow center">How It Works</div>
+      <h2 class="sec-title" style="text-align:center;">Three actors. One mission.</h2>
+      <p class="sec-desc center" style="margin-top:8px;">Donors list surplus food. NGOs claim it. SMARTSAVE verifies and coordinates every transfer safely and transparently.</p>
+    </div>
+
+    <!-- Visual flow -->
+    <div class="actor-flow fade-up">
+      <div class="af-node">
+        <div class="af-circle donor">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="af-label">Donor</div>
+        <div class="af-sub">Hotel, restaurant,<br/>school, business</div>
+      </div>
+      <div class="af-arrow"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="af-node">
+        <div class="af-circle platform">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8z" stroke="currentColor" stroke-width="1.8"/><path d="M9 10l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="af-label">SMARTSAVE</div>
+        <div class="af-sub">Verifies, matches<br/>&amp; coordinates</div>
+      </div>
+      <div class="af-arrow"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="af-node">
+        <div class="af-circle ngo">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="af-label">NGO / Community</div>
+        <div class="af-sub">Claims &amp; collects<br/>for beneficiaries</div>
+      </div>
+      <div class="af-arrow"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="af-node">
+        <div class="af-circle community">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="af-label">Community</div>
+        <div class="af-sub">Vulnerable households<br/>receive food</div>
+      </div>
+    </div>
+
+    <!-- Three actor cards -->
+    <div class="actors-grid fade-up">
+      <div class="actor-card donor">
+        <div class="actor-top">
+          <span class="actor-emoji">🏨</span>
+          <div class="actor-title">Hotels, Restaurants &amp; Schools</div>
+          <div class="actor-desc">List surplus food that would otherwise be discarded. Set pick-up times, specify quantities and food type — the platform handles the rest.</div>
+        </div>
+        <div class="actor-steps">
+          <div class="actor-step">
+            <div class="actor-step-num">1</div>
+            <div>Log your surplus food with quantity, type, and pick-up window</div>
+          </div>
+          <div class="actor-step">
+            <div class="actor-step-num">2</div>
+            <div>SMARTSAVE admin verifies the listing and notifies matched NGOs</div>
+          </div>
+          <div class="actor-step">
+            <div class="actor-step-num">3</div>
+            <div>An NGO confirms pick-up — you receive confirmation and a receipt</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actor-card ngo">
+        <div class="actor-top">
+          <span class="actor-emoji">🤝</span>
+          <div class="actor-title">NGOs &amp; Community Organisations</div>
+          <div class="actor-desc">Browse verified food donations by district and food type. Claim what your beneficiaries need and coordinate collection quickly.</div>
+        </div>
+        <div class="actor-steps">
+          <div class="actor-step">
+            <div class="actor-step-num">1</div>
+            <div>Browse the live donation feed — filter by district, food type, quantity</div>
+          </div>
+          <div class="actor-step">
+            <div class="actor-step-num">2</div>
+            <div>Submit a claim request with your organisation details and need</div>
+          </div>
+          <div class="actor-step">
+            <div class="actor-step-num">3</div>
+            <div>Admin approves — collect food at the agreed time and confirm receipt</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actor-card admin">
+        <div class="actor-top">
+          <span class="actor-emoji">✅</span>
+          <div class="actor-title">SMARTSAVE Admin</div>
+          <div class="actor-desc">Every donation and claim is reviewed by the platform team — ensuring food safety, fair distribution, and accountability at every step.</div>
+        </div>
+        <div class="actor-steps">
+          <div class="actor-step">
+            <div class="actor-step-num">1</div>
+            <div>Review and verify each donation listing for food safety compliance</div>
+          </div>
+          <div class="actor-step">
+            <div class="actor-step-num">2</div>
+            <div>Match donations to NGOs based on proximity, capacity, and need</div>
+          </div>
+          <div class="actor-step">
+            <div class="actor-step-num">3</div>
+            <div>Track completion, generate impact reports, and flag any issues</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LIVE DONATIONS FEED ── -->
+<section class="sec feed-section" id="feed">
+  <div class="inner">
+    <div class="feed-header fade-up">
+      <div>
+        <div class="eyebrow">Live Donations</div>
+        <h2 class="sec-title">Food available right now</h2>
+      </div>
+      <a href="#" class="btn btn-secondary btn-sm">View all 47 donations</a>
+    </div>
+
+    <div class="feed-grid">
+
+      <!-- Donation Card 1 -->
+      <div class="donation-card fade-up">
+        <div class="dc-img">
+          <!--
+            📸 PHOTO SLOT
+            SHOOT: Hotel buffet leftovers being packed — rice, vegetables,
+            proteins in clean containers. Conveys organised, safe food.
+            Replace .photo-slot with:
+            <img src="assets/images/donation-hotel.jpg" alt="Hotel food donation" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Hotel Buffet Leftovers</div>
+            <div class="ps-hint">Packed containers of cooked food, clean and organised</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="dc-status-badge ds-available">Available</span>
+        </div>
+        <div class="dc-body">
+          <div class="dc-title">Cooked Mixed Meals</div>
+          <div class="dc-donor">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Kigali Heights Hotel · Gasabo District
+          </div>
+          <div class="dc-tags">
+            <span class="dc-tag">Rice &amp; beans</span>
+            <span class="dc-tag">Cooked vegetables</span>
+            <span class="dc-tag">Protein</span>
+          </div>
+          <div class="dc-footer">
+            <div>
+              <div class="dc-qty">85 <span class="dc-qty-unit">kg</span></div>
+              <div class="dc-expires soon">Expires: Today 6:00 PM</div>
+            </div>
+            <button class="dc-claim-btn">Claim Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donation Card 2 -->
+      <div class="donation-card fade-up">
+        <div class="dc-img">
+          <!--
+            📸 PHOTO SLOT
+            SHOOT: Fresh bread loaves or pastries on a bakery shelf or tray.
+            Replace with:
+            <img src="assets/images/donation-bakery.jpg" alt="Bread donation" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Fresh Bread / Pastries</div>
+            <div class="ps-hint">Bread loaves or pastries on bakery shelf or tray</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="dc-status-badge ds-available">Available</span>
+        </div>
+        <div class="dc-body">
+          <div class="dc-title">Fresh Bread &amp; Pastries</div>
+          <div class="dc-donor">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Bourbon Coffee Bakery · Kiyovu, Kigali
+          </div>
+          <div class="dc-tags">
+            <span class="dc-tag">Bread loaves</span>
+            <span class="dc-tag">Pastries</span>
+            <span class="dc-tag">Same-day fresh</span>
+          </div>
+          <div class="dc-footer">
+            <div>
+              <div class="dc-qty">42 <span class="dc-qty-unit">kg</span></div>
+              <div class="dc-expires soon">Expires: Today 8:00 PM</div>
+            </div>
+            <button class="dc-claim-btn">Claim Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donation Card 3 -->
+      <div class="donation-card fade-up">
+        <div class="dc-img">
+          <!--
+            📸 PHOTO SLOT
+            SHOOT: Crates of fresh vegetables — tomatoes, peppers, cabbages —
+            from a school or institutional kitchen store.
+            Replace with:
+            <img src="assets/images/donation-school.jpg" alt="School produce donation" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">School Surplus Produce</div>
+            <div class="ps-hint">Crates of fresh vegetables from a school kitchen store</div>
+            <span class="ps-tag">📸 Landscape</span>
+          </div>
+          <span class="dc-status-badge ds-claimed">Claimed</span>
+        </div>
+        <div class="dc-body">
+          <div class="dc-title">Fresh Vegetables (Surplus)</div>
+          <div class="dc-donor">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Lycée de Kigali · Nyarugenge
+          </div>
+          <div class="dc-tags">
+            <span class="dc-tag">Tomatoes</span>
+            <span class="dc-tag">Cabbages</span>
+            <span class="dc-tag">Carrots</span>
+          </div>
+          <div class="dc-footer">
+            <div>
+              <div class="dc-qty">120 <span class="dc-qty-unit">kg</span></div>
+              <div class="dc-expires">Expires: Tomorrow 12:00 PM</div>
+            </div>
+            <button class="dc-claimed-btn">Claimed ✓</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /feed-grid -->
+
+    <!-- View more prompt -->
+    <div style="text-align:center;">
+      <a href="#" class="btn btn-secondary">
+        View All 47 Active Donations
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── IMPACT NUMBERS ── -->
+<section class="impact-section">
+  <div class="impact-inner">
+    <div class="impact-header fade-up">
+      <div class="eyebrow gold center">Our Impact</div>
+      <h2 class="sec-title white" style="margin-bottom:10px;">Every kilogram recovered<br/>is a meal served.</h2>
+      <p class="sec-desc white center">Since launching the food recovery program, here is what the SMARTSAVE community has achieved together.</p>
+    </div>
+
+    <div class="impact-grid">
+      <div class="impact-num-card fade-up">
+        <div class="inc-icon green">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M11 2C7 2 4 5 4 9c0 5.5 7 11 7 11s7-5.5 7-11c0-4-3-7-7-7z" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div class="inc-num" data-count="284000">0<span>kg</span></div>
+        <div class="inc-lbl">Surplus food recovered<br/>and redistributed</div>
+      </div>
+      <div class="impact-num-card fade-up">
+        <div class="inc-icon gold">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div class="inc-num" data-count="96000">0<span>+</span></div>
+        <div class="inc-lbl">People nourished<br/>across Rwanda</div>
+      </div>
+      <div class="impact-num-card fade-up">
+        <div class="inc-icon sky">
+          <svg viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v4M14 3v4M2 11h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="inc-num" data-count="320">0<span>+</span></div>
+        <div class="inc-lbl">Donor organisations<br/>registered</div>
+      </div>
+      <div class="impact-num-card fade-up">
+        <div class="inc-icon red">
+          <svg viewBox="0 0 22 22" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L11 5.67 9.94 4.61a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L11 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="inc-num" data-count="84">0<span>+</span></div>
+        <div class="inc-lbl">NGO &amp; community<br/>partners active</div>
+      </div>
+    </div>
+
+    <!-- Photo strip (3 photos) -->
+    <div class="impact-photo-strip fade-up">
+
+      <!--
+        📸 PHOTO SLOT 1 — Impact strip
+        SHOOT: NGO volunteer handing food packages to a family or children.
+        Warm, hopeful, human. Show faces if possible.
+        Save as: assets/images/impact-handout.jpg
+        Replace .photo-slot with: <img src="assets/images/impact-handout.jpg" alt="Food handout" />
+      -->
+      <div class="ips-card photo-frame">
+        <div class="photo-slot">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Food Handout</div>
+          <div class="ps-hint">Volunteer handing food to family or children, warm hopeful expression</div>
+          <span class="ps-tag">📸 Landscape</span>
+        </div>
+      </div>
+
+      <!--
+        📸 PHOTO SLOT 2 — Impact strip
+        SHOOT: Sorting and packing donated food in a community centre
+        or warehouse. Multiple volunteers working together.
+        Save as: assets/images/impact-sorting.jpg
+        Replace with: <img src="assets/images/impact-sorting.jpg" alt="Food sorting" />
+      -->
+      <div class="ips-card photo-frame">
+        <div class="photo-slot">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Sorting &amp; Packing</div>
+          <div class="ps-hint">Volunteers sorting donated produce in a warehouse or community centre</div>
+          <span class="ps-tag">📸 Landscape</span>
+        </div>
+      </div>
+
+      <!--
+        📸 PHOTO SLOT 3 — Impact strip
+        SHOOT: A community meal being shared — people sitting together,
+        food on table. Communal warmth, dignity, joy.
+        Save as: assets/images/impact-meal.jpg
+        Replace with: <img src="assets/images/impact-meal.jpg" alt="Community meal" />
+      -->
+      <div class="ips-card photo-frame">
+        <div class="photo-slot">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Community Meal</div>
+          <div class="ps-hint">People sharing a meal together — communal warmth and dignity</div>
+          <span class="ps-tag">📸 Landscape</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── DONATE / REQUEST FORMS ── -->
+<section class="sec donate-section" id="donate">
+  <div class="inner">
+    <div class="donate-grid">
+
+      <!--
+        📸 PHOTO SLOT — Form section (foreground, 4:5)
+        Save as: assets/images/donate-side.jpg
+        Replace .photo-slot with: <img src="assets/images/donate-side.jpg" alt="Food donation" />
+        SHOOT: A restaurant or hotel chef presenting packed containers
+        of surplus food ready for donation — pride, care, professionalism.
+        Portrait orientation.
+      -->
+      <div class="donate-photo photo-frame fade-up">
+        <div class="photo-slot" style="min-height:100%;">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Chef with Donation</div>
+          <div class="ps-hint">Chef presenting packed surplus food for donation, professional and warm</div>
+          <span class="ps-tag">📸 Portrait · 4:5</span>
+        </div>
+      </div>
+
+      <!-- Forms panel -->
+      <div>
+        <div class="eyebrow">Get Involved</div>
+        <h2 class="sec-title" style="margin-bottom:8px;">Donate or Request Food</h2>
+        <p class="sec-desc" style="margin-bottom:28px;">Choose your role below and fill in the form. Our team will reach out within a few hours.</p>
+
+        <!-- Tab toggle -->
+        <div class="org-tabs">
+          <button class="org-tab active" onclick="showTab('donor', this)">🏨 I Want to Donate Food</button>
+          <button class="org-tab" onclick="showTab('ngo', this)">🤝 I'm an NGO / Community Org</button>
+        </div>
+
+        <!-- DONOR FORM -->
+        <div id="tab-donor">
+          <div class="form-section-title">Organisation Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Organisation Name</label>
+              <input type="text" class="form-input" placeholder="e.g. Kigali Heights Hotel" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Organisation Type</label>
+              <select class="form-select">
+                <option value="">Select type</option>
+                <option>Hotel</option>
+                <option>Restaurant</option>
+                <option>School / University</option>
+                <option>Supermarket / Retailer</option>
+                <option>Food Processor</option>
+                <option>Event Caterer</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Contact Person</label>
+              <input type="text" class="form-input" placeholder="Full name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">District</label>
+            <select class="form-select">
+              <option value="">Select your district</option>
+              <option>Gasabo</option><option>Kicukiro</option><option>Nyarugenge</option>
+              <option>Musanze</option><option>Huye</option><option>Nyanza</option>
+              <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
+            </select>
+          </div>
+          <hr class="form-divider" />
+          <div class="form-section-title">Food Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Food Type</label>
+              <select class="form-select">
+                <option value="">Select food type</option>
+                <option>Cooked meals</option>
+                <option>Fresh produce</option>
+                <option>Baked goods &amp; bread</option>
+                <option>Dry goods</option>
+                <option>Dairy products</option>
+                <option>Mixed / Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Estimated Quantity (kg)</label>
+              <input type="number" class="form-input" placeholder="e.g. 50" min="1" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Pick-up Date</label>
+              <input type="date" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pick-up Time Window</label>
+              <select class="form-select">
+                <option>Morning (6AM – 10AM)</option>
+                <option>Midday (10AM – 2PM)</option>
+                <option>Afternoon (2PM – 6PM)</option>
+                <option>Evening (6PM – 9PM)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Additional Notes (optional)</label>
+            <textarea class="form-textarea" placeholder="Packaging, storage conditions, dietary notes, access instructions…"></textarea>
+          </div>
+          <a href="#" class="btn btn-gold" style="width:100%; justify-content:center; margin-top:4px;">
+            Submit Donation Listing
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <p style="font-size:12px; color:var(--tm); margin-top:10px; text-align:center;">Our team will review and confirm within 2–4 hours. No food is collected without your approval.</p>
+        </div>
+
+        <!-- NGO REQUEST FORM -->
+        <div id="tab-ngo" style="display:none;">
+          <div class="request-panel">
+            <h3 class="sec-title" style="font-size:20px; color:var(--sky-d); margin-bottom:6px;">Request Available Food</h3>
+            <p class="sec-desc" style="font-size:14px; color:#1976D2; margin-bottom:24px;">Fill in your organisation's details. We'll match you with available donations in your district.</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Organisation Name</label>
+                <input type="text" class="form-input" placeholder="e.g. Inshuti z'Abana Rwanda" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Organisation Type</label>
+                <select class="form-select">
+                  <option value="">Select type</option>
+                  <option>NGO</option>
+                  <option>Community-Based Organisation</option>
+                  <option>Church / Faith-Based</option>
+                  <option>Government Agency</option>
+                  <option>School / Nutrition Programme</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Contact Person</label>
+                <input type="text" class="form-input" placeholder="Full name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">District</label>
+                <select class="form-select">
+                  <option value="">Select district</option>
+                  <option>Gasabo</option><option>Kicukiro</option><option>Nyarugenge</option>
+                  <option>Musanze</option><option>Huye</option><option>Nyanza</option>
+                  <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Number of Beneficiaries</label>
+                <input type="number" class="form-input" placeholder="e.g. 200" min="1" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Type of Food Needed</label>
+              <select class="form-select">
+                <option value="">Any available food</option>
+                <option>Cooked meals</option>
+                <option>Fresh produce</option>
+                <option>Dry goods</option>
+                <option>Baked goods</option>
+                <option>Mixed / Any</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Collection Capacity</label>
+              <select class="form-select">
+                <option>Up to 50 kg</option>
+                <option>50–150 kg</option>
+                <option>150–500 kg</option>
+                <option>500 kg +</option>
+              </select>
+            </div>
+            <a href="#" class="btn btn-sky" style="width:100%; justify-content:center; margin-top:4px;">
+              Submit Food Request
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p style="font-size:12px; color:#1976D2; margin-top:10px; text-align:center;">We'll match you with available donations and confirm within a few hours.</p>
+          </div>
+        </div>
+
+      </div><!-- /forms panel -->
+    </div>
+  </div>
+</section>
+
+<!-- ── PARTNERS ── -->
+<div class="partners-section">
+  <div class="partners-inner">
+    <p class="partners-lbl">Trusted partners in food recovery</p>
+    <div class="partners-row">
+      <div class="p-chip">WFP Rwanda</div>
+      <div class="p-chip">MINISANTE</div>
+      <div class="p-chip">Inshuti z'Abana</div>
+      <div class="p-chip">Caritas Rwanda</div>
+      <div class="p-chip">RBC</div>
+      <div class="p-chip">UNHCR Rwanda</div>
+      <div class="p-chip">Good Neighbours</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<div style="background:var(--gp); padding:72px 5%;">
+  <div class="inner">
+    <div class="cta-box">
+      <div class="eyebrow gold center" style="margin-bottom:14px;">Join the movement</div>
+      <h2 class="sec-title white" style="margin-bottom:12px;">Every kilogram counts.</h2>
+      <p class="sec-desc white" style="margin:0 auto 32px; text-align:center; max-width:480px;">Whether you have surplus food to donate or a community to feed — SMARTSAVE connects you with the right partner, fast.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="#donate" class="btn btn-gold">Donate Food Now</a>
+        <a href="marketplace.html" class="btn btn-outline-white">Explore the Platform</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">SMART<span>SAVE</span> Rwanda</div>
+      <p class="ft-tagline">Connecting farmers, markets, technology, youth, and communities to reduce food loss across Rwanda.</p>
+      <div class="ft-dot">Platform Active · All 30 Districts</div>
+    </div>
+    <div>
+      <div class="ft-col-title">Platform</div>
+      <ul class="ft-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="farmers.html">Farmers Portal</a></li>
+        <li><a href="recovery.html">Food Recovery</a></li>
+        <li><a href="innovation.html">Innovation Hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Company</div>
+      <ul class="ft-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Support</div>
+      <ul class="ft-links">
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 SMARTSAVE Rwanda.</div>
+    <div class="ft-copy">From Harvest to Hope 🌱</div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+  // Tab switching (Donor / NGO)
+  function showTab(tab, btn) {
+    document.getElementById('tab-donor').style.display = tab === 'donor' ? 'block' : 'none';
+    document.getElementById('tab-ngo').style.display   = tab === 'ngo'   ? 'block' : 'none';
+    document.querySelectorAll('.org-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Claim button feedback
+  document.querySelectorAll('.dc-claim-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.textContent = 'Requested ✓';
+      btn.style.background = 'var(--gf)';
+      btn.disabled = true;
+    });
+  });
+
+  // Animated counters
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.querySelector('span') ? el.querySelector('span').textContent : '';
+    const dur = 1800;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(ease * target);
+      el.innerHTML = (val >= 1000 ? val.toLocaleString() : val) + '<span>' + suffix + '</span>';
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); countObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // Fade up
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+</script>
+</body>
+</html>

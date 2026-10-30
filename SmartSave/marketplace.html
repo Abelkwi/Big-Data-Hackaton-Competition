@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketplace — SMARTSAVE Rwanda</title>
+  <style>
+    /* ── FONTS (local) ── */
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    /* ── TOKENS ── */
+    :root {
+      --gd: #1B5E20; --gm: #2E7D32; --gf: #43A047;
+      --gl: #E8F5E9; --gp: #F1F8F2;
+      --gold: #F9A825; --gold-l: #FFF8E1;
+      --brown: #8D6E63; --sky: #E3F2FD;
+      --tp: #1A2E1A; --tb: #374737; --tm: #6B7F6B;
+      --border: #D4E8D4; --border2: #B8D4B8;
+      --sh: 0 4px 24px rgba(27,94,32,0.12);
+      --r: 8px; --rm: 16px; --rl: 24px; --rxl: 32px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#fff; overflow-x:hidden; }
+    h1,h2,h3,h4,h5 { font-family:'Manrope', system-ui, sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      height:68px; padding:0 5%;
+      display:flex; align-items:center; justify-content:space-between;
+      background:rgba(255,255,255,0.93);
+      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(212,232,212,0.6);
+      transition:box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:100%; height:100%; object-fit:contain; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; transition:transform 0.2s; }
+    .btn:hover svg { transform:translateX(3px); }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-white { background:white; color:var(--gd); }
+    .btn-white:hover { box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+    .btn-outline-white { background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.45); }
+    .btn-outline-white:hover { background:rgba(255,255,255,0.1); }
+    .btn-sm { padding:9px 20px; font-size:14px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gf); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:14px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:2px; background:var(--gf); border-radius:2px; }
+    .eyebrow.gold { color:var(--gold); }
+    .eyebrow.gold::before { background:var(--gold); }
+    .eyebrow.center { justify-content:center; }
+    .eyebrow.center::before { display:none; }
+
+    /* ── SECTION ── */
+    .sec { padding:72px 5%; }
+    .inner { max-width:1200px; margin:0 auto; }
+    .sec-title { font-size:clamp(26px,3.5vw,40px); font-weight:800; letter-spacing:-0.6px; margin-bottom:12px; }
+    .sec-title.white { color:white; }
+    .sec-desc { font-size:16px; color:var(--tm); max-width:520px; line-height:1.7; }
+    .sec-desc.white { color:rgba(255,255,255,0.65); }
+    .sec-desc.center { margin:0 auto; text-align:center; }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark  { background:rgba(10,30,10,0.60); }
+    .photo-bg .ov-mid   { background:rgba(10,30,10,0.42); }
+    .photo-bg > *:not(img):not(.ov) { position:relative; z-index:2; }
+    .photo-frame { border-radius:var(--rl); overflow:hidden; background:var(--gl); }
+
+    /* ── PHOTO SLOT (placeholder until real photo) ── */
+    .photo-slot {
+      width:100%; height:100%; min-height:200px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9);
+      text-align:center; padding:20px;
+    }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint { font-size:11px; color:var(--tm); max-width:160px; line-height:1.4; }
+    .ps-tag { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* ── CTA BOX ── */
+    .cta-box { background:var(--gd); border-radius:var(--rxl); padding:72px 52px; text-align:center; position:relative; overflow:hidden; }
+    .cta-box::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; border-radius:50%; background:rgba(67,160,71,0.13); pointer-events:none; }
+    .cta-box > * { position:relative; z-index:1; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--tp); color:rgba(255,255,255,0.65); padding:56px 5% 32px; }
+    .ft-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:44px; margin-bottom:40px; }
+    .ft-brand { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:white; margin-bottom:10px; }
+    .ft-brand span { color:var(--gf); }
+    .ft-tagline { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:16px; }
+    .ft-col-title { font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:white; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:12px; }
+    .ft-links { list-style:none; }
+    .ft-links li { margin-bottom:8px; }
+    .ft-links a { font-size:14px; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+    .ft-links a:hover { color:var(--gf); }
+    .ft-bottom { max-width:1200px; margin:0 auto; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .ft-copy { font-size:13px; color:rgba(255,255,255,0.35); }
+    .ft-dot { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; background:rgba(255,255,255,0.06); border-radius:50px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); }
+    .ft-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gf); }
+
+    /* ── FADE UP ── */
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up:nth-child(2){transition-delay:0.08s}
+    .fade-up:nth-child(3){transition-delay:0.16s}
+    .fade-up:nth-child(4){transition-delay:0.24s}
+
+    /* ════════════════════════════════════
+       PAGE-SPECIFIC STYLES
+       ════════════════════════════════════ */
+
+    /* HERO */
+    .mkt-hero {
+      min-height:56vh; padding:140px 5% 72px;
+      display:flex; align-items:flex-end;
+      background-color:#1B5E20; /* replaced by photo-bg image */
+    }
+    .mkt-hero h1 { font-size:clamp(34px,5vw,58px); font-weight:800; color:white; letter-spacing:-1.2px; line-height:1.1; margin-bottom:12px; }
+    .mkt-hero p { font-size:17px; color:rgba(255,255,255,0.72); max-width:460px; line-height:1.6; }
+    .hero-stats { display:flex; gap:36px; margin-top:28px; flex-wrap:wrap; }
+    .hero-stat-num { font-family:'Manrope',sans-serif; font-size:28px; font-weight:800; color:white; line-height:1; }
+    .hero-stat-num span { color:var(--gold); }
+    .hero-stat-lbl { font-size:12px; color:rgba(255,255,255,0.55); margin-top:3px; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      background:white; border-bottom:1px solid var(--border);
+      padding:16px 5%; position:sticky; top:68px; z-index:50;
+      box-shadow:0 2px 12px rgba(27,94,32,0.07);
+    }
+    .filter-inner { max-width:1200px; margin:0 auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .search-wrap { position:relative; flex:1; min-width:200px; }
+    .search-wrap svg { position:absolute; left:13px; top:50%; transform:translateY(-50%); width:15px; height:15px; color:var(--tm); pointer-events:none; }
+    .search-wrap input { width:100%; padding:10px 14px 10px 36px; border:1.5px solid var(--border); border-radius:50px; font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .search-wrap input:focus { border-color:var(--gf); box-shadow:0 0 0 3px rgba(67,160,71,0.12); }
+    .f-select { padding:10px 16px; border:1.5px solid var(--border); border-radius:50px; font-family:'Inter',sans-serif; font-size:13px; color:var(--tb); background:white; outline:none; cursor:pointer; transition:border-color 0.2s; min-width:130px; }
+    .f-select:focus { border-color:var(--gf); }
+
+    /* CATEGORY CHIPS */
+    .cat-bar { background:var(--gp); border-bottom:1px solid var(--border); padding:14px 5%; }
+    .cat-bar-inner { max-width:1200px; margin:0 auto; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; }
+    .cat-bar-inner::-webkit-scrollbar { display:none; }
+    .chip { padding:8px 18px; border-radius:50px; border:1.5px solid var(--border); background:white; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--tb); cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:6px; transition:all 0.2s; }
+    .chip:hover { border-color:var(--gf); color:var(--gd); background:var(--gl); }
+    .chip.active { background:var(--gd); border-color:var(--gd); color:white; }
+    .chip-count { font-size:11px; background:rgba(0,0,0,0.09); border-radius:50px; padding:1px 7px; }
+    .chip.active .chip-count { background:rgba(255,255,255,0.2); }
+
+    /* BODY */
+    .mkt-body { background:var(--gp); padding:40px 5% 80px; }
+    .mkt-body-inner { max-width:1200px; margin:0 auto; }
+
+    /* ROW LABEL */
+    .row-label { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .row-label h2 { font-size:20px; font-weight:700; color:var(--tp); }
+    .row-label a { font-size:13px; font-weight:600; color:var(--gd); display:flex; align-items:center; gap:4px; }
+    .row-label a svg { width:13px; height:13px; }
+    .row-label a:hover { color:var(--gf); }
+
+    /* FEATURED BANNER */
+    .feat-banner { border-radius:var(--rl); overflow:hidden; height:260px; margin-bottom:40px; background-color:var(--gm); }
+    .feat-banner-inner { height:100%; display:flex; align-items:center; padding:0 52px; }
+    .feat-banner h2 { font-size:30px; font-weight:800; color:white; letter-spacing:-0.5px; margin-bottom:8px; }
+    .feat-banner p { font-size:15px; color:rgba(255,255,255,0.72); margin-bottom:22px; max-width:340px; }
+
+    /* PRODUCT GRID */
+    .prod-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:44px; }
+
+    .prod-card { background:white; border-radius:var(--rm); border:1px solid var(--border); overflow:hidden; transition:box-shadow 0.25s, transform 0.25s; cursor:pointer; }
+    .prod-card:hover { box-shadow:var(--sh); transform:translateY(-4px); }
+
+    .prod-img { width:100%; aspect-ratio:4/3; background:var(--gl); position:relative; overflow:hidden; }
+    .prod-img img { width:100%; height:100%; object-fit:cover; }
+    .prod-img .photo-slot { min-height:unset; height:100%; }
+    .prod-img .ps-icon { width:34px; height:34px; }
+    .prod-img .ps-icon svg { width:17px; height:17px; }
+    .prod-img .ps-title { font-size:12px; }
+    .prod-img .ps-hint { font-size:10px; max-width:130px; }
+
+    .prod-badge { position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:50px; font-size:11px; font-weight:700; }
+    .b-organic { background:var(--gd); color:white; }
+    .b-fresh   { background:var(--gold); color:var(--tp); }
+    .b-deal    { background:#E53935; color:white; }
+
+    .prod-info { padding:14px 16px 16px; }
+    .prod-name { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:var(--tp); margin-bottom:4px; }
+    .prod-origin { font-size:12px; color:var(--tm); display:flex; align-items:center; gap:4px; margin-bottom:10px; }
+    .prod-origin svg { width:11px; height:11px; flex-shrink:0; }
+    .prod-foot { display:flex; justify-content:space-between; align-items:center; }
+    .prod-price { font-family:'Manrope',sans-serif; font-size:17px; font-weight:800; color:var(--gd); }
+    .prod-unit { font-size:12px; font-weight:500; color:var(--tm); }
+    .prod-stock { font-size:11px; color:var(--tm); margin-top:5px; }
+    .prod-stock.low { color:#C62828; font-weight:600; }
+    .add-btn { width:34px; height:34px; border-radius:50%; background:var(--gd); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s, transform 0.15s; flex-shrink:0; }
+    .add-btn:hover { background:var(--gf); transform:scale(1.1); }
+    .add-btn svg { width:16px; height:16px; color:white; }
+
+    /* COOP CARDS */
+    .coop-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:44px; }
+    .coop-card { border-radius:var(--rm); overflow:hidden; height:224px; }
+    .coop-inner { height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:24px; }
+    .coop-tag { display:inline-block; padding:4px 10px; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:50px; font-size:11px; font-weight:700; color:white; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:8px; backdrop-filter:blur(4px); }
+    .coop-name { font-family:'Manrope',sans-serif; font-size:21px; font-weight:800; color:white; margin-bottom:4px; }
+    .coop-meta { font-size:13px; color:rgba(255,255,255,0.68); margin-bottom:16px; }
+    .coop-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 18px; background:white; border-radius:50px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); width:fit-content; transition:background 0.2s, transform 0.15s; }
+    .coop-btn:hover { background:var(--gl); transform:translateY(-1px); }
+    .coop-btn svg { width:13px; height:13px; }
+
+    /* HOW IT WORKS */
+    .how-box { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:40px; margin-bottom:44px; }
+    .how-box h3 { font-size:19px; font-weight:700; color:var(--tp); text-align:center; margin-bottom:32px; }
+    .how-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; position:relative; }
+    .how-steps::before { content:''; position:absolute; top:19px; left:10%; right:10%; height:1px; background:var(--border); }
+    .how-step { text-align:center; }
+    .how-num { width:40px; height:40px; border-radius:50%; background:var(--gd); color:white; font-family:'Manrope',sans-serif; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; position:relative; z-index:2; }
+    .how-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); margin-bottom:6px; }
+    .how-desc { font-size:13px; color:var(--tm); line-height:1.5; }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){ .prod-grid{grid-template-columns:repeat(3,1fr);} }
+    @media(max-width:768px){
+      .prod-grid{grid-template-columns:repeat(2,1fr);}
+      .coop-grid{grid-template-columns:1fr;}
+      .how-steps{grid-template-columns:repeat(2,1fr);}
+      .how-steps::before{display:none;}
+      .ft-grid{grid-template-columns:1fr 1fr; gap:28px;}
+    }
+    @media(max-width:640px){
+      nav{padding:0 4%;}
+      .nav-links{display:none;}
+      .prod-grid{grid-template-columns:1fr 1fr;}
+      .feat-banner{height:auto;}
+      .feat-banner-inner{padding:28px 24px;}
+      .cta-box{padding:44px 24px;}
+      .ft-grid{grid-template-columns:1fr;}
+      .ft-bottom{flex-direction:column; align-items:flex-start;}
+    }
+    @media(max-width:400px){
+      .prod-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html" class="active">Marketplace</a></li>
+    <li><a href="farmers.html">Farmers</a></li>
+    <li><a href="recovery.html">Food Recovery</a></li>
+    <li><a href="innovation.html">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+</nav>
+
+<!-- ─── HERO (photo-bg) ───
+  📸 TO ADD YOUR PHOTO:
+  1. Save your photo as: assets/images/market-hero.jpg
+  2. Add this inside .mkt-hero, BEFORE the .ov div:
+       <img src="assets/images/market-hero.jpg" alt="Rwandan market" />
+  SHOOT: Busy open-air market, colourful produce stalls, morning light. Landscape 16:9.
+-->
+<div class="mkt-hero photo-bg">
+  <div class="ov ov-dark"></div>
+  <div class="inner" style="width:100%;">
+    <div class="eyebrow gold" style="margin-bottom:16px;">Fresh &amp; Local</div>
+    <h1>Rwanda's Local<br/>Food Marketplace</h1>
+    <p>Order directly from verified farmers and cooperatives across all 30 districts — fresh, traceable, and fairly priced.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">840<span>+</span></div>
+        <div class="hero-stat-lbl">Active listings</div>
+      </div>
+      <div style="width:1px; background:rgba(255,255,255,0.18);"></div>
+      <div>
+        <div class="hero-stat-num">30</div>
+        <div class="hero-stat-lbl">Districts covered</div>
+      </div>
+      <div style="width:1px; background:rgba(255,255,255,0.18);"></div>
+      <div>
+        <div class="hero-stat-num">18<span>+</span></div>
+        <div class="hero-stat-lbl">Product categories</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FILTER BAR ─── -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="search-wrap">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="text" placeholder="Search produce, cooperative, district…" />
+    </div>
+    <select class="f-select">
+      <option>All Districts</option>
+      <option>Kigali</option><option>Musanze</option><option>Huye</option>
+      <option>Nyanza</option><option>Rubavu</option><option>Rusizi</option>
+      <option>Rwamagana</option><option>Bugesera</option>
+    </select>
+    <select class="f-select">
+      <option>Price: Any</option>
+      <option>Under 500 RWF/kg</option>
+      <option>500–1,500 RWF/kg</option>
+      <option>Above 1,500 RWF/kg</option>
+    </select>
+    <select class="f-select">
+      <option>Availability</option>
+      <option>In Stock</option><option>Pre-order</option><option>Seasonal</option>
+    </select>
+    <a href="#" class="btn btn-primary btn-sm" style="white-space:nowrap;">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Filter
+    </a>
+  </div>
+</div>
+
+<!-- ─── CATEGORY CHIPS ─── -->
+<div class="cat-bar">
+  <div class="cat-bar-inner">
+    <button class="chip active">All <span class="chip-count">840</span></button>
+    <button class="chip">🥬 Vegetables <span class="chip-count">214</span></button>
+    <button class="chip">🫘 Legumes &amp; Beans <span class="chip-count">98</span></button>
+    <button class="chip">🍌 Fruits <span class="chip-count">132</span></button>
+    <button class="chip">☕ Coffee <span class="chip-count">47</span></button>
+    <button class="chip">🍵 Tea <span class="chip-count">38</span></button>
+    <button class="chip">🌾 Grains &amp; Cereals <span class="chip-count">76</span></button>
+    <button class="chip">🥛 Dairy <span class="chip-count">54</span></button>
+    <button class="chip">🍠 Root Crops <span class="chip-count">89</span></button>
+    <button class="chip">🌿 Herbs <span class="chip-count">43</span></button>
+  </div>
+</div>
+
+<!-- ─── MARKETPLACE BODY ─── -->
+<div class="mkt-body">
+  <div class="mkt-body-inner">
+
+    <!-- FEATURED BANNER (photo-bg)
+      📸 TO ADD YOUR PHOTO:
+      Save as: assets/images/harvest-banner.jpg
+      Add <img src="assets/images/harvest-banner.jpg" alt="Harvest" /> inside .feat-banner before .ov
+      SHOOT: Close-up of farmer's hands holding fresh tomatoes or beans. Golden hour. Wide crop.
+    -->
+    <div class="feat-banner photo-bg">
+      <div class="ov ov-mid"></div>
+      <div class="feat-banner-inner">
+        <div>
+          <div class="eyebrow gold" style="margin-bottom:10px;">Harvest Season</div>
+          <h2>Season's Best Now Available</h2>
+          <p>Northern Province cooperatives just listed fresh tomatoes, beans, and maize at peak quality.</p>
+          <a href="marketplace.html" class="btn btn-white btn-sm">
+            Shop Now
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- VEGETABLES ROW -->
+    <div class="row-label">
+      <h2>🥬 Vegetables</h2>
+      <a href="#">View all <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="prod-grid">
+
+      <!-- CARD: Tomatoes -->
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Fresh tomatoes in basket. Bright red, natural light.
+            Replace this entire .photo-slot div with:
+            <img src="assets/images/tomatoes.jpg" alt="Fresh tomatoes" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Fresh Tomatoes</div>
+            <div class="ps-hint">Bright red tomatoes in woven basket, natural light</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+          <span class="prod-badge b-organic">Organic</span>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Fresh Tomatoes</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Musanze · Akagera Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">450 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock">1,200 kg available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD: Amaranth -->
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Fresh leafy amaranth or spinach, washed, vibrant green.
+            <img src="assets/images/amaranth.jpg" alt="Amaranth leaves" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Amaranth Leaves</div>
+            <div class="ps-hint">Freshly washed leafy greens, bright vivid green</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+          <span class="prod-badge b-fresh">Freshly Picked</span>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Amaranth Leaves</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Nyanza · Ingabo Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">280 RWF <span class="prod-unit">/ bunch</span></div>
+              <div class="prod-stock">340 bunches available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD: Bell Peppers -->
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Green bell peppers in a wooden crate, outdoor setting.
+            <img src="assets/images/peppers.jpg" alt="Bell peppers" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Green Bell Peppers</div>
+            <div class="ps-hint">Peppers in a wooden crate, outdoor market</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Green Bell Peppers</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Rubavu · Ikirezi Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">600 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock">680 kg available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD: Red Onions -->
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Purple-red onions in a burlap sack.
+            <img src="assets/images/onions.jpg" alt="Red onions" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Red Onions</div>
+            <div class="ps-hint">Purple-red onions in a burlap sack, earthy tones</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+          <span class="prod-badge b-deal">Bulk Deal</span>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Red Onions</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Huye · Imbaraga Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">320 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock low">Only 200 kg left</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /vegetables grid -->
+
+    <!-- COOPERATIVE CARDS (photo-bg) -->
+    <div class="row-label">
+      <h2>Featured Cooperatives</h2>
+      <a href="#">View all <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="coop-grid">
+
+      <!--
+        📸 PHOTO: Group of farmers from a cooperative, smiling, holding produce.
+        Save as: assets/images/coop-north.jpg
+        Add <img src="assets/images/coop-north.jpg" alt="Akagera Cooperative" /> before .ov inside this div
+      -->
+      <div class="coop-card photo-bg" style="background-color:#1B5E20;">
+        <div class="ov ov-dark"></div>
+        <div class="coop-inner">
+          <span class="coop-tag">Musanze · Northern Province</span>
+          <div class="coop-name">Akagera Farmers Cooperative</div>
+          <div class="coop-meta">280 member farmers · Vegetables &amp; Legumes · Organic certified</div>
+          <a href="cooperative-profile.html" class="coop-btn">
+            View Products
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!--
+        📸 PHOTO: Coffee plantation — red coffee cherries on branch, or farmer sorting beans.
+        Save as: assets/images/coop-coffee.jpg
+        Add <img src="assets/images/coop-coffee.jpg" alt="Imbaraga Cooperative" /> before .ov
+      -->
+      <div class="coop-card photo-bg" style="background-color:#4E342E;">
+        <div class="ov ov-dark"></div>
+        <div class="coop-inner">
+          <span class="coop-tag">Huye · Southern Province</span>
+          <div class="coop-name">Imbaraga Coffee Cooperative</div>
+          <div class="coop-meta">415 member farmers · Arabica Coffee · RDB Export Certified</div>
+          <a href="cooperative-profile.html" class="coop-btn">
+            View Products
+            <svg viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /coop grid -->
+
+    <!-- GRAINS ROW -->
+    <div class="row-label">
+      <h2>🌾 Grains &amp; Cereals</h2>
+      <a href="#">View all <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="prod-grid">
+
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Dried maize cobs or shelled maize in a sack.
+            <img src="assets/images/maize.jpg" alt="Dried maize" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Dried Maize</div>
+            <div class="ps-hint">Maize cobs or shelled grain in a sack</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+          <span class="prod-badge b-organic">Organic</span>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Dried Maize</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Rwamagana · Inzira Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">380 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock">5,000 kg available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Red sorghum stalks or grain in a wooden bowl.
+            <img src="assets/images/sorghum.jpg" alt="Red sorghum" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Red Sorghum</div>
+            <div class="ps-hint">Sorghum stalks or grain in a wooden bowl</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Red Sorghum</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Rusizi · Umucyo Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">420 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock">2,800 kg available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: Climbing beans spilling from a sack, earthy tones.
+            <img src="assets/images/beans.jpg" alt="Climbing beans" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">Climbing Beans</div>
+            <div class="ps-hint">Dried beans spilling from a sack, earthy tones</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+          <span class="prod-badge b-fresh">Just Listed</span>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">Climbing Beans</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Musanze · Akagera Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">1,100 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock">900 kg available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card fade-up">
+        <div class="prod-img">
+          <!--
+            📸 PHOTO: White rice or paddy rice in a large wooden bowl.
+            <img src="assets/images/rice.jpg" alt="White rice" />
+          -->
+          <div class="photo-slot">
+            <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="ps-title">White Rice</div>
+            <div class="ps-hint">Milled white rice in a large wooden bowl</div>
+            <span class="ps-tag">📸 400×300px</span>
+          </div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">White Rice</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Bugesera · Inzovu Cooperative
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">900 RWF <span class="prod-unit">/ kg</span></div>
+              <div class="prod-stock">3,400 kg available</div>
+            </div>
+            <button class="add-btn" aria-label="Add to cart">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /grains grid -->
+
+    <!-- HOW IT WORKS -->
+    <div class="how-box">
+      <h3>How the Marketplace Works</h3>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <div class="how-title">Browse &amp; Filter</div>
+          <div class="how-desc">Search by product, district, price, or certification to find exactly what you need.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <div class="how-title">Place Your Order</div>
+          <div class="how-desc">Add items to your cart and submit a purchase order directly to the cooperative.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <div class="how-title">Confirm &amp; Pay</div>
+          <div class="how-desc">Confirm quantities with the supplier, then pay via MoMo, Airtel Money, or invoice.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">4</div>
+          <div class="how-title">Receive &amp; Track</div>
+          <div class="how-desc">Track delivery, confirm receipt, and build an ongoing supply relationship.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /mkt-body-inner -->
+</div><!-- /mkt-body -->
+
+<!-- ─── CTA ─── -->
+<div style="background:white; padding:72px 5%;">
+  <div class="inner">
+    <div class="cta-box">
+      <div class="eyebrow gold center" style="margin-bottom:12px;">Are you a farmer or cooperative?</div>
+      <h2 class="sec-title white" style="margin-bottom:12px;">List your produce on the marketplace</h2>
+      <p class="sec-desc white center" style="margin-bottom:32px;">Join thousands of farmers who reach hotels, schools, restaurants, and retailers directly.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="register.html" class="btn btn-white">Create Farmer Account</a>
+        <a href="farmers.html" class="btn btn-outline-white">Learn More</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">SMART<span>SAVE</span> Rwanda</div>
+      <p class="ft-tagline">Connecting farmers, markets, technology, youth, and communities to reduce food loss across Rwanda.</p>
+      <div class="ft-dot">Platform Active · All 30 Districts</div>
+    </div>
+    <div>
+      <div class="ft-col-title">Platform</div>
+      <ul class="ft-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="farmers.html">Farmers Portal</a></li>
+        <li><a href="recovery.html">Food Recovery</a></li>
+        <li><a href="innovation.html">Innovation Hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Company</div>
+      <ul class="ft-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Support</div>
+      <ul class="ft-links">
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 SMARTSAVE Rwanda.</div>
+    <div class="ft-copy">From Harvest to Hope 🌱</div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  // Nav scroll shadow
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+  let currentCategory = '';
+  let currentSearch = '';
+
+  // ─── Load Categories ────────────────────────────────────────
+  async function loadCategories() {
+    const catBar = document.querySelector('.cat-bar-inner');
+    try {
+      const cats = await API.getCategories();
+      // Keep "All" chip, add dynamic ones
+      const staticChips = catBar.querySelectorAll('.chip');
+      staticChips.forEach(c => c.remove());
+      
+      const allChip = document.createElement('button');
+      allChip.className = 'chip active';
+      allChip.dataset.slug = '';
+      allChip.textContent = 'All ✨';
+      catBar.appendChild(allChip);
+      
+      cats.forEach(c => {
+        const chip = document.createElement('button');
+        chip.className = 'chip';
+        chip.dataset.slug = c.slug;
+        chip.innerHTML = `${c.icon ? c.icon + ' ' : ''}${c.name} <span class="chip-count">${c.product_count}</span>`;
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+          chip.classList.add('active');
+          currentCategory = c.slug;
+          loadProducts();
+        });
+        catBar.appendChild(chip);
+      });
+      
+      allChip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+        allChip.classList.add('active');
+        currentCategory = '';
+        loadProducts();
+      });
+    } catch (err) {
+      console.warn('Could not load categories:', err.message);
+    }
+  }
+
+  // ─── Render Product Card ────────────────────────────────────
+  function renderProductCard(p) {
+    const card = document.createElement('div');
+    card.className = 'prod-card fade-up';
+    const imgHtml = p.main_image_url
+      ? `<img src="${p.main_image_url}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />`
+      : `<div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">${p.name}</div></div>`;
+    const badge = p.organic ? '<span class="prod-badge b-organic">Organic</span>' : '';
+    card.innerHTML = `
+      <a href="marketplace-product.html?slug=${p.slug}" style="text-decoration:none;color:inherit;">
+        <div class="prod-img" style="position:relative;">
+          ${imgHtml}
+          ${badge}
+        </div>
+        <div class="prod-info">
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-origin">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.9 2 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10 2.9 8.2 1 6 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+            ${p.district || 'Rwanda'} · ${p.farmer_name}
+          </div>
+          <div class="prod-foot">
+            <div>
+              <div class="prod-price">${formatPrice(p.price_per_unit)} <span class="prod-unit">/ ${p.unit}</span></div>
+              <div class="prod-stock">${p.quantity} ${p.unit} available</div>
+            </div>
+            <span class="prod-rating" style="font-size:12px;color:var(--gold);font-weight:700;">★ ${p.average_rating || '0'}</span>
+          </div>
+        </div>
+      </a>`;
+    return card;
+  }
+
+  // ─── Load Products ──────────────────────────────────────────
+  async function loadProducts() {
+    const grid = document.querySelector('.prod-grid');
+    if (!grid) return;
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--tm);">Loading products…</div>';
+    try {
+      const params = {};
+      if (currentSearch) params.search = currentSearch;
+      if (currentCategory) params.category = currentCategory;
+      const data = await API.getProducts(params);
+      const products = data.results || (Array.isArray(data) ? data : []);
+      grid.innerHTML = '';
+      if (!products.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--tm);">No products found. Check back soon!</div>';
+        return;
+      }
+      products.forEach(p => grid.appendChild(renderProductCard(p)));
+      // Re-init fade-up
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      grid.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    } catch (err) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--red);">Error loading products: ${err.message}</div>`;
+    }
+  }
+
+  // ─── Search bar ─────────────────────────────────────────────
+  const searchInput = document.querySelector('.search-wrap input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value.trim();
+      loadProducts();
+    });
+  }
+
+  // Init
+  loadCategories();
+  loadProducts();
+</script>
+</body>
+</html>

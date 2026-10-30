@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fresh Tomatoes — SMARTSAVE Marketplace</title>
+  <style>
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:var(--gp); }
+    h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* BUTTONS */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-secondary { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--gf); background:var(--gl); }
+    .btn-sm { padding:9px 20px; font-size:14px; }
+
+    /* PHOTO PLACEHOLDER */
+    .photo-slot { width:100%; height:100%; min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:20px; }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint  { font-size:11px; color:var(--tm); max-width:200px; line-height:1.4; }
+    .ps-tag   { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* BREADCRUMB */
+    .breadcrumb { max-width:1200px; margin:0 auto; padding:16px 5% 0; display:flex; align-items:center; gap:6px; font-size:13px; color:var(--tm); padding-top:84px; }
+    .breadcrumb a { color:var(--gd); font-weight:500; }
+    .breadcrumb a:hover { color:var(--gf); }
+    .breadcrumb svg { width:12px; height:12px; flex-shrink:0; }
+
+    /* MAIN LAYOUT */
+    .product-page { max-width:1200px; margin:0 auto; padding:24px 5% 80px; display:grid; grid-template-columns:1fr 400px; gap:40px; align-items:start; }
+
+    /* LEFT — images + description */
+    .product-left { }
+    .main-image { border-radius:var(--rl); overflow:hidden; aspect-ratio:4/3; margin-bottom:14px; background:var(--gl); }
+    .thumb-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:32px; }
+    .thumb { border-radius:var(--rm); overflow:hidden; aspect-ratio:1; background:var(--gl); cursor:pointer; border:2px solid transparent; transition:border-color 0.2s; }
+    .thumb:hover { border-color:var(--gf); }
+    .thumb.active { border-color:var(--gd); }
+    .thumb .photo-slot { min-height:unset; height:100%; }
+    .thumb .ps-icon { width:28px; height:28px; }
+    .thumb .ps-icon svg { width:14px; height:14px; }
+    .thumb .ps-title { font-size:10px; }
+    .thumb .ps-hint, .thumb .ps-tag { display:none; }
+
+    /* Tabs */
+    .product-tabs { border-bottom:1px solid var(--border); margin-bottom:24px; display:flex; gap:0; }
+    .tab-btn { padding:12px 20px; font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; color:var(--tm); background:none; border:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color 0.2s, border-color 0.2s; }
+    .tab-btn:hover { color:var(--gd); }
+    .tab-btn.active { color:var(--gd); border-bottom-color:var(--gd); }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+    .tab-content h3 { font-size:17px; font-weight:700; margin-bottom:12px; }
+    .tab-content p  { font-size:14px; color:var(--tm); line-height:1.7; margin-bottom:12px; }
+
+    /* Spec table */
+    .spec-table { width:100%; border-collapse:collapse; }
+    .spec-table tr { border-bottom:1px solid var(--border); }
+    .spec-table tr:last-child { border-bottom:none; }
+    .spec-table td { padding:12px 0; font-size:14px; }
+    .spec-table td:first-child { color:var(--tm); font-weight:600; width:45%; }
+    .spec-table td:last-child { color:var(--tp); font-weight:500; }
+
+    /* RIGHT — order panel */
+    .order-panel { background:white; border:1px solid var(--border); border-radius:var(--rl); padding:28px; position:sticky; top:88px; }
+
+    /* Badges row */
+    .badge-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .badge { padding:5px 12px; border-radius:50px; font-size:11px; font-weight:700; }
+    .b-organic  { background:var(--gl); color:var(--gd); }
+    .b-verified { background:var(--gold-l); color:#B37A00; }
+    .b-instock  { background:#E8F5E9; color:var(--gm); }
+
+    .product-title { font-size:24px; font-weight:800; letter-spacing:-0.4px; margin-bottom:6px; }
+    .product-origin { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--tm); margin-bottom:18px; }
+    .product-origin svg { width:13px; height:13px; flex-shrink:0; }
+    .product-origin a { color:var(--gd); font-weight:600; }
+
+    .price-row { display:flex; align-items:baseline; gap:8px; margin-bottom:4px; }
+    .price-main { font-family:'Manrope',sans-serif; font-size:32px; font-weight:800; color:var(--gd); }
+    .price-unit { font-size:14px; color:var(--tm); }
+    .price-stock { font-size:13px; color:var(--tm); margin-bottom:20px; }
+    .price-stock span { font-weight:700; color:var(--gd); }
+
+    /* Quantity selector */
+    .qty-label { font-size:13px; font-weight:600; color:var(--tb); margin-bottom:8px; }
+    .qty-row { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+    .qty-btn { width:36px; height:36px; border-radius:50%; background:var(--gp); border:1.5px solid var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:var(--gd); transition:background 0.2s; user-select:none; }
+    .qty-btn:hover { background:var(--gl); }
+    .qty-input { width:80px; text-align:center; padding:8px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); outline:none; transition:border-color 0.2s; }
+    .qty-input:focus { border-color:var(--gf); }
+    .qty-unit { font-size:13px; color:var(--tm); }
+    .qty-total { font-size:13px; color:var(--tm); margin-bottom:20px; }
+    .qty-total span { font-family:'Manrope',sans-serif; font-weight:800; color:var(--gd); font-size:15px; }
+
+    .order-btn-wrap { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+    .order-divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+
+    /* Seller mini card */
+    .seller-card { }
+    .seller-label { font-size:12px; font-weight:700; color:var(--tm); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px; }
+    .seller-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+    .seller-avatar { width:44px; height:44px; border-radius:50%; background:var(--gl); display:flex; align-items:center; justify-content:center; font-family:'Manrope',sans-serif; font-size:15px; font-weight:800; color:var(--gd); flex-shrink:0; }
+    .seller-name { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); }
+    .seller-meta { font-size:12px; color:var(--tm); }
+    .seller-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .ss-stat { background:var(--gp); border-radius:var(--r); padding:10px 12px; }
+    .ss-num { font-family:'Manrope',sans-serif; font-size:16px; font-weight:800; color:var(--gd); }
+    .ss-lbl { font-size:11px; color:var(--tm); }
+
+    /* Related products */
+    .related-section { max-width:1200px; margin:0 auto; padding:0 5% 80px; }
+    .related-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .related-header h2 { font-size:20px; font-weight:700; }
+    .related-header a { font-size:13px; font-weight:600; color:var(--gd); }
+    .related-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .rel-card { background:white; border:1px solid var(--border); border-radius:var(--rm); overflow:hidden; transition:box-shadow 0.2s, transform 0.2s; cursor:pointer; }
+    .rel-card:hover { box-shadow:var(--sh); transform:translateY(-3px); }
+    .rel-img { height:140px; background:var(--gl); }
+    .rel-img .photo-slot { min-height:unset; height:100%; }
+    .rel-img .ps-icon { width:32px; height:32px; }
+    .rel-img .ps-icon svg { width:16px; height:16px; }
+    .rel-img .ps-title { font-size:11px; }
+    .rel-img .ps-hint, .rel-img .ps-tag { display:none; }
+    .rel-body { padding:12px 14px; }
+    .rel-name { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); margin-bottom:2px; }
+    .rel-origin { font-size:11px; color:var(--tm); margin-bottom:8px; }
+    .rel-price { font-family:'Manrope',sans-serif; font-size:15px; font-weight:800; color:var(--gd); }
+    .rel-unit  { font-size:11px; color:var(--tm); font-weight:400; }
+
+    /* Toast */
+    .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--gd); color:white; padding:14px 24px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; display:flex; align-items:center; gap:10px; box-shadow:0 8px 32px rgba(27,94,32,0.25); opacity:0; pointer-events:none; transition:opacity 0.3s, transform 0.3s; z-index:200; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    .toast svg { width:18px; height:18px; }
+
+    @media(max-width:960px){
+      .product-page { grid-template-columns:1fr; }
+      .order-panel { position:static; }
+      .related-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:640px){
+      nav { padding:0 4%; }
+      .nav-links { display:none; }
+      .breadcrumb { padding-top:80px; }
+      .thumb-row { grid-template-columns:repeat(4,1fr); }
+      .related-grid { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html" class="active">Marketplace</a></li>
+    <li><a href="farmers.html">Farmers</a></li>
+    <li><a href="recovery.html">Food Recovery</a></li>
+    <li><a href="innovation.html">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="marketplace.html">Marketplace</a>
+  <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <a href="#">Vegetables</a>
+  <svg viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Fresh Tomatoes</span>
+</div>
+
+<!-- PRODUCT PAGE -->
+<div class="product-page">
+
+  <!-- LEFT COLUMN -->
+  <div class="product-left">
+
+    <!-- Main product image
+      📸 PHOTO SLOT — Main product photo
+      Save as: assets/images/product-tomatoes-main.jpg
+      Replace .photo-slot with: <img src="assets/images/product-tomatoes-main.jpg" alt="Fresh tomatoes" />
+      SHOOT: Close-up of bright red ripe tomatoes — in a basket, crate,
+      or on a surface. Clean background if possible. Crisp and vibrant.
+      4:3 landscape orientation.
+    -->
+    <div class="main-image">
+      <div class="photo-slot">
+        <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="ps-title">Main Product Photo</div>
+        <div class="ps-hint">Close-up of bright red ripe tomatoes in a basket or crate. Crisp, vibrant, 4:3 landscape.</div>
+        <span class="ps-tag">📸 1200×900px recommended</span>
+      </div>
+    </div>
+
+    <!-- Thumbnail gallery
+      📸 SHOOT 3 more angles:
+      Thumb 1: Handful of tomatoes — overhead flat lay
+      Thumb 2: Farmer holding tomatoes in the field
+      Thumb 3: Tomatoes in sacks ready for delivery
+      Thumb 4: Close-up of stems and freshness detail
+    -->
+    <div class="thumb-row">
+      <div class="thumb active">
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Angle 1</div></div>
+      </div>
+      <div class="thumb">
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Angle 2</div></div>
+      </div>
+      <div class="thumb">
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Angle 3</div></div>
+      </div>
+      <div class="thumb">
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Angle 4</div></div>
+      </div>
+    </div>
+
+    <!-- Tabs: Description / Specifications / Delivery / Reviews -->
+    <div class="product-tabs">
+      <button class="tab-btn active" onclick="openTab('description', this)">Description</button>
+      <button class="tab-btn" onclick="openTab('specs', this)">Specifications</button>
+      <button class="tab-btn" onclick="openTab('delivery', this)">Delivery</button>
+      <button class="tab-btn" onclick="openTab('reviews', this)">Reviews (12)</button>
+    </div>
+
+    <div class="tab-content active" id="tab-description">
+      <h3>About these tomatoes</h3>
+      <p>These are fresh Roma tomatoes grown organically in Musanze District, Northern Province. Harvested at peak ripeness, they are firm-fleshed, richly flavoured, and ideal for sauces, salads, and cooked dishes. The cooperative uses traditional sun-drying methods alongside natural pest control — no synthetic pesticides are used at any stage of production.</p>
+      <p>These tomatoes are popular with hotels and restaurants across Kigali for their consistent size and deep colour. They are typically harvested Monday and Wednesday mornings and can be delivered same-day or next-day to Kigali and surrounding districts.</p>
+      <p>Available in bulk (50 kg+) or standard orders (minimum 10 kg). Custom packaging in 5 kg or 10 kg mesh bags is available upon request.</p>
+    </div>
+
+    <div class="tab-content" id="tab-specs">
+      <table class="spec-table">
+        <tr><td>Product</td><td>Fresh Tomatoes (Roma variety)</td></tr>
+        <tr><td>Certification</td><td>Organic — RAB certified</td></tr>
+        <tr><td>Harvest frequency</td><td>Monday &amp; Wednesday mornings</td></tr>
+        <tr><td>Minimum order</td><td>10 kg</td></tr>
+        <tr><td>Maximum order</td><td>1,200 kg (current stock)</td></tr>
+        <tr><td>Shelf life</td><td>5–7 days unrefrigerated · 12–14 days refrigerated</td></tr>
+        <tr><td>Packaging options</td><td>Loose in crates · 5 kg mesh bags · 10 kg mesh bags</td></tr>
+        <tr><td>Average unit weight</td><td>80–120g per tomato</td></tr>
+        <tr><td>Colour &amp; variety</td><td>Deep red, Roma (egg-shaped)</td></tr>
+        <tr><td>Pesticide use</td><td>None — natural pest management only</td></tr>
+        <tr><td>Water source</td><td>Rainwater irrigation and seasonal streams</td></tr>
+        <tr><td>District</td><td>Musanze District, Northern Province</td></tr>
+      </table>
+    </div>
+
+    <div class="tab-content" id="tab-delivery">
+      <h3>Delivery &amp; Logistics</h3>
+      <p><strong>Coverage:</strong> Musanze, Kigali (Gasabo, Kicukiro, Nyarugenge), Rwamagana, and Huye. Delivery available for orders of 50 kg or more. Smaller orders can be collected from the cooperative's aggregation point in Musanze.</p>
+      <p><strong>Lead time:</strong> Place orders before 6:00 PM for next-day delivery to Kigali. Same-day collection available from Musanze on harvest days (Monday &amp; Wednesday).</p>
+      <p><strong>Minimum for delivery:</strong> 50 kg. Orders under 50 kg are available for self-collection only.</p>
+      <p><strong>Delivery cost:</strong> Negotiated directly with the cooperative based on volume and frequency. Recurring weekly delivery agreements are available at discounted logistics rates.</p>
+      <p><strong>Payment:</strong> MTN MoMo, Airtel Money, or invoice (net 15 days for verified institutional buyers).</p>
+    </div>
+
+    <div class="tab-content" id="tab-reviews">
+      <h3>Buyer Reviews</h3>
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:4px;">
+        <div style="background:var(--gp); border-radius:var(--rm); padding:18px 20px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp);">Kigali Heights Hotel</span>
+            <span style="font-size:12px; color:var(--tm);">3 weeks ago</span>
+          </div>
+          <div style="display:flex; gap:2px; margin-bottom:8px; color:var(--gold);">★★★★★</div>
+          <p style="font-size:14px; color:var(--tm); line-height:1.65;">"Very consistent quality over 6 deliveries now. The tomatoes arrive firm and last well in our cold store. Akagera cooperative is highly responsive when we need to adjust quantities."</p>
+        </div>
+        <div style="background:var(--gp); border-radius:var(--rm); padding:18px 20px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp);">Ikirezi Restaurant</span>
+            <span style="font-size:12px; color:var(--tm);">1 month ago</span>
+          </div>
+          <div style="display:flex; gap:2px; margin-bottom:8px; color:var(--gold);">★★★★★</div>
+          <p style="font-size:14px; color:var(--tm); line-height:1.65;">"Our kitchen team loves these. Much better flavour than the market vendors we used before, and the pricing is more predictable. Highly recommend for any restaurant sourcing locally."</p>
+        </div>
+        <div style="background:var(--gp); border-radius:var(--rm); padding:18px 20px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp);">Ecole Primaire Musanze</span>
+            <span style="font-size:12px; color:var(--tm);">2 months ago</span>
+          </div>
+          <div style="display:flex; gap:2px; margin-bottom:8px; color:var(--gold);">★★★★☆</div>
+          <p style="font-size:14px; color:var(--tm); line-height:1.65;">"Good quality and easy communication. We do wish delivery days aligned better with our school week, but the cooperative has been flexible when we need to adjust timing."</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /product-left -->
+
+  <!-- RIGHT COLUMN — Order Panel -->
+  <div class="order-panel">
+
+    <div class="badge-row">
+      <span class="badge b-organic">Organic</span>
+      <span class="badge b-verified">Verified Seller</span>
+      <span class="badge b-instock">In Stock</span>
+    </div>
+
+    <h1 class="product-title">Fresh Tomatoes</h1>
+    <div class="product-origin">
+      <svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1C4.3 1 2.5 2.9 2.5 5.2c0 3.3 4 6.8 4 6.8s4-3.5 4-6.8C10.5 2.9 8.7 1 6.5 1z" stroke="currentColor" stroke-width="1.2"/></svg>
+      Musanze District · <a href="farmer-profile.html">Akagera Farmers Cooperative</a>
+    </div>
+
+    <div class="price-row">
+      <div class="price-main">450 RWF</div>
+      <div class="price-unit">/ kg</div>
+    </div>
+    <div class="price-stock">Available: <span>1,200 kg</span> · Harvested this week</div>
+
+    <div class="order-divider"></div>
+
+    <div class="qty-label">Order Quantity</div>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-10)">−</button>
+      <input type="number" class="qty-input" id="qtyInput" value="50" min="10" step="10" oninput="updateTotal()" />
+      <button class="qty-btn" onclick="changeQty(+10)">+</button>
+      <div class="qty-unit">kg (min 10 kg)</div>
+    </div>
+    <div class="qty-total">Order total: <span id="totalPrice">22,500 RWF</span></div>
+
+    <div class="order-btn-wrap">
+      <button class="btn btn-primary" style="width:100%;" onclick="addToCart()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M6 11.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM12 11.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM1 1h2l2 7h7l1.5-5H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Add to Order
+      </button>
+      <button class="btn btn-secondary" style="width:100%;">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M14 2H10L8 6H4l-1 1 2 3-1 2h8l-1-2 2-3-1-1H9L8 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Message Seller
+      </button>
+    </div>
+
+    <div class="order-divider"></div>
+
+    <!-- Seller info -->
+    <div class="seller-card">
+      <div class="seller-label">Sold by</div>
+      <div class="seller-row">
+        <div class="seller-avatar">AK</div>
+        <div>
+          <div class="seller-name">Akagera Farmers Cooperative</div>
+          <div class="seller-meta">Musanze District · Member since 2025</div>
+        </div>
+      </div>
+      <div class="seller-stats">
+        <div class="ss-stat">
+          <div class="ss-num">280</div>
+          <div class="ss-lbl">Member farmers</div>
+        </div>
+        <div class="ss-stat">
+          <div class="ss-num">4.9 ★</div>
+          <div class="ss-lbl">Buyer rating</div>
+        </div>
+        <div class="ss-stat">
+          <div class="ss-num">98%</div>
+          <div class="ss-lbl">On-time delivery</div>
+        </div>
+        <div class="ss-stat">
+          <div class="ss-num">47</div>
+          <div class="ss-lbl">Orders completed</div>
+        </div>
+      </div>
+      <a href="farmer-profile.html" style="display:inline-block; margin-top:14px; font-size:13px; font-weight:700; color:var(--gd);">View full profile →</a>
+    </div>
+
+  </div>
+</div><!-- /product-page -->
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+  <div class="related-header">
+    <h2>From the same cooperative</h2>
+    <a href="marketplace.html">View all →</a>
+  </div>
+  <div class="related-grid">
+    <div class="rel-card" onclick="window.location='marketplace-product.html'">
+      <div class="rel-img">
+        <!--📸 Related: Green bell peppers in a crate-->
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Bell Peppers</div></div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Green Bell Peppers</div>
+        <div class="rel-origin">Musanze · Akagera Coop</div>
+        <div class="rel-price">600 RWF <span class="rel-unit">/ kg</span></div>
+      </div>
+    </div>
+    <div class="rel-card">
+      <div class="rel-img">
+        <!--📸 Related: Climbing beans in sack-->
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Climbing Beans</div></div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Climbing Beans</div>
+        <div class="rel-origin">Musanze · Akagera Coop</div>
+        <div class="rel-price">1,100 RWF <span class="rel-unit">/ kg</span></div>
+      </div>
+    </div>
+    <div class="rel-card">
+      <div class="rel-img">
+        <!--📸 Related: Amaranth leaves, fresh and washed-->
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Amaranth Leaves</div></div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Amaranth Leaves</div>
+        <div class="rel-origin">Musanze · Akagera Coop</div>
+        <div class="rel-price">280 RWF <span class="rel-unit">/ bunch</span></div>
+      </div>
+    </div>
+    <div class="rel-card">
+      <div class="rel-img">
+        <!--📸 Related: Red onions in burlap sack-->
+        <div class="photo-slot"><div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ps-title">Red Onions</div></div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Red Onions</div>
+        <div class="rel-origin">Huye · Imbaraga Coop</div>
+        <div class="rel-price">320 RWF <span class="rel-unit">/ kg</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 18 18" fill="none"><path d="M2 9l4.5 4.5L16 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Added to your order
+</div>
+
+<script>
+  // Nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Tabs
+  function openTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Thumbnail gallery
+  document.querySelectorAll('.thumb').forEach((t, i) => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.thumb').forEach(th => th.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+
+  // Quantity
+  function changeQty(delta) {
+    const input = document.getElementById('qtyInput');
+    const current = parseInt(input.value) || 10;
+    const next = Math.max(10, current + delta);
+    input.value = next;
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const qty = parseInt(document.getElementById('qtyInput').value) || 0;
+    const total = qty * 450;
+    document.getElementById('totalPrice').textContent = total.toLocaleString() + ' RWF';
+  }
+
+  function addToCart() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+</script>
+</body>
+</html>

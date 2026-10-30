@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmers Portal — SMARTSAVE Rwanda</title>
+  <style>
+    /* ── FONTS ── */
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    /* ── TOKENS ── */
+    :root {
+      --gd:#1B5E20; --gm:#2E7D32; --gf:#43A047;
+      --gl:#E8F5E9; --gp:#F1F8F2;
+      --gold:#F9A825; --gold-l:#FFF8E1;
+      --sky:#E3F2FD; --brown:#8D6E63;
+      --tp:#1A2E1A; --tb:#374737; --tm:#6B7F6B;
+      --border:#D4E8D4; --border2:#B8D4B8;
+      --sh:0 4px 24px rgba(27,94,32,0.12);
+      --r:8px; --rm:16px; --rl:24px; --rxl:32px;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.7; color:var(--tb); background:#fff; overflow-x:hidden; }
+    h1,h2,h3,h4,h5 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(212,232,212,0.6); transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:var(--sh); }
+    .nav-logo { display:flex; align-items:center; gap:10px; }
+    .nav-logo-icon { width:36px; height:36px; background:var(--gd); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+    .nav-logo-icon img { width:auto; height:auto; max-width:100%; max-height:100%; }
+    .nav-logo-icon svg { width:20px; height:20px; }
+    .nav-logo-text { font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; color:var(--gd); letter-spacing:-0.3px; }
+    .nav-logo-text span { color:var(--gf); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:14px; font-weight:500; color:var(--tb); transition:background 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--gl); color:var(--gd); }
+    .nav-cta { display:flex; align-items:center; gap:10px; }
+    .btn-outline-nav { padding:8px 18px; border-radius:50px; border:1.5px solid var(--gd); background:transparent; color:var(--gd); font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .btn-outline-nav:hover { background:var(--gd); color:white; }
+
+    /* ── BUTTONS ── */
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:50px; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:transform 0.15s, box-shadow 0.2s, background 0.2s; white-space:nowrap; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:16px; height:16px; flex-shrink:0; transition:transform 0.2s; }
+    .btn:hover svg { transform:translateX(3px); }
+    .btn-primary { background:var(--gd); color:white; }
+    .btn-primary:hover { background:var(--gm); box-shadow:0 8px 24px rgba(27,94,32,0.25); }
+    .btn-secondary { background:white; color:var(--gd); border:1.5px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--gf); background:var(--gl); }
+    .btn-white { background:white; color:var(--gd); }
+    .btn-white:hover { box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+    .btn-outline-white { background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.45); }
+    .btn-outline-white:hover { background:rgba(255,255,255,0.1); }
+    .btn-gold { background:var(--gold); color:var(--tp); }
+    .btn-gold:hover { background:#F57F17; box-shadow:0 8px 24px rgba(249,168,37,0.3); }
+    .btn-sm { padding:9px 20px; font-size:14px; }
+    .btn-lg { padding:16px 34px; font-size:16px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--gf); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:14px; }
+    .eyebrow::before { content:''; display:block; width:20px; height:2px; background:var(--gf); border-radius:2px; }
+    .eyebrow.gold { color:var(--gold); }
+    .eyebrow.gold::before { background:var(--gold); }
+    .eyebrow.white { color:rgba(255,255,255,0.8); }
+    .eyebrow.white::before { background:rgba(255,255,255,0.5); }
+    .eyebrow.center { justify-content:center; }
+    .eyebrow.center::before { display:none; }
+
+    /* ── LAYOUT ── */
+    .sec { padding:80px 5%; }
+    .inner { max-width:1200px; margin:0 auto; }
+    .sec-title { font-size:clamp(28px,3.8vw,44px); font-weight:800; letter-spacing:-0.8px; margin-bottom:14px; }
+    .sec-title.white { color:white; }
+    .sec-desc { font-size:17px; color:var(--tm); max-width:520px; line-height:1.7; }
+    .sec-desc.white { color:rgba(255,255,255,0.65); }
+
+    /* ── PHOTO SYSTEM ── */
+    .photo-bg { position:relative; overflow:hidden; }
+    .photo-bg img.bg-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .photo-bg .ov { position:absolute; inset:0; z-index:1; }
+    .photo-bg .ov-dark  { background:rgba(10,28,10,0.62); }
+    .photo-bg .ov-mid   { background:rgba(10,28,10,0.44); }
+    .photo-bg .ov-light { background:rgba(10,28,10,0.25); }
+    .photo-bg > *:not(.bg-img):not(.ov) { position:relative; z-index:2; }
+    .photo-frame { border-radius:var(--rl); overflow:hidden; background:var(--gl); }
+    .photo-frame img { width:100%; height:100%; object-fit:cover; }
+
+    /* ── PHOTO PLACEHOLDER ── */
+    .photo-slot { width:100%; height:100%; min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:linear-gradient(145deg,#E8F5E9,#C8E6C9); text-align:center; padding:20px; }
+    .ps-icon { width:44px; height:44px; background:rgba(27,94,32,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .ps-icon svg { width:22px; height:22px; color:var(--gd); }
+    .ps-title { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:var(--gd); }
+    .ps-hint { font-size:11px; color:var(--tm); max-width:160px; line-height:1.4; }
+    .ps-tag { display:inline-block; padding:3px 10px; background:rgba(27,94,32,0.1); border-radius:50px; font-size:10px; font-weight:700; color:var(--gd); }
+
+    /* ── CARDS ── */
+    .card { background:white; border:1px solid var(--border); border-radius:var(--rm); padding:28px; transition:box-shadow 0.25s, transform 0.25s, border-color 0.25s; }
+    .card:hover { box-shadow:var(--sh); transform:translateY(-3px); border-color:var(--border2); }
+    .card-icon { width:48px; height:48px; border-radius:13px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+    .card-icon svg { width:24px; height:24px; }
+    .ci-green  { background:var(--gl); }
+    .ci-green svg  { color:var(--gd); }
+    .ci-gold   { background:var(--gold-l); }
+    .ci-gold svg   { color:#B37A00; }
+    .ci-sky    { background:var(--sky); }
+    .ci-sky svg    { color:#1565C0; }
+    .ci-red    { background:#FFEBEE; }
+    .ci-red svg    { color:#C62828; }
+    .ci-purple { background:#F3E5F5; }
+    .ci-purple svg { color:#6A1B9A; }
+    .card-title { font-family:'Manrope',sans-serif; font-size:17px; font-weight:700; color:var(--tp); margin-bottom:8px; }
+    .card-desc  { font-size:14px; color:var(--tm); line-height:1.65; }
+
+    /* ── CTA BOX ── */
+    .cta-box { background:var(--gd); border-radius:var(--rxl); padding:76px 56px; text-align:center; position:relative; overflow:hidden; }
+    .cta-box::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; border-radius:50%; background:rgba(67,160,71,0.13); pointer-events:none; }
+    .cta-box::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:260px; height:260px; border-radius:50%; background:rgba(249,168,37,0.07); pointer-events:none; }
+    .cta-box > * { position:relative; z-index:1; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--tp); color:rgba(255,255,255,0.65); padding:56px 5% 32px; }
+    .ft-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:44px; margin-bottom:40px; }
+    .ft-brand { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:white; margin-bottom:10px; }
+    .ft-brand span { color:var(--gf); }
+    .ft-tagline { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:16px; }
+    .ft-col-title { font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:white; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:12px; }
+    .ft-links { list-style:none; }
+    .ft-links li { margin-bottom:8px; }
+    .ft-links a { font-size:14px; color:rgba(255,255,255,0.5); transition:color 0.2s; }
+    .ft-links a:hover { color:var(--gf); }
+    .ft-bottom { max-width:1200px; margin:0 auto; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .ft-copy { font-size:13px; color:rgba(255,255,255,0.35); }
+    .ft-dot { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; background:rgba(255,255,255,0.06); border-radius:50px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); }
+    .ft-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gf); }
+
+    /* ── FADE UP ── */
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .fade-up:nth-child(2){transition-delay:0.09s}
+    .fade-up:nth-child(3){transition-delay:0.18s}
+    .fade-up:nth-child(4){transition-delay:0.27s}
+    .fade-up:nth-child(5){transition-delay:0.36s}
+    .fade-up:nth-child(6){transition-delay:0.45s}
+
+    /* ══════════════════════════════
+       PAGE STYLES
+       ══════════════════════════════ */
+
+    /* ── HERO ── */
+    .hero {
+      min-height:100vh; padding:130px 5% 80px;
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:60px; align-items:center;
+      background:linear-gradient(150deg, #F1F8F2 0%, #E8F5E9 50%, #DCEDC8 100%);
+      position:relative; overflow:hidden;
+    }
+    .hero::before { content:''; position:absolute; top:-120px; right:-80px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(67,160,71,0.13) 0%, transparent 70%); pointer-events:none; }
+    .hero::after  { content:''; position:absolute; bottom:-80px; left:-60px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle, rgba(249,168,37,0.09) 0%, transparent 70%); pointer-events:none; }
+    .hero-content { position:relative; z-index:2; }
+    .hero h1 { font-size:clamp(38px,5vw,62px); font-weight:800; color:var(--tp); letter-spacing:-1.4px; line-height:1.08; margin-bottom:20px; }
+    .hero h1 span { color:var(--gf); }
+    .hero-sub { font-size:18px; color:var(--tb); line-height:1.65; max-width:460px; margin-bottom:36px; }
+    .hero-actions { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:44px; }
+    .hero-trust { display:flex; gap:20px; flex-wrap:wrap; }
+    .trust-item { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--tm); }
+    .trust-dot { width:20px; height:20px; border-radius:50%; background:var(--gl); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .trust-dot svg { width:11px; height:11px; color:var(--gd); }
+
+    /* Hero right — photo + floating cards */
+    .hero-visual { position:relative; z-index:2; }
+    .hero-photo { border-radius:var(--rl); overflow:hidden; aspect-ratio:4/5; border:1px solid rgba(27,94,32,0.1); }
+    .float-card { position:absolute; background:white; border-radius:var(--rm); padding:14px 18px; box-shadow:0 8px 32px rgba(27,94,32,0.14); display:flex; align-items:center; gap:12px; }
+    .float-card.fc-1 { bottom:32px; left:-44px; min-width:210px; }
+    .float-card.fc-2 { top:36px;    right:-36px; min-width:190px; }
+    .fc-icon { width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .fc-icon.green { background:var(--gl); }
+    .fc-icon.gold  { background:var(--gold-l); }
+    .fc-icon svg { width:20px; height:20px; }
+    .fc-icon.green svg { color:var(--gd); }
+    .fc-icon.gold  svg { color:#B37A00; }
+    .fc-lbl { font-size:11px; color:var(--tm); font-weight:500; }
+    .fc-val { font-family:'Manrope',sans-serif; font-size:18px; font-weight:800; color:var(--tp); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { background:var(--gd); padding:52px 5%; }
+    .stats-row { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+    .stat-item { text-align:center; padding:8px; }
+    .stat-num { font-family:'Manrope',sans-serif; font-size:38px; font-weight:800; color:white; line-height:1; margin-bottom:6px; }
+    .stat-num span { color:var(--gold); }
+    .stat-lbl { font-size:13px; color:rgba(255,255,255,0.6); font-weight:500; line-height:1.4; }
+    .stat-div { border:none; width:1px; background:rgba(255,255,255,0.15); align-self:stretch; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background:var(--gp); }
+    .how-header { text-align:center; margin-bottom:60px; }
+    .how-header .sec-desc { margin:0 auto; text-align:center; }
+    .how-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; position:relative; }
+    .how-grid::before { content:''; position:absolute; top:28px; left:calc(12.5% + 20px); right:calc(12.5% + 20px); height:1.5px; background:var(--border); z-index:0; }
+    .how-step { text-align:center; position:relative; z-index:1; }
+    .how-num { width:56px; height:56px; border-radius:50%; background:var(--gd); color:white; font-family:'Manrope',sans-serif; font-size:20px; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; box-shadow:0 4px 16px rgba(27,94,32,0.25); }
+    .how-step-title { font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); margin-bottom:8px; }
+    .how-step-desc { font-size:14px; color:var(--tm); line-height:1.6; }
+
+    /* ── BENEFITS (split layout) ── */
+    .benefits-section { background:white; }
+    .benefits-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .benefits-photo { border-radius:var(--rl); overflow:hidden; aspect-ratio:4/5; }
+    .benefits-list { display:flex; flex-direction:column; gap:20px; margin-top:32px; }
+    .benefit-item { display:flex; align-items:flex-start; gap:16px; padding:20px; border:1px solid var(--border); border-radius:var(--rm); transition:box-shadow 0.2s, border-color 0.2s, transform 0.2s; }
+    .benefit-item:hover { box-shadow:var(--sh); border-color:var(--border2); transform:translateX(4px); }
+    .bi-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .bi-icon svg { width:22px; height:22px; }
+    .bi-title { font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:var(--tp); margin-bottom:5px; }
+    .bi-desc  { font-size:14px; color:var(--tm); line-height:1.6; }
+
+    /* ── DASHBOARD PREVIEW ── */
+    .dashboard-section { background:var(--tp); padding:80px 5%; position:relative; overflow:hidden; }
+    .dashboard-section::before { content:''; position:absolute; top:-120px; right:-120px; width:500px; height:500px; border-radius:50%; background:rgba(67,160,71,0.1); pointer-events:none; }
+    .dashboard-section::after  { content:''; position:absolute; bottom:-80px; left:-80px; width:320px; height:320px; border-radius:50%; background:rgba(249,168,37,0.06); pointer-events:none; }
+    .db-inner { max-width:1200px; margin:0 auto; position:relative; z-index:2; }
+    .db-header { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-bottom:52px; }
+    .db-header .sec-title { color:white; }
+    .db-header .sec-desc { color:rgba(255,255,255,0.62); max-width:100%; }
+
+    /* Dashboard mock UI */
+    .db-mock { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:var(--rl); overflow:hidden; }
+    .db-topbar { background:rgba(255,255,255,0.08); padding:14px 24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .db-topbar-title { font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:white; }
+    .db-topbar-meta  { font-size:13px; color:rgba(255,255,255,0.5); }
+    .db-topbar-dot   { width:8px; height:8px; border-radius:50%; background:var(--gf); display:inline-block; margin-right:6px; }
+
+    .db-body { padding:24px; }
+    .db-kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+    .db-kpi { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:var(--rm); padding:18px 20px; }
+    .db-kpi-lbl { font-size:12px; color:rgba(255,255,255,0.5); font-weight:500; margin-bottom:6px; }
+    .db-kpi-val { font-family:'Manrope',sans-serif; font-size:24px; font-weight:800; color:white; line-height:1; }
+    .db-kpi-val span { color:var(--gold); }
+    .db-kpi-change { font-size:11px; margin-top:6px; font-weight:600; }
+    .db-kpi-change.up   { color:#66BB6A; }
+    .db-kpi-change.down { color:#EF9A9A; }
+
+    .db-two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+    /* Recent orders table */
+    .db-table-wrap { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:var(--rm); overflow:hidden; }
+    .db-table-head { padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; }
+    .db-table-head-title { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:white; }
+    .db-table-head-link  { font-size:12px; color:rgba(255,255,255,0.45); }
+    .db-table-row { padding:12px 18px; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:8px; align-items:center; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .db-table-row:last-child { border-bottom:none; }
+    .db-tr-name { font-size:13px; font-weight:600; color:rgba(255,255,255,0.85); }
+    .db-tr-meta { font-size:12px; color:rgba(255,255,255,0.45); }
+    .db-tr-amount { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:white; }
+    .db-status { display:inline-block; padding:3px 10px; border-radius:50px; font-size:11px; font-weight:700; }
+    .ds-confirmed { background:rgba(102,187,106,0.2); color:#66BB6A; }
+    .ds-pending   { background:rgba(249,168,37,0.2);  color:var(--gold); }
+    .ds-delivered { background:rgba(100,181,246,0.2); color:#64B5F6; }
+
+    /* Price tracker */
+    .db-prices-wrap { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:var(--rm); overflow:hidden; }
+    .db-price-row { padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .db-price-row:last-child { border-bottom:none; }
+    .db-price-crop { font-size:13px; font-weight:600; color:rgba(255,255,255,0.85); }
+    .db-price-val  { font-family:'Manrope',sans-serif; font-size:14px; font-weight:800; color:white; }
+    .db-price-trend { font-size:11px; font-weight:600; }
+    .tr-up   { color:#66BB6A; }
+    .tr-down { color:#EF9A9A; }
+    .tr-flat { color:rgba(255,255,255,0.4); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background:var(--gp); }
+    .t-header { margin-bottom:52px; }
+    .t-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .t-card { background:white; border:1px solid var(--border); border-radius:var(--rm); padding:28px; }
+    .t-stars { display:flex; gap:3px; margin-bottom:16px; }
+    .t-stars svg { width:15px; height:15px; color:var(--gold); fill:currentColor; }
+    .t-quote { font-size:15px; line-height:1.7; color:var(--tb); margin-bottom:22px; font-style:italic; }
+    .t-author { display:flex; align-items:center; gap:12px; }
+    .t-avatar { width:44px; height:44px; border-radius:50%; background:var(--gl); display:flex; align-items:center; justify-content:center; font-family:'Manrope',sans-serif; font-size:14px; font-weight:800; color:var(--gd); flex-shrink:0; }
+    .t-name { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--tp); }
+    .t-role { font-size:12px; color:var(--tm); margin-top:2px; }
+
+    /* ── REGISTER SECTION ── */
+    .register-section { background:white; }
+    .reg-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .reg-photo { border-radius:var(--rl); overflow:hidden; aspect-ratio:3/4; }
+    .reg-form-wrap { }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-group { margin-bottom:16px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--tb); margin-bottom:6px; }
+    .form-input, .form-select { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:var(--r); font-family:'Inter',sans-serif; font-size:14px; color:var(--tp); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus, .form-select:focus { border-color:var(--gf); box-shadow:0 0 0 3px rgba(67,160,71,0.11); }
+    .form-note { font-size:12px; color:var(--tm); margin-top:10px; }
+    .form-note a { color:var(--gd); font-weight:600; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .hero { grid-template-columns:1fr; min-height:auto; padding:120px 5% 80px; }
+      .hero-visual { display:none; }
+      .stats-row { grid-template-columns:repeat(3,1fr); }
+      .stat-div  { display:none; }
+      .how-grid  { grid-template-columns:repeat(2,1fr); }
+      .how-grid::before { display:none; }
+      .benefits-grid { grid-template-columns:1fr; gap:40px; }
+      .benefits-photo { display:none; }
+      .db-header { grid-template-columns:1fr; gap:20px; }
+      .db-kpi-row { grid-template-columns:repeat(2,1fr); }
+      .db-two-col { grid-template-columns:1fr; }
+      .t-grid { grid-template-columns:1fr 1fr; }
+      .reg-grid { grid-template-columns:1fr; gap:40px; }
+      .reg-photo { display:none; }
+      .ft-grid { grid-template-columns:1fr 1fr; gap:28px; }
+    }
+    @media(max-width:640px){
+      nav { padding:0 4%; }
+      .nav-links { display:none; }
+      .sec { padding:64px 4%; }
+      .stats-row { grid-template-columns:repeat(2,1fr); }
+      .how-grid  { grid-template-columns:1fr; }
+      .db-kpi-row { grid-template-columns:1fr 1fr; }
+      .db-table-row { grid-template-columns:2fr 1fr; }
+      .db-table-row .db-tr-amount, .db-table-row .db-status { display:none; }
+      .t-grid { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; }
+      .ft-grid { grid-template-columns:1fr; gap:24px; }
+      .cta-box { padding:44px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img src="Logo.png" alt="SmartSave logo" />
+    </div>
+    <span class="nav-logo-text">SMART<span>SAVE</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="farmers.html" class="active">Farmers</a></li>
+    <li><a href="recovery.html">Food Recovery</a></li>
+    <li><a href="innovation.html">Innovation</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline-nav">Sign in</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Join as Farmer</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-content fade-up">
+    <div class="eyebrow">Farmers Portal</div>
+    <h1>Grow more.<br/>Lose less.<br/><span>Earn better.</span></h1>
+    <p class="hero-sub">SMARTSAVE connects smallholder farmers directly to hotels, schools, restaurants, and retailers — with real-time prices, storage guidance, and the tools to run a stronger farm business.</p>
+    <div class="hero-actions">
+      <a href="#register" class="btn btn-primary btn-lg">
+        Join as a Farmer
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#dashboard" class="btn btn-secondary btn-lg">See the Dashboard</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <div class="trust-dot"><svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        Free to register
+      </div>
+      <div class="trust-item">
+        <div class="trust-dot"><svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        All 30 districts
+      </div>
+      <div class="trust-item">
+        <div class="trust-dot"><svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        No middlemen
+      </div>
+      <div class="trust-item">
+        <div class="trust-dot"><svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        MoMo payments
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!--
+      📸 HERO PHOTO (foreground, 4:5 portrait)
+      Save as: assets/images/farmer-hero.jpg
+      Replace .photo-slot with: <img src="assets/images/farmer-hero.jpg" alt="Farmer" />
+      SHOOT: A confident Rwandan farmer in their field — holding freshly
+      harvested produce, looking toward camera, warm golden hour light.
+      Portrait orientation.
+    -->
+    <div class="hero-photo photo-frame">
+      <div class="photo-slot">
+        <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="ps-title">Farmer Hero Portrait</div>
+        <div class="ps-hint">Confident Rwandan farmer holding harvest, golden hour, portrait orientation</div>
+        <span class="ps-tag">📸 Portrait · 4:5</span>
+      </div>
+    </div>
+
+    <!-- Floating stat cards -->
+    <div class="float-card fc-1">
+      <div class="fc-icon green">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M10 2v16M14 6H8a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="fc-lbl">Average Income Increase</div>
+        <div class="fc-val">+34%</div>
+      </div>
+    </div>
+    <div class="float-card fc-2">
+      <div class="fc-icon gold">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l5 5 7-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="fc-lbl">Loss Reduced by</div>
+        <div class="fc-val">28%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip">
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num" data-count="12400">0<span>+</span></div>
+      <div class="stat-lbl">Farmers Registered</div>
+    </div>
+    <hr class="stat-div">
+    <div class="stat-item">
+      <div class="stat-num" data-count="30">0</div>
+      <div class="stat-lbl">Districts Covered</div>
+    </div>
+    <hr class="stat-div">
+    <div class="stat-item">
+      <div class="stat-num" data-count="860">0<span>+</span></div>
+      <div class="stat-lbl">Active Buyers</div>
+    </div>
+    <hr class="stat-div">
+    <div class="stat-item">
+      <div class="stat-num" data-count="34">0<span>%</span></div>
+      <div class="stat-lbl">Avg Income Increase</div>
+    </div>
+    <hr class="stat-div">
+    <div class="stat-item">
+      <div class="stat-num" data-count="480000">0<span>kg</span></div>
+      <div class="stat-lbl">Food Saved</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="sec how-section">
+  <div class="inner">
+    <div class="how-header fade-up">
+      <div class="eyebrow center">How It Works</div>
+      <h2 class="sec-title" style="text-align:center;">From registration to your first sale</h2>
+      <p class="sec-desc" style="text-align:center; margin:0 auto;">Four simple steps to start reaching buyers, listing produce, and growing your farm income.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step fade-up">
+        <div class="how-num">1</div>
+        <div class="how-step-title">Register for Free</div>
+        <div class="how-step-desc">Sign up with your email address, district, and cooperative. Verification takes less than 24 hours.</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-num">2</div>
+        <div class="how-step-title">List Your Produce</div>
+        <div class="how-step-desc">Add your available crops with quantities, harvest date, and price. Your listings are visible to hundreds of verified buyers.</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-num">3</div>
+        <div class="how-step-title">Receive Orders</div>
+        <div class="how-step-desc">Buyers send purchase orders directly to you. Review, confirm, and arrange delivery on your schedule.</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-num">4</div>
+        <div class="how-step-title">Get Paid</div>
+        <div class="how-step-desc">Payment is confirmed via MTN MoMo or Airtel Money directly to your account — no delays, no middlemen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENEFITS ── -->
+<section class="sec benefits-section">
+  <div class="inner">
+    <div class="benefits-grid">
+
+      <!--
+        📸 PHOTO (foreground, 4:5)
+        Save as: assets/images/farmer-field.jpg
+        Replace .photo-slot with: <img src="assets/images/farmer-field.jpg" alt="Farmers in field" />
+        SHOOT: Farmers working together in a lush Rwandan field — beans
+        or vegetables. Cooperative feel, natural daylight, vibrant green.
+      -->
+      <div class="benefits-photo photo-frame fade-up">
+        <div class="photo-slot" style="min-height:100%;">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Farmers in the Field</div>
+          <div class="ps-hint">2–3 farmers working cooperatively, green lush field, natural daylight</div>
+          <span class="ps-tag">📸 Portrait · 4:5</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow">Why Farmers Choose SMARTSAVE</div>
+        <h2 class="sec-title">Tools built for Rwanda's real farmers</h2>
+        <div class="benefits-list">
+          <div class="benefit-item fade-up">
+            <div class="bi-icon ci-green">
+              <svg viewBox="0 0 22 22" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="bi-title">Live Market Prices</div>
+              <div class="bi-desc">See today's prices for your crops across Kigali and all district markets — so you never sell below the going rate again.</div>
+            </div>
+          </div>
+          <div class="benefit-item fade-up">
+            <div class="bi-icon ci-gold">
+              <svg viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v4M14 3v4M2 11h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div class="bi-title">Direct Buyer Connections</div>
+              <div class="bi-desc">Receive purchase orders directly from verified hotels, schools, restaurants, and retailers — with agreed prices upfront.</div>
+            </div>
+          </div>
+          <div class="benefit-item fade-up">
+            <div class="bi-icon ci-sky">
+              <svg viewBox="0 0 22 22" fill="none"><path d="M12 2a6 6 0 0 1 6 6v1a6 6 0 0 1-6 6H6a6 6 0 0 1-6-6V8a6 6 0 0 1 6-6h6z" stroke="currentColor" stroke-width="1.8"/><path d="M8 10h6M11 7v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div class="bi-title">Storage &amp; Loss Reduction Tips</div>
+              <div class="bi-desc">Crop-specific guidance on post-harvest handling, affordable storage solutions, and preservation techniques to protect your income.</div>
+            </div>
+          </div>
+          <div class="benefit-item fade-up">
+            <div class="bi-icon ci-purple">
+              <svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 12l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="bi-title">Income Dashboard</div>
+              <div class="bi-desc">Track every sale, order, and payment in one place. See seasonal trends and plan next season's planting with real data.</div>
+            </div>
+          </div>
+          <div class="benefit-item fade-up">
+            <div class="bi-icon ci-green">
+              <svg viewBox="0 0 22 22" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="bi-title">Cooperative &amp; Group Tools</div>
+              <div class="bi-desc">Cooperatives can manage members, aggregate supply, and fulfill larger institutional orders that individual farmers couldn't handle alone.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DASHBOARD PREVIEW ── -->
+<section class="dashboard-section" id="dashboard">
+  <div class="db-inner">
+    <div class="db-header">
+      <div>
+        <div class="eyebrow white">Farmer Dashboard</div>
+        <h2 class="sec-title" style="color:white;">Everything in one place</h2>
+      </div>
+      <p class="sec-desc" style="color:rgba(255,255,255,0.62); max-width:100%;">Your orders, earnings, market prices, and storage tips — all visible the moment you log in. Here's a preview of what your dashboard looks like.</p>
+    </div>
+
+    <!-- Dashboard mock -->
+    <div class="db-mock fade-up">
+      <div class="db-topbar">
+        <div class="db-topbar-title"><span class="db-topbar-dot"></span>My Farm Dashboard — Marie Uwamahoro</div>
+        <div class="db-topbar-meta">Musanze District &nbsp;·&nbsp; Last updated: Today, 9:14 AM</div>
+      </div>
+      <div class="db-body">
+
+        <!-- KPI row -->
+        <div class="db-kpi-row">
+          <div class="db-kpi">
+            <div class="db-kpi-lbl">Total Earnings (This Month)</div>
+            <div class="db-kpi-val">182,<span>400</span> RWF</div>
+            <div class="db-kpi-change up">↑ 18% vs last month</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi-lbl">Active Listings</div>
+            <div class="db-kpi-val">6</div>
+            <div class="db-kpi-change up">↑ 2 new this week</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi-lbl">Pending Orders</div>
+            <div class="db-kpi-val">3</div>
+            <div class="db-kpi-change down">2 await confirmation</div>
+          </div>
+          <div class="db-kpi">
+            <div class="db-kpi-lbl">Kg Sold This Season</div>
+            <div class="db-kpi-val">2,<span>840</span></div>
+            <div class="db-kpi-change up">↑ 34% vs last season</div>
+          </div>
+        </div>
+
+        <div class="db-two-col">
+          <!-- Recent orders table -->
+          <div class="db-table-wrap">
+            <div class="db-table-head">
+              <div class="db-table-head-title">Recent Orders</div>
+              <div class="db-table-head-link">View all →</div>
+            </div>
+            <div class="db-table-row">
+              <div><div class="db-tr-name">Kigali Heights Hotel</div><div class="db-tr-meta">Tomatoes · 200 kg</div></div>
+              <div class="db-tr-meta" style="color:rgba(255,255,255,0.5);">Today</div>
+              <div class="db-tr-amount">90,000 RWF</div>
+              <div><span class="db-status ds-confirmed">Confirmed</span></div>
+            </div>
+            <div class="db-table-row">
+              <div><div class="db-tr-name">Ecole Primaire Musanze</div><div class="db-tr-meta">Beans · 80 kg</div></div>
+              <div class="db-tr-meta" style="color:rgba(255,255,255,0.5);">Yesterday</div>
+              <div class="db-tr-amount">88,000 RWF</div>
+              <div><span class="db-status ds-pending">Pending</span></div>
+            </div>
+            <div class="db-table-row">
+              <div><div class="db-tr-name">Ikirezi Restaurant</div><div class="db-tr-meta">Onions · 50 kg</div></div>
+              <div class="db-tr-meta" style="color:rgba(255,255,255,0.5);">3 days ago</div>
+              <div class="db-tr-amount">16,000 RWF</div>
+              <div><span class="db-status ds-delivered">Delivered</span></div>
+            </div>
+            <div class="db-table-row">
+              <div><div class="db-tr-name">WFP Rwanda Office</div><div class="db-tr-meta">Mixed veg · 300 kg</div></div>
+              <div class="db-tr-meta" style="color:rgba(255,255,255,0.5);">5 days ago</div>
+              <div class="db-tr-amount">135,000 RWF</div>
+              <div><span class="db-status ds-delivered">Delivered</span></div>
+            </div>
+          </div>
+
+          <!-- Market prices -->
+          <div class="db-prices-wrap">
+            <div class="db-table-head">
+              <div class="db-table-head-title">Today's Market Prices</div>
+              <div class="db-table-head-link">Kigali Central Market</div>
+            </div>
+            <div class="db-price-row">
+              <div class="db-price-crop">🍅 Tomatoes</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="db-price-val">450 RWF/kg</div>
+                <div class="db-price-trend tr-up">↑ +5%</div>
+              </div>
+            </div>
+            <div class="db-price-row">
+              <div class="db-price-crop">🫘 Beans (climbing)</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="db-price-val">1,100 RWF/kg</div>
+                <div class="db-price-trend tr-flat">→ stable</div>
+              </div>
+            </div>
+            <div class="db-price-row">
+              <div class="db-price-crop">🧅 Red Onions</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="db-price-val">320 RWF/kg</div>
+                <div class="db-price-trend tr-down">↓ -3%</div>
+              </div>
+            </div>
+            <div class="db-price-row">
+              <div class="db-price-crop">🌽 Maize (dried)</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="db-price-val">380 RWF/kg</div>
+                <div class="db-price-trend tr-up">↑ +8%</div>
+              </div>
+            </div>
+            <div class="db-price-row">
+              <div class="db-price-crop">🥬 Amaranth</div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="db-price-val">280 RWF/bunch</div>
+                <div class="db-price-trend tr-up">↑ +2%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /db-mock -->
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="sec testimonials-section">
+  <div class="inner">
+    <div class="t-header fade-up">
+      <div class="eyebrow">Farmer Stories</div>
+      <h2 class="sec-title">Real results from real farmers</h2>
+    </div>
+    <div class="t-grid">
+      <div class="t-card fade-up">
+        <div class="t-stars">
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+        </div>
+        <p class="t-quote">"Before, I sold everything at the farm gate at whatever price the traders offered. Now I can see real market prices and send my produce directly to a hotel in Kigali. My income this season is 34% higher."</p>
+        <div class="t-author">
+          <div class="t-avatar">MU</div>
+          <div>
+            <div class="t-name">Marie Uwamahoro</div>
+            <div class="t-role">Smallholder Farmer · Musanze District</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-card fade-up">
+        <div class="t-stars">
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+        </div>
+        <p class="t-quote">"The storage tips saved a huge portion of my tomato harvest last season. I lost almost nothing to spoilage and was able to sell at a better price by waiting two weeks until market prices rose."</p>
+        <div class="t-author">
+          <div class="t-avatar">JP</div>
+          <div>
+            <div class="t-name">Jean-Pierre Ndayisaba</div>
+            <div class="t-role">Tomato &amp; Bean Farmer · Nyanza District</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-card fade-up">
+        <div class="t-stars">
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+          <svg viewBox="0 0 14 14"><polygon points="7 1 8.8 5.2 13.5 5.7 10 8.8 11 13.5 7 11.2 3 13.5 4 8.8 0.5 5.7 5.2 5.2"/></svg>
+        </div>
+        <p class="t-quote">"As a cooperative coordinator, SMARTSAVE helped us aggregate produce from 280 members and fulfill a large WFP order we could never have handled alone. The group tools changed everything for us."</p>
+        <div class="t-author">
+          <div class="t-avatar">EK</div>
+          <div>
+            <div class="t-name">Emmanuel Kalisa</div>
+            <div class="t-role">Coordinator · Akagera Farmers Cooperative</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGISTER FORM ── -->
+<section class="sec register-section" id="register">
+  <div class="inner">
+    <div class="reg-grid">
+
+      <!--
+        📸 PHOTO (foreground, 3:4)
+        Save as: assets/images/farmer-register.jpg
+        Replace .photo-slot with: <img src="assets/images/farmer-register.jpg" alt="Farmer registering" />
+        SHOOT: A farmer using a smartphone or tablet outdoors — possibly
+        with a cooperative group behind them. Conveys digital access
+        in a rural context. Natural light.
+      -->
+      <div class="reg-photo photo-frame fade-up">
+        <div class="photo-slot" style="min-height:100%;">
+          <div class="ps-icon"><svg viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 15l4-3.5 3.5 3.5 2.5-2.5 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="ps-title">Farmer with Phone</div>
+          <div class="ps-hint">Farmer using smartphone outdoors, cooperative group behind them, natural light</div>
+          <span class="ps-tag">📸 Portrait · 3:4</span>
+        </div>
+      </div>
+
+      <div class="reg-form-wrap">
+        <div class="eyebrow">Get Started Today</div>
+        <h2 class="sec-title">Register as a Farmer</h2>
+        <p class="sec-desc" style="margin-bottom:32px;">Free registration. Verified within 24 hours. Start receiving orders immediately.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" placeholder="e.g. Marie" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" placeholder="e.g. Uwamahoro" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="you@example.com" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">District</label>
+            <select class="form-select">
+              <option value="">Select your district</option>
+              <option>Musanze</option><option>Huye</option><option>Nyanza</option>
+              <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
+              <option>Bugesera</option><option>Kamonyi</option><option>Kigali</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Main Crop</label>
+            <select class="form-select">
+              <option value="">Select main crop</option>
+              <option>Vegetables</option><option>Legumes &amp; Beans</option>
+              <option>Grains &amp; Cereals</option><option>Fruits</option>
+              <option>Coffee</option><option>Tea</option><option>Dairy</option><option>Root Crops</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cooperative (optional)</label>
+          <input type="text" class="form-input" placeholder="e.g. Akagera Farmers Cooperative" />
+        </div>
+
+        <a href="register-farmer.html" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px;">
+          Create My Free Account
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="form-note">By registering you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>. Free forever for farmers.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div style="background:var(--gp); padding:72px 5%;">
+  <div class="inner">
+    <div class="cta-box">
+      <div class="eyebrow gold center" style="margin-bottom:14px;">Are you a buyer?</div>
+      <h2 class="sec-title white" style="margin-bottom:12px;">Source reliable local produce</h2>
+      <p class="sec-desc white" style="margin:0 auto 32px; text-align:center;">Hotels, schools, restaurants, and retailers — connect directly with verified Rwandan farmers and cooperatives.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="marketplace.html" class="btn btn-white">Browse Marketplace</a>
+        <a href="register.html" class="btn btn-outline-white">Register as Buyer</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">SMART<span>SAVE</span> Rwanda</div>
+      <p class="ft-tagline">Connecting farmers, markets, technology, youth, and communities to reduce food loss across Rwanda.</p>
+      <div class="ft-dot">Platform Active · All 30 Districts</div>
+    </div>
+    <div>
+      <div class="ft-col-title">Platform</div>
+      <ul class="ft-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="farmers.html">Farmers Portal</a></li>
+        <li><a href="recovery.html">Food Recovery</a></li>
+        <li><a href="innovation.html">Innovation Hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Company</div>
+      <ul class="ft-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Support</div>
+      <ul class="ft-links">
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 SMARTSAVE Rwanda.</div>
+    <div class="ft-copy">From Harvest to Hope 🌱</div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+  // Counter animation
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.querySelector('span') ? el.querySelector('span').textContent : '';
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(ease * target);
+      el.innerHTML = (val >= 1000 ? val.toLocaleString() : val) + '<span>' + suffix + '</span>';
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); countObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // Fade up
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+</script>
+</body>
+</html>
