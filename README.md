@@ -126,8 +126,6 @@ And the engaging interpretations were provided here: https://colab.research.goog
 
 ******3. SOLUTION******
 
-Project website / current public prototype: https://github.com/Abelkwi/Big-Data-Hackaton-Competition.io
-
 Public GitHub repository; https://github.com/Abelkwi/Big-Data-Hackaton-Competition 
 
 Constructed interactive dashboard: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true 
