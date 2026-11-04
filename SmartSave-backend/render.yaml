@@ -11,6 +11,7 @@ services:
   - type: web
     name: smartsave-backend
     runtime: python
+    rootDir: SmartSave-backend
     plan: free
     buildCommand: bash build.sh
     startCommand: gunicorn core.wsgi:application --workers 2 --timeout 120
