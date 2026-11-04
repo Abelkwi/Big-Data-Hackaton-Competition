@@ -4,8 +4,6 @@
 
 **Track:** Track 1 — Agricultural Productivity  
 
-Demo video: https://youtu.be/MdDpt8RrRY4  
-
 Team: 
     1. Abel KWIZERA
     2. Francine UWAJENEZA
@@ -22,52 +20,19 @@ For the NISR Big Data Hackathon 2026, the project uses available NISR and other 
 
 National and international evidence demonstrates the urgency of addressing these challenges. Approximately 20.6% of Rwanda's population continues to experience food insecurity, 40-50% harvest in Rwanda is lost yearly due to structural inefficiencies (around 141kgs per person) that comes between the farmers(producers) and consumers which makes 12% of yearly GDP, While 20.6% of Rwandan population faces food insecurity of while 27% of children under five remain affected by stunting. Furthermore, studies indicate that significant quantities of food are lost or wasted across the value chain every year, representing not only economic losses but also wasted natural resources and missed opportunities to improve livelihoods and nutrition. 
 
-All statistics provided were examined at here: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true 
-
-And the engaging interpretations were provided here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing 
-
 SMARTSAVE RWANDA responds to these challenges by **introducing an integrated system that connects farmers, cooperatives, institutional buyers, logistics providers, youth entrepreneurs, and development partners within one collaborative ecosystem**. Rather than replacing existing agricultural programmes, SMARTSAVE RWANDA complements national efforts by improving coordination across the food system, increasing market efficiency, promoting responsible food utilisation, and strengthening local value chains.
-
-The project aligns with NISR Big Data Hackathon Track 1: Agricultural Productivity, which encourages data-driven solutions related to agricultural productivity, irrigation, soil conservation, post-harvest collection and storage, processing, value addition, and related real-world agricultural challenges. It is also intended to contribute to relevant priorities in Rwanda's Second National Strategy for Transformation (NST2) and Vision 2050, subject to the final policy references cited in the analysis.
 
 The initiative directly contributes to Rwanda's Vision 2050, the Second National Strategy for Transformation (NST2), and the Sustainable Development Goals, particularly SDG 1 (No Poverty), SDG 2 (Zero Hunger), SDG 4 (Quality Education) SDG 8 (Decent Work and Economic Growth), SDG 12 (Responsible Consumption and Production), SDG 13 (Climate Action) and SDG 17 (Partnership for the Goals).
 
-Beyond improving agricultural markets, SMARTSAVE seeks to build a more connected, resilient, and inclusive food system where every harvest creates greater value, nutritious food reaches those who need it most, and young innovators become active contributors to Rwanda's sustainable development. SMARTSAVE RWANDA is therefore more than a digital system or an agricultural project. It is a scalable social enterprise that transforms fragmented food systems into connected opportunities; creating shared economic, social, and environmental value for farmers, institutions, communities, and future generations
+Beyond improving agricultural markets, SMARTSAVE seeks to build a more connected, resilient, and inclusive food system where every harvest creates greater value, nutritious food reaches those who need it most, and young innovators become active contributors to Rwanda's sustainable development. SMARTSAVE RWANDA is therefore more than a digital system or an agricultural project. It is a scalable social enterprise that transforms fragmented food systems into connected opportunities; creating shared economic, social, and environmental value for farmers, institutions, communities, and future generations.
+
+You can find all the datasets Here: https://drive.google.com/drive/folders/1mlUg2ti11CShWQDenfifRId2TnJprRVU?usp=drive_link
 
 The Excel-centered analytical workflow is found here: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true 
 
 And the engaging interpretations were provided here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing
 
-**2. Data sources and acknowledgements**
-The project workspace contains the following datasets or dataset folders, based on the files assembled for this work. 
- 1. Rwanda Seasonal Agricultural Survey 2025	NISR microdata catalogue
- 2. Rwanda Seasonal Agricultural Survey 2024	NISR microdata catalogue
- 3. NISR SAS 2025 catalogue and official SAS 2025 report
- 4. FAO Food Loss and Waste Database
- 5. FBS TABLES
- 6. wfp_food_prices_rwa
- 7. CPI_time_series_September_2025
- 8. CPI_time_series_September_2026
- 9. Moderate-or-severe food-insecurity indicator file
- 10. NISR CFSVA_2018
- 11. NISR CFSVA 2024
- 12. Rwanda Demographic and Health Survey 2025 
- 
-You can find all the datasets Here: https://drive.google.com/drive/folders/1mlUg2ti11CShWQDenfifRId2TnJprRVU?usp=drive_link and 
-
-https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true
-
-**2.4. Data cleaning and preprocessing**
-The analysis followed a documented workflow. The final version of each section are provided above on the links:
-
-The Excel-centered analytical workflow is found here: https://docs.google.com/spreadsheets/d/13uaMbMCLB_yIAbeO7hkqEEMGX-npjxqy/edit?usp=sharing&ouid=115192111389233668118&rtpof=true&sd=true 
-
-And the engaging interpretations were provided here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing
-
-****3. Instructions for using the solution****
-**For evaluators using the published website:**
-
-https://abelkwi.github.io/Big-Data-Hackaton-Competition/
+The published website: https://abelkwi.github.io/Big-Data-Hackaton-Competition/
 
 Demo video : https://youtu.be/MdDpt8RrRY4   
 
