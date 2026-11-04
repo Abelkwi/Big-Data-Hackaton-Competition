@@ -32,7 +32,7 @@ The Excel-centered analytical workflow is found here: https://docs.google.com/sp
 
 And the engaging interpretations were provided here: https://colab.research.google.com/drive/1ohqeb6bSejv5i7vXrSE7dwtvnMwpN4p6?usp=sharing
 
-The published website: https://abelkwi.github.io/Big-Data-Hackaton-Competition/
+The published website: https://abelkwi.github.io/Big-Data-Hackaton-Competition/SmartSave-frontend/
 
 Demo video : https://youtu.be/MdDpt8RrRY4   
 
