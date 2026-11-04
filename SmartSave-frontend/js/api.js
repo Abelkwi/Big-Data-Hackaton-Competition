@@ -141,6 +141,14 @@ const API = {
         this.setUser(profile);
         return profile;
     },
+
+    async loginWithGoogle(credential) {
+        const data = await this.request('POST', '/auth/google/', { credential });
+        this.setTokens(data.access, data.refresh);
+        const profile = await this.getProfile();
+        this.setUser(profile);
+        return profile;
+    },
     
     async register(data) {
         const result = await this.request('POST', '/auth/register/', data);

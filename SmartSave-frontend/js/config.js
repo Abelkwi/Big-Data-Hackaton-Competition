@@ -9,3 +9,4 @@
  * This file must be loaded BEFORE js/api.js on every page.
  */
 const API_BASE_URL = 'https://smartsave-backend-zvdk.onrender.com/api';
+window.GOOGLE_CLIENT_ID = '584153018499-6ervj8kkhe16fbgihc4f6avn03jo2e1o.apps.googleusercontent.com';

@@ -106,6 +106,10 @@
     .role-card.ngo    .role-cta { background:var(--purple); color:white; }
     .role-card:hover .role-cta { transform:translateY(-1px); }
     .role-cta svg { width:14px; height:14px; }
+    .google-signup { max-width:400px; margin:-28px auto 48px; text-align:center; }
+    .google-signup p { font-size:13px; color:var(--tm); margin-top:8px; }
+    .google-signup .form-error { display:none; color:#C62828; margin-top:10px; }
+    .google-signup .form-error.show { display:block; }
 
     /* ── YOUTH BANNER ── */
     .youth-banner {
@@ -162,6 +166,12 @@
     <div class="eyebrow">Join SMARTSAVE</div>
     <h1 class="page-title">How will you use SMARTSAVE?</h1>
     <p class="page-desc">Choose the option that best describes you. We'll tailor your registration and dashboard accordingly — it only takes a minute.</p>
+  </div>
+
+  <div class="google-signup">
+    <div id="googleContinueButton"></div>
+    <p>New Google accounts start as Buyers. Choose a role below to complete the tailored registration form.</p>
+    <div class="form-error" id="googleAuthError" role="alert"></div>
   </div>
 
   <!-- Role cards -->
@@ -241,10 +251,17 @@
 
 </div>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/google-auth.js"></script>
 <script>
-  // No backend yet — these role cards link to dedicated registration
-  // pages (register-farmer.html, register-buyer.html, register-ngo.html)
-  // which can be built next, each with fields tailored to that role.
+  GoogleAuth.init({
+    buttonId: 'googleContinueButton',
+    errorId: 'googleAuthError',
+    text: 'continue_with',
+    redirectUrl: 'buyer-dashboard.html',
+  });
+
 </script>
 </body>
 </html>

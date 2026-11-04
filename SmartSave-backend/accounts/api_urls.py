@@ -9,6 +9,7 @@ urlpatterns = [
     # JWT Auth
     path("login/", TokenObtainPairView.as_view(), name="auth-login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="auth-token-refresh"),
+    path("google/", api_views.GoogleLoginView.as_view(), name="auth-google"),
     
     # Registration
     path("register/", api_views.RegisterView.as_view(), name="auth-register"),
