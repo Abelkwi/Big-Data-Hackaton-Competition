@@ -3,7 +3,7 @@ import re
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Avg, Sum 
 from django.shortcuts import (
     redirect,
@@ -14,8 +14,13 @@ from django.shortcuts import (
 from marketplace.models import Product, Review
 from .models import (
     Profile,
+    FarmerProfile,
+    BuyerProfile,
+    NGOProfile,
     FarmerFollow,
 )
+
+User = get_user_model()
 
 
 class EmailBackend(ModelBackend):
@@ -82,15 +87,17 @@ def register_view(request):
             candidate = f'{username}{counter}'
             counter += 1
 
-        user = User.objects.create_user(username=candidate, email=email, password=password1)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save(update_fields=['first_name', 'last_name'])
+        user = User.objects.create_user(
+            username=candidate,
+            email=email,
+            password=password1,
+            first_name=first_name,
+            last_name=last_name,
+            role=role,
+            phone=phone,
+        )
         user.backend = 'accounts.views.EmailBackend'
         profile = user.profile
-        profile.role = role
-        profile.phone = phone
-        profile.organization = organization
         profile.gender = gender
         profile.bio = bio
         profile.province = province
@@ -99,6 +106,18 @@ def register_view(request):
         profile.cell = cell
         profile.village = village
         profile.save()
+        if role == 'farmer':
+            FarmerProfile.objects.get_or_create(profile=profile)
+        elif role == 'buyer':
+            BuyerProfile.objects.get_or_create(
+                profile=profile,
+                defaults={'company_name': organization},
+            )
+        elif role == 'ngo':
+            NGOProfile.objects.get_or_create(
+                profile=profile,
+                defaults={'organization_name': organization or user.get_full_name() or email},
+            )
         login(request, user)
         messages.success(request, 'Registration successful.')
         return redirect('marketplace:dashboard')

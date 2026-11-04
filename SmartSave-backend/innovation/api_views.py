@@ -55,7 +55,7 @@ class InnovationIdeaCreateView(generics.CreateAPIView):
     serializer_class = InnovationIdeaDetailSerializer
 
     def perform_create(self, serializer):
-        serializer.save(submitted_by=self.request.user)
+        serializer.save(submitted_by=self.request.user, status="submitted")
 
 
 class ToggleVoteView(APIView):

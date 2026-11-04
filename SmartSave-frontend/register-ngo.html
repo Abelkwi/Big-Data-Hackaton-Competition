@@ -241,12 +241,12 @@
 
             <div class="form-group">
               <label class="form-label">Organisation Name</label>
-              <input type="text" class="form-input" name="organization" placeholder="e.g. Inshuti z'Abana Rwanda" required />
+              <input type="text" class="form-input" name="organization_name" placeholder="e.g. Inshuti z'Abana Rwanda" required />
             </div>
 
             <div class="form-group">
               <label class="form-label">Organisation Type</label>
-              <select class="form-select" required>
+              <select class="form-select" name="organization_type" required>
                 <option value="">Select type</option>
                 <option>Non-Governmental Organisation (NGO)</option>
                 <option>Community-Based Organisation (CBO)</option>
@@ -276,19 +276,19 @@
                 <input type="email" class="form-input" name="email" placeholder="info@yourorg.rw" required />
               </div>
               <div class="form-group">
-                <label class="form-label">Email Address</label>
-                <input type="email" class="form-input" name="email" placeholder="info@yourorg.rw" required />
+                <label class="form-label">Phone <span class="optional">(optional)</span></label>
+                <input type="tel" class="form-input" name="phone" placeholder="+250 7XX XXX XXX" />
               </div>
             </div>
 
             <div class="form-group">
               <label class="form-label">Website or Social Media <span class="optional">(optional)</span></label>
-              <input type="text" class="form-input" placeholder="https://yourorg.rw or Facebook/Twitter page" />
+              <input type="url" class="form-input" name="website" placeholder="https://yourorg.rw" />
             </div>
 
             <div class="form-group">
               <label class="form-label">Number of Beneficiaries Served</label>
-              <select class="form-select" required>
+              <select class="form-select" name="beneficiaries_served" required>
                 <option value="">Select range</option>
                 <option>Under 100 beneficiaries</option>
                 <option>100 – 500 beneficiaries</option>
@@ -315,19 +315,40 @@
 
             <div class="form-group">
               <label class="form-label">Which districts do you operate in? <span class="optional">(select all that apply)</span></label>
-              <div class="district-grid">
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Gasabo</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Kicukiro</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Nyarugenge</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Musanze</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Huye</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Nyanza</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Rubavu</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Rusizi</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Rwamagana</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Bugesera</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Ruhango</div>
-                <div class="dist-chip" onclick="this.classList.toggle('selected')">Muhanga</div>
+              <div data-rwanda-address>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Province</label>
+                    <select class="form-select" name="province" data-location-level="province" required>
+                      <option value="">Loading provinces…</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">District</label>
+                    <select class="form-select" name="district" data-location-level="district" required disabled>
+                      <option value="">Select district</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Sector</label>
+                    <select class="form-select" name="sector" data-location-level="sector" required disabled>
+                      <option value="">Select sector</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Cell</label>
+                    <select class="form-select" name="cell" data-location-level="cell" required disabled>
+                      <option value="">Select cell</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Village</label>
+                  <input type="text" class="form-input" name="village" placeholder="Enter your village" />
+                </div>
+                <p class="form-hint" data-location-error role="status"></p>
               </div>
             </div>
 
@@ -348,7 +369,7 @@
             <div class="form-row" style="margin-top:18px;">
               <div class="form-group">
                 <label class="form-label">Food Collection Capacity</label>
-                <select class="form-select">
+                <select class="form-select" name="collection_capacity">
                   <option>Up to 50 kg per collection</option>
                   <option>50 – 150 kg per collection</option>
                   <option>150 – 500 kg per collection</option>
@@ -357,7 +378,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Do you have transport?</label>
-                <select class="form-select">
+                <select class="form-select" name="has_transport">
                   <option>Yes — we have our own vehicle</option>
                   <option>Sometimes — borrowed / rented</option>
                   <option>No — we need collection support</option>
@@ -379,7 +400,7 @@
 
             <div class="form-group" style="margin-top:18px;">
               <label class="form-label">Briefly describe your organisation's work <span class="optional">(optional)</span></label>
-              <textarea class="form-textarea" placeholder="How do you distribute food to your beneficiaries? What challenges do you face in sourcing food?"></textarea>
+              <textarea class="form-textarea" name="mission" placeholder="How do you distribute food to your beneficiaries? What challenges do you face in sourcing food?"></textarea>
             </div>
 
             <div class="step-nav">
@@ -413,7 +434,7 @@
 
             <div class="form-group">
               <label class="form-label">Organisation Registration Number <span class="optional">(if applicable)</span></label>
-              <input type="text" class="form-input" placeholder="e.g. RCA registration number or equivalent" />
+              <input type="text" class="form-input" name="ngo_registration_number" placeholder="e.g. RCA registration number or equivalent" />
               <div class="form-hint">Church-based or informal CBOs can note this and still apply.</div>
             </div>
 
@@ -428,7 +449,7 @@
             </div>
 
             <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:18px;">
-              <input type="checkbox" style="width:16px; height:16px; margin-top:3px; accent-color:var(--pur); cursor:pointer;" />
+              <input type="checkbox" required style="width:16px; height:16px; margin-top:3px; accent-color:var(--pur); cursor:pointer;" />
               <label style="font-size:13px; color:var(--tb); line-height:1.6; cursor:pointer;">I confirm that my organisation genuinely serves vulnerable beneficiaries and that the information provided is accurate. I agree to SMARTSAVE's <a href="#" style="color:var(--pur); font-weight:600;">Terms of Use</a> and <a href="#" style="color:var(--pur); font-weight:600;">Privacy Policy</a>.</label>
             </div>
 
@@ -464,12 +485,22 @@
 
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
+<script src="js/rwanda-locations.js"></script>
 <script>
   document.querySelectorAll('.focus-chip').forEach(chip => {
     chip.addEventListener('click', () => chip.classList.toggle('selected'));
   });
 
   function goToStep(step) {
+    const activeStep = document.querySelector('.form-step.active');
+    if (step > Number(activeStep.id.replace('step', ''))) {
+      const invalid = [...activeStep.querySelectorAll('input, select, textarea')]
+        .find(field => !field.checkValidity());
+      if (invalid) {
+        invalid.reportValidity();
+        return;
+      }
+    }
     document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
     for (let i = 1; i <= 3; i++) {
@@ -495,19 +526,41 @@
     const payload = {
       email: form.get('email'),
       username: form.get('email').split('@')[0],
-      first_name: form.get('contact_name') || '',
-      last_name: form.get('job_title') || '',
+      first_name: (form.get('contact_name') || '').trim().split(/\s+/)[0] || '',
+      last_name: (form.get('contact_name') || '').trim().split(/\s+/).slice(1).join(' '),
       password: form.get('password1') || '',
       password2: form.get('password2') || '',
       role: 'ngo',
+      phone: form.get('phone') || '',
+      province: form.get('province') || '',
+      district: form.get('district') || '',
+      sector: form.get('sector') || '',
+      cell: form.get('cell') || '',
+      village: form.get('village') || '',
+      organization_name: form.get('organization_name') || '',
+      organization_type: form.get('organization_type') || '',
+      ngo_registration_number: form.get('ngo_registration_number') || '',
+      website: form.get('website') || '',
+      beneficiaries_served: form.get('beneficiaries_served') || '',
+      mission: form.get('mission') || '',
+      focus_areas: [...document.querySelectorAll('#focusChips .focus-chip.selected')]
+        .map(chip => chip.textContent.trim()).join(', '),
+      food_types: [...document.querySelectorAll('#foodTypeChips .focus-chip.selected')]
+        .map(chip => chip.textContent.trim()).join(', '),
+      collection_capacity: form.get('collection_capacity') || '',
+      has_transport: form.get('has_transport') || '',
     };
 
     try {
       await API.registerNGO(payload);
-      // Auto-login after registration
+      let loginMessage = '';
       try {
         await API.login(payload.email, payload.password);
-      } catch (e) {}
+      } catch (loginError) {
+        console.error('NGO account was created, but automatic sign-in failed.', loginError);
+        loginMessage = 'Application submitted. Please sign in to continue.';
+      }
+      if (loginMessage) document.querySelector('#successBox .success-desc').textContent = loginMessage;
       document.getElementById('formWrap').style.display = 'none';
       document.getElementById('successBox').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });

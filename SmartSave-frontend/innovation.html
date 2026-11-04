@@ -763,52 +763,58 @@
         <h2 class="sec-title">Tell us what you're building</h2>
         <p class="sec-desc" style="margin-bottom:28px;">No idea is too early. We review every submission and respond within one week.</p>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" class="form-input" placeholder="Your name" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="text" class="form-input" placeholder="+250 7XX XXX XXX or email" />
-          </div>
+        <form id="ideaForm">
+        <p class="form-note">Submit using your SMARTSAVE account so the idea is attached to your profile. <a href="login.html">Sign in</a> or <a href="register.html">create an account</a> first.</p>
+        <div class="form-group">
+          <label class="form-label" for="ideaTitle">Project title</label>
+          <input type="text" class="form-input" id="ideaTitle" name="title" placeholder="A short name for your idea" maxlength="200" required />
         </div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">University / Institution</label>
-            <input type="text" class="form-input" placeholder="e.g. University of Rwanda" />
+            <input type="text" class="form-input" name="institution" placeholder="e.g. University of Rwanda" maxlength="200" />
           </div>
           <div class="form-group">
             <label class="form-label">Field of Focus</label>
-            <select class="form-select">
+            <select class="form-select" name="category" required>
               <option value="">Select a category</option>
-              <option>Storage &amp; Preservation</option>
-              <option>Logistics</option>
-              <option>Digital Tools</option>
-              <option>Nutrition</option>
-              <option>Circular Economy</option>
-              <option>Other</option>
+              <option value="technique">Storage &amp; Preservation</option>
+              <option value="technique">Logistics</option>
+              <option value="technology">Digital Tools</option>
+              <option value="other">Nutrition</option>
+              <option value="sustainability">Circular Economy</option>
+              <option value="other">Other</option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Project Stage</label>
-          <select class="form-select">
-            <option>Just an idea</option>
-            <option>Early prototype</option>
-            <option>Piloting with users</option>
-            <option>Ready to scale</option>
+          <select class="form-select" name="project_stage" required>
+            <option value="">Select a stage</option>
+            <option value="idea">Just an idea</option>
+            <option value="prototype">Early prototype</option>
+            <option value="pilot">Piloting with users</option>
+            <option value="scale">Ready to scale</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Tell us about your idea</label>
-          <textarea class="form-textarea" placeholder="What problem are you solving? What's your approach? What support do you need?"></textarea>
+          <textarea class="form-textarea" name="description" placeholder="Describe the idea, your approach, and the support you need." required></textarea>
         </div>
-
-        <a href="#" class="btn btn-purple" style="width:100%; justify-content:center; margin-top:4px;">
+        <div class="form-group">
+          <label class="form-label">Problem being solved <span class="optional">(optional)</span></label>
+          <textarea class="form-textarea" name="problem_solved" placeholder="What challenge does this address?"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Expected impact <span class="optional">(optional)</span></label>
+          <textarea class="form-textarea" name="expected_impact" placeholder="Who benefits, and how?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-purple" style="width:100%; justify-content:center; margin-top:4px;">
           Submit My Idea
           <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        </button>
+        <p id="ideaFormMessage" class="form-note" role="status" aria-live="polite"></p>
+        </form>
         <p class="form-note">By submitting you agree to our <a href="#">Terms of Use</a>. We review every idea — no submission is too early.</p>
       </div>
 
@@ -871,6 +877,8 @@
   </div>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
   // Nav scroll
   const nav = document.getElementById('nav');
@@ -881,6 +889,29 @@
     btn.addEventListener('click', () => {
       document.querySelectorAll('.f-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+    });
+
+    document.getElementById('ideaForm').addEventListener('submit', async event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const button = form.querySelector('button[type="submit"]');
+      const message = document.getElementById('ideaFormMessage');
+      if (!API.isAuthenticated()) {
+        message.textContent = 'Please sign in before submitting an idea.';
+        return;
+      }
+      const data = Object.fromEntries(new FormData(form));
+      button.disabled = true;
+      message.textContent = 'Submitting your idea…';
+      try {
+        await API.createInnovationIdea(data);
+        form.reset();
+        message.textContent = 'Your idea was submitted successfully.';
+      } catch (error) {
+        message.textContent = error.message || 'Could not submit your idea. Please try again.';
+      } finally {
+        button.disabled = false;
+      }
     });
   });
 

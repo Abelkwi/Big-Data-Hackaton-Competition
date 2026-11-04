@@ -268,7 +268,7 @@
 
             <div class="form-group">
               <label class="form-label">Organisation Name</label>
-              <input type="text" class="form-input" placeholder="e.g. Kigali Heights Hotel" required />
+              <input type="text" class="form-input" name="company_name" placeholder="e.g. Kigali Heights Hotel" required />
             </div>
 
             <div class="form-row">
@@ -288,20 +288,45 @@
                 <input type="email" class="form-input" name="email" placeholder="you@example.com" required />
               </div>
               <div class="form-group">
-                <label class="form-label">Email Address</label>
-                <input type="email" class="form-input" name="secondary_email" placeholder="procurement@org.rw" required />
+                <label class="form-label">Phone <span class="optional">(optional)</span></label>
+                <input type="tel" class="form-input" name="phone" placeholder="+250 7XX XXX XXX" />
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">District / Location</label>
-              <select class="form-select" required>
-                <option value="">Select your district</option>
-                <option>Gasabo</option><option>Kicukiro</option><option>Nyarugenge</option>
-                <option>Musanze</option><option>Huye</option><option>Nyanza</option>
-                <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
-                <option>Bugesera</option>
-              </select>
+            <div data-rwanda-address>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Province</label>
+                  <select class="form-select" name="province" data-location-level="province" required>
+                    <option value="">Loading provinces…</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">District</label>
+                  <select class="form-select" name="district" data-location-level="district" required disabled>
+                    <option value="">Select district</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Sector</label>
+                  <select class="form-select" name="sector" data-location-level="sector" required disabled>
+                    <option value="">Select sector</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Cell</label>
+                  <select class="form-select" name="cell" data-location-level="cell" required disabled>
+                    <option value="">Select cell</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Village</label>
+                <input type="text" class="form-input" name="village" placeholder="Enter your village" />
+              </div>
+              <p class="form-hint" data-location-error role="status"></p>
             </div>
 
             <div class="step-nav">
@@ -337,7 +362,7 @@
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Estimated Monthly Volume</label>
-                <select class="form-select">
+                <select class="form-select" name="monthly_volume">
                   <option value="">Select volume</option>
                   <option>Less than 100 kg/month</option>
                   <option>100 – 500 kg/month</option>
@@ -348,7 +373,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Preferred Delivery Frequency</label>
-                <select class="form-select">
+                <select class="form-select" name="delivery_frequency">
                   <option>Daily</option>
                   <option>Every 2–3 days</option>
                   <option>Weekly</option>
@@ -391,7 +416,7 @@
 
             <div class="form-group">
               <label class="form-label">Email (for login &amp; notifications)</label>
-              <input type="email" class="form-input" name="email" placeholder="procurement@yourorg.rw" required />
+              <p class="form-hint">We’ll use the email address you entered in the organisation details step.</p>
             </div>
 
             <div class="form-row">
@@ -407,7 +432,7 @@
 
             <div class="form-group">
               <label class="form-label">Business Registration Number <span class="optional">(optional but recommended)</span></label>
-              <input type="text" class="form-input" placeholder="RDB registration number" />
+              <input type="text" class="form-input" name="buyer_registration_number" placeholder="RDB registration number" />
               <div class="form-hint">Providing this helps our team verify your organisation faster and unlocks priority support.</div>
             </div>
 
@@ -452,6 +477,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
+<script src="js/rwanda-locations.js"></script>
 <script>
   function selectOrg(card) {
     document.querySelectorAll('.org-type-card').forEach(c => c.classList.remove('selected'));
@@ -463,6 +489,15 @@
   });
 
   function goToStep(step) {
+    const activeStep = document.querySelector('.form-step.active');
+    if (step > Number(activeStep.id.replace('step', ''))) {
+      const invalid = [...activeStep.querySelectorAll('input, select')]
+        .find(field => !field.checkValidity());
+      if (invalid) {
+        invalid.reportValidity();
+        return;
+      }
+    }
     document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
     for (let i = 1; i <= 3; i++) {
@@ -493,14 +528,32 @@
       password: form.get('password1') || '',
       password2: form.get('password2') || '',
       role: 'buyer',
+      phone: form.get('phone') || '',
+      province: form.get('province') || '',
+      district: form.get('district') || '',
+      sector: form.get('sector') || '',
+      cell: form.get('cell') || '',
+      village: form.get('village') || '',
+      company_name: form.get('company_name') || '',
+      buyer_type: document.querySelector('.org-type-card.selected .ot-label')?.textContent.trim() === 'School'
+        ? 'institution' : 'business',
+      supply_needs: [...document.querySelectorAll('.need-chip.selected')]
+        .map(chip => chip.textContent.trim().replace(/^[^\w]+/u, '')).join(', '),
+      monthly_volume: form.get('monthly_volume') || '',
+      delivery_frequency: form.get('delivery_frequency') || '',
+      buyer_registration_number: form.get('buyer_registration_number') || '',
     };
 
     try {
       await API.registerBuyer(payload);
-      // Auto-login after registration
+      let loginMessage = '';
       try {
         await API.login(payload.email, payload.password);
-      } catch (e) {}
+      } catch (loginError) {
+        console.error('Buyer account was created, but automatic sign-in failed.', loginError);
+        loginMessage = 'Application submitted. Please sign in to continue.';
+      }
+      if (loginMessage) document.querySelector('#successBox .success-desc').textContent = loginMessage;
       document.getElementById('formWrap').style.display = 'none';
       document.getElementById('successBox').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -22,7 +22,8 @@ class InnovationIdeaListSerializer(serializers.ModelSerializer):
     class Meta:
         model = InnovationIdea
         fields = [
-            "id", "title", "slug", "description", "category", "status",
+            "id", "title", "slug", "institution", "project_stage",
+            "description", "category", "status",
             "submitter_name", "votes_count", "comment_count",
             "is_featured", "created_at",
         ]
@@ -40,10 +41,15 @@ class InnovationIdeaDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = InnovationIdea
         fields = [
-            "id", "title", "slug", "description", "problem_solved",
+            "id", "title", "slug", "institution", "project_stage",
+            "description", "problem_solved",
             "expected_impact", "category", "status", "attachments",
             "submitted_by", "submitter_name", "votes_count",
             "is_featured", "created_at", "updated_at",
+        ]
+        read_only_fields = [
+            "id", "slug", "status", "submitted_by", "submitter_name",
+            "votes_count", "is_featured", "created_at", "updated_at",
         ]
 
     def get_submitter_name(self, obj):

@@ -149,6 +149,10 @@ const API = {
         this.setUser(profile);
         return profile;
     },
+
+    async verifyGoogleCredential(credential) {
+        return await this.request('POST', '/auth/google/verify/', { credential });
+    },
     
     async register(data) {
         const result = await this.request('POST', '/auth/register/', data);
@@ -380,6 +384,10 @@ const API = {
     async createRecoveryListing(data) {
         return await this.request('POST', '/recovery/create/', data);
     },
+
+    async claimRecoveryListing(id, data) {
+        return await this.request('POST', `/recovery/${id}/claim/`, data);
+    },
     
     async claimListing(id) {
         return await this.request('POST', `/recovery/${id}/claim/`);
@@ -393,6 +401,10 @@ const API = {
     
     async submitContact(data) {
         return await this.request('POST', '/contact/', data);
+    },
+
+    async createInnovationIdea(data) {
+        return await this.request('POST', '/innovation/create/', data);
     },
     
     // ─── Dashboard ────────────────────────────────────────────

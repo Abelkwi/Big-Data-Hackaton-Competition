@@ -32,6 +32,9 @@
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
     body { font-family:'Inter',system-ui,sans-serif; font-size:14px; line-height:1.6; color:var(--tb); background:#F4F6F4; overflow-x:hidden; }
+    body.dashboard-loading .main-inner { visibility:hidden; }
+    .dashboard-message { margin:20px 28px 0; color:var(--tm); }
+    .dashboard-error { color:#b71c1c; }
     h1,h2,h3,h4 { font-family:'Manrope',system-ui,sans-serif; color:var(--tp); line-height:1.2; }
     a { text-decoration:none; color:inherit; }
     img { display:block; width:100%; height:100%; object-fit:cover; }
@@ -348,7 +351,7 @@
     }
   </style>
 </head>
-<body>
+<body class="dashboard-loading">
 
 <!-- Mobile toggle -->
 <button class="mob-toggle" id="mobToggle" onclick="toggleSidebar()">
@@ -365,10 +368,10 @@
   </a>
 
   <div class="sidebar-user">
-    <div class="su-avatar">JK</div>
+    <div class="su-avatar" id="sidebarAvatar">—</div>
     <div>
-      <div class="su-name">Jean-Paul Kagabo</div>
-      <div class="su-role">Kigali Heights Hotel</div>
+      <div class="su-name" id="sidebarName">Loading account…</div>
+      <div class="su-role" id="sidebarCompany"></div>
     </div>
   </div>
 
@@ -387,7 +390,7 @@
     <a href="#" class="nav-item">
       <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       My Orders
-      <span class="nav-badge">3</span>
+      <span class="nav-badge" id="ordersBadge" hidden>0</span>
     </a>
     <a href="#" class="nav-item">
       <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -428,7 +431,7 @@
       <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       Account Settings
     </a>
-    <a href="login.html" class="nav-item">
+    <a href="index.html" class="nav-item" id="logoutButton">
       <svg viewBox="0 0 16 16" fill="none"><path d="M11 11l3-3-3-3M14 8H6M6 4H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Sign Out
     </a>
@@ -439,8 +442,8 @@
 <header class="topbar">
   <div class="topbar-left">
     <div>
-      <div class="topbar-greeting">Good morning, Jean-Paul 👋</div>
-      <div class="topbar-date">Sunday, 25 October 2026 · Kigali</div>
+      <div class="topbar-greeting" id="dashboardGreeting">Welcome 👋</div>
+      <div class="topbar-date" id="dashboardDate"></div>
     </div>
   </div>
   <div class="topbar-right">
@@ -455,12 +458,13 @@
     <button class="tb-icon-btn">
       <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4l-3 3V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <div class="tb-avatar">JK</div>
+    <div class="tb-avatar" id="topbarAvatar">—</div>
   </div>
 </header>
 
 <!-- ══════════ MAIN CONTENT ══════════ -->
 <main class="main">
+  <div class="dashboard-message" id="dashboardMessage" role="status" aria-live="polite">Loading your dashboard…</div>
   <div class="main-inner">
 
     <!-- KPI STRIP -->
@@ -469,33 +473,33 @@
         <div class="kpi-icon green">
           <svg viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 2v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </div>
-        <div class="kpi-num">1,284,000</div>
+        <div class="kpi-num" id="monthlySpend">—</div>
         <div class="kpi-lbl">Total Spend This Month (RWF)</div>
-        <span class="kpi-delta up">↑ 22% vs last month</span>
+        <span class="kpi-delta" id="spendDelta"></span>
       </div>
       <div class="kpi-card gold">
         <div class="kpi-icon gold">
           <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 5V3.5a3 3 0 0 1 6 0V5" stroke="currentColor" stroke-width="1.6"/></svg>
         </div>
-        <div class="kpi-num">18</div>
+        <div class="kpi-num" id="monthlyOrders">—</div>
         <div class="kpi-lbl">Orders Placed This Month</div>
-        <span class="kpi-delta up">↑ 6 more than last month</span>
+        <span class="kpi-delta" id="ordersDelta"></span>
       </div>
       <div class="kpi-card blue">
         <div class="kpi-icon blue">
           <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M9 5v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </div>
-        <div class="kpi-num">3</div>
+        <div class="kpi-num" id="pendingOrders">—</div>
         <div class="kpi-lbl">Pending Confirmations</div>
-        <span class="kpi-delta flat">Same as last week</span>
+        <span class="kpi-delta flat">Awaiting supplier confirmation</span>
       </div>
       <div class="kpi-card red">
         <div class="kpi-icon red">
           <svg viewBox="0 0 18 18" fill="none"><path d="M9 3C5.7 3 3 5.7 3 9s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z" stroke="currentColor" stroke-width="1.6"/><path d="M9 6v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="12" r=".8" fill="currentColor"/></svg>
         </div>
-        <div class="kpi-num">2</div>
-        <div class="kpi-lbl">Low-stock Suppliers</div>
-        <span class="kpi-delta down">Action recommended</span>
+        <div class="kpi-num" id="wishlistCount">—</div>
+        <div class="kpi-lbl">Saved Products</div>
+        <span class="kpi-delta flat">In your wishlist</span>
       </div>
     </div>
 
@@ -573,7 +577,7 @@
       <div class="card">
         <div class="card-title">
           Notifications
-          <a href="#" class="card-title-link">Mark all read</a>
+          <a href="#" class="card-title-link" id="markAllRead">Mark all read</a>
         </div>
         <div class="notif-list">
           <div class="notif-item">
@@ -611,10 +615,7 @@
       <!-- Monthly spend chart -->
       <div class="card">
         <div class="card-title">
-          Monthly Spend (RWF '000)
-          <select style="border:1px solid var(--border); border-radius:6px; padding:4px 8px; font-size:12px; color:var(--tm); outline:none; background:white;">
-            <option>2026</option><option>2025</option>
-          </select>
+          Monthly Spend — Last 6 Months (RWF '000)
         </div>
         <div class="spend-chart">
           <div class="chart-bars" id="spendBars">
@@ -656,15 +657,15 @@
         </div>
         <div class="summary-grid" style="margin-top:14px;">
           <div class="sum-item">
-            <div class="sum-num">6,246k</div>
+            <div class="sum-num" id="yearSpend">—</div>
             <div class="sum-lbl">YTD Total (RWF)</div>
           </div>
           <div class="sum-item">
-            <div class="sum-num">1,041k</div>
+            <div class="sum-num" id="averageSpend">—</div>
             <div class="sum-lbl">Monthly Average</div>
           </div>
           <div class="sum-item">
-            <div class="sum-num">+22%</div>
+            <div class="sum-num" id="monthlyGrowth">—</div>
             <div class="sum-lbl">MoM Growth</div>
           </div>
         </div>
@@ -673,7 +674,7 @@
       <!-- Spend by category (donut) -->
       <div class="card">
         <div class="card-title">Spend by Category</div>
-        <div class="donut-wrap" style="margin-top:8px;">
+        <div class="donut-wrap" id="categorySpend" style="margin-top:8px;">
           <div class="donut-svg-wrap">
             <svg width="100" height="100" viewBox="0 0 100 100">
               <!-- Donut: Vegetables 42%, Grains 23%, Fruits 15%, Coffee 12%, Other 8% -->
@@ -714,47 +715,32 @@
         <div class="card-title">Quick Order</div>
         <div class="quick-order-form">
           <label class="qo-label">Product</label>
-          <select class="qo-select">
-            <option>🥬 Fresh Tomatoes — Akagera Coop</option>
-            <option>🫘 Climbing Beans — Akagera Coop</option>
-            <option>☕ Arabica Coffee — Imbaraga Coop</option>
-            <option>🌾 Dried Maize — Inzira Coop</option>
-            <option>🥛 Whole Milk — Inyange Industries</option>
+          <select class="qo-select" id="quickOrderProduct">
+            <option value="">Loading available products…</option>
           </select>
           <div class="qo-row">
             <div>
-              <label class="qo-label">Quantity (kg)</label>
-              <input type="number" class="qo-input" value="100" min="10" />
-            </div>
-            <div>
-              <label class="qo-label">Delivery Date</label>
-              <input type="date" class="qo-input" />
+              <label class="qo-label" for="quickOrderQuantity">Quantity</label>
+              <input type="number" class="qo-input" id="quickOrderQuantity" value="1" min="0.01" step="0.01" />
             </div>
           </div>
-          <label class="qo-label">Delivery Address</label>
-          <input type="text" class="qo-input" placeholder="Kigali Heights Hotel, Kiyovu" />
-          <label class="qo-label">Payment</label>
-          <select class="qo-select">
-            <option>MTN Mobile Money</option>
-            <option>Airtel Money</option>
-            <option>Invoice (Net 30)</option>
-          </select>
 
           <div style="background:var(--gp); border-radius:var(--rm); padding:12px 14px; margin-bottom:12px;">
             <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--tm); margin-bottom:4px;">
-              <span>100 kg × 450 RWF</span><span>45,000 RWF</span>
+              <span id="quickOrderUnitPrice">Choose a product</span><span id="quickOrderTotal">—</span>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--tm); margin-bottom:4px;">
-              <span>Delivery fee</span><span>Free (50 kg+)</span>
+              <span>Next step</span><span>Review in cart</span>
             </div>
             <div style="display:flex; justify-content:space-between; font-family:'Manrope',sans-serif; font-size:14px; font-weight:800; color:var(--tp); border-top:1px solid var(--border); padding-top:8px; margin-top:8px;">
-              <span>Total</span><span style="color:var(--gd);">45,000 RWF</span>
+              <span>Estimated subtotal</span><span style="color:var(--gd);" id="quickOrderSubtotal">—</span>
             </div>
           </div>
-          <button class="btn btn-primary btn-full">
-            Place Order
+          <button type="button" class="btn btn-primary btn-full" id="addQuickOrder">
+            Add to Cart
             <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
+          <p id="quickOrderMessage" role="status" aria-live="polite"></p>
         </div>
       </div>
     </div>
@@ -777,7 +763,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="recentOrders">
           <tr>
             <td>
               <div class="order-product">
@@ -875,7 +861,7 @@
           My Suppliers
           <a href="#" class="card-title-link">Manage →</a>
         </div>
-        <div class="supplier-list">
+        <div class="supplier-list" id="supplierList">
           <div class="supplier-item">
             <div class="supplier-avatar">AK</div>
             <div style="flex:1; min-width:0;">
@@ -935,10 +921,10 @@
 
       <div class="card">
         <div class="card-title">
-          Today's Market Prices
-          <span style="font-size:11px; color:var(--tm); font-weight:400;">Kigali Central Market</span>
+          Current Marketplace Listings
+          <span style="font-size:11px; color:var(--tm); font-weight:400;">Live product prices</span>
         </div>
-        <div class="price-list">
+        <div class="price-list" id="marketPriceList">
           <div class="price-row">
             <div class="price-item-left">
               <span class="price-emoji">🍅</span>
@@ -1025,35 +1011,347 @@
   </div><!-- /main-inner -->
 </main>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
+  const kigaliDate = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Africa/Kigali',
+    dateStyle: 'full',
+  });
+  const kigaliDateTime = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Africa/Kigali',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+  const money = value => `${Number(value || 0).toLocaleString('en-RW', { maximumFractionDigits: 0 })} RWF`;
+  const number = value => Number(value || 0).toLocaleString('en-RW', { maximumFractionDigits: 2 });
+  const node = (tag, className, text) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+
+  function initials(name) {
+    return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0].toUpperCase()).join('') || 'U';
+  }
+
+  function formatOrderStatus(status) {
+    return ({
+      pending: 'Pending',
+      confirmed: 'Confirmed',
+      processing: 'Processing',
+      shipped: 'Shipped',
+      delivered: 'Delivered',
+      cancelled: 'Cancelled',
+    })[status] || status;
+  }
+
+  function renderOrders(orders) {
+    const body = document.getElementById('recentOrders');
+    if (!orders.length) {
+      const row = node('tr');
+      const cell = node('td', '', 'No orders yet. Browse the marketplace to place your first order.');
+      cell.colSpan = 7;
+      row.append(cell);
+      body.append(row);
+      return;
+    }
+    orders.forEach(order => {
+      const row = node('tr');
+      const productCell = node('td');
+      const product = node('div', 'order-product');
+      product.append(node('div', 'order-product-img', '🛒'));
+      const details = node('div');
+      details.append(
+        node('div', 'order-product-name', order.product_name),
+        node('div', 'order-product-coop', `${order.supplier} · ${order.order_number}`)
+      );
+      product.append(details);
+      productCell.append(product);
+      row.append(
+        productCell,
+        node('td', 'order-date', kigaliDateTime.format(new Date(order.ordered_at))),
+        node('td', '', `${number(order.quantity)} items`),
+        node('td', 'order-amount', money(order.total))
+      );
+      const status = node('span', `status-pill ${order.status === 'delivered' ? 'sp-delivered' : order.status === 'pending' ? 'sp-pending' : 'sp-confirmed'}`, formatOrderStatus(order.status));
+      const statusCell = node('td');
+      statusCell.append(status);
+      row.append(statusCell, node('td', 'order-date', order.delivery_address || '—'), node('td', '', ''));
+      body.append(row);
+    });
+  }
+
+  function renderNotifications(notifications) {
+    const list = document.querySelector('.notif-list');
+    if (!notifications.length) {
+      list.append(node('div', 'notif-item', 'You have no notifications.'));
+      return;
+    }
+    notifications.forEach(notification => {
+      const item = node('div', 'notif-item');
+      const dotWrap = node('div', 'notif-dot-wrap');
+      dotWrap.append(node('div', `ndot ${notification.is_read ? 'grey' : 'green'}`));
+      const text = node('div', 'notif-text');
+      text.append(node('strong', '', notification.title));
+      if (notification.body) text.append(document.createTextNode(` ${notification.body}`));
+      item.append(
+        dotWrap,
+        text,
+        node('div', 'notif-time', notification.created_at
+          ? kigaliDateTime.format(new Date(notification.created_at))
+          : '')
+      );
+      list.append(item);
+    });
+  }
+
+  function renderSpendChart(months) {
+    const bars = document.getElementById('spendBars');
+    const max = Math.max(...months.map(item => Number(item.total)), 0);
+    months.forEach((item, index) => {
+      const wrap = node('div', 'chart-bar-wrap');
+      const value = Number(item.total);
+      const height = max ? Math.max(value / max * 100, 2) : 2;
+      const bar = node('div', `chart-bar ${index === months.length - 1 ? 'active' : 'prev'}`);
+      bar.style.height = `${height}%`;
+      bar.dataset.val = `${number(value / 1000)}k`;
+      wrap.append(
+        bar,
+        node('div', 'chart-bar-val', `${number(value / 1000)}k`),
+        node('div', 'chart-label', item.month)
+      );
+      bars.append(wrap);
+    });
+  }
+
+  function renderCategorySpend(items) {
+    const list = document.getElementById('categorySpend');
+    if (!items.length) {
+      list.textContent = 'No completed order spending yet.';
+      return;
+    }
+    const legend = node('div', 'donut-legend');
+    const total = items.reduce((sum, item) => sum + Number(item.total), 0);
+    const colors = ['#1B5E20', '#43A047', '#F9A825', '#1565C0', '#7B1FA2'];
+    items.forEach((item, index) => {
+      const row = node('div', 'dl-item');
+      const left = node('div', 'dl-left');
+      const dot = node('div', 'dl-dot');
+      dot.style.backgroundColor = colors[index % colors.length];
+      left.append(dot, document.createTextNode(item.category));
+      row.append(left, node('div', 'dl-pct', `${total ? Math.round(Number(item.total) / total * 100) : 0}%`));
+      legend.append(row);
+    });
+    list.replaceChildren(legend);
+  }
+
+  function renderSuppliers(suppliers) {
+    const list = document.getElementById('supplierList');
+    if (!suppliers.length) {
+      list.append(node('div', 'supplier-item', 'Suppliers from your orders will appear here.'));
+      return;
+    }
+    suppliers.forEach(supplier => {
+      const item = node('div', 'supplier-item');
+      const avatar = node('div', 'supplier-avatar', initials(supplier.name));
+      const details = node('div');
+      details.style.cssText = 'flex:1; min-width:0;';
+      details.append(
+        node('div', 'supplier-name', supplier.name),
+        node('div', 'supplier-meta', `${supplier.orders} order${supplier.orders === 1 ? '' : 's'} with you`)
+      );
+      item.append(avatar, details);
+      list.append(item);
+    });
+  }
+
+  function renderProducts(products) {
+    const select = document.getElementById('quickOrderProduct');
+    const priceText = document.getElementById('quickOrderUnitPrice');
+    const totalText = document.getElementById('quickOrderTotal');
+    const subtotalText = document.getElementById('quickOrderSubtotal');
+    const quantity = document.getElementById('quickOrderQuantity');
+    const byId = new Map(products.map(product => [String(product.id), product]));
+    select.replaceChildren(new Option(
+      products.length ? 'Select a product' : 'No products currently available',
+      ''
+    ));
+    products.forEach(product => {
+      select.add(new Option(`${product.name} — ${money(product.price_per_unit)}/${product.unit}`, product.id));
+    });
+    const updateEstimate = () => {
+      const product = byId.get(select.value);
+      const amount = product ? Number(product.price_per_unit) * Number(quantity.value || 0) : 0;
+      priceText.textContent = product
+        ? `${number(quantity.value)} ${product.unit} × ${money(product.price_per_unit)}`
+        : 'Choose a product';
+      totalText.textContent = product ? money(amount) : '—';
+      subtotalText.textContent = product ? money(amount) : '—';
+    };
+    select.addEventListener('change', updateEstimate);
+    quantity.addEventListener('input', updateEstimate);
+    updateEstimate();
+
+    document.getElementById('addQuickOrder').addEventListener('click', async event => {
+      const product = byId.get(select.value);
+      const message = document.getElementById('quickOrderMessage');
+      const button = event.currentTarget;
+      if (!product || Number(quantity.value) <= 0) {
+        message.textContent = 'Choose an available product and enter a positive quantity.';
+        return;
+      }
+      button.disabled = true;
+      try {
+        await API.addToCart(product.id, Number(quantity.value));
+        message.textContent = `${product.name} added to your cart.`;
+      } catch (error) {
+        message.textContent = error.message || 'Could not add this product to your cart.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
+  function clearSampleData() {
+    document.querySelectorAll('.delivery-tracker, .notif-item, .supplier-item, .price-row').forEach(item => item.remove());
+    document.getElementById('spendBars').replaceChildren();
+    document.getElementById('categorySpend').replaceChildren();
+    document.getElementById('recentOrders').replaceChildren();
+    document.getElementById('supplierList').replaceChildren();
+    document.getElementById('marketPriceList').replaceChildren();
+    document.querySelectorAll('.kpi-num').forEach(item => { item.textContent = '—'; });
+    document.querySelectorAll('.summary-grid .sum-num').forEach(item => { item.textContent = '—'; });
+  }
+
+  async function loadDashboard() {
+    clearSampleData();
+    document.getElementById('dashboardDate').textContent = kigaliDate.format(new Date());
+    if (!API.isAuthenticated()) {
+      window.location.href = 'login.html';
+      return;
+    }
+    try {
+      const [profile, data] = await Promise.all([
+        API.getProfile(),
+        API.getBuyerDashboard(),
+      ]);
+      if (profile.role !== 'buyer') throw new Error('This account does not have a buyer dashboard.');
+
+      const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ') || profile.email;
+      const company = profile.buyer_profile?.company_name || 'Buyer account';
+      const hour = Number(new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Africa/Kigali', hour: '2-digit', hourCycle: 'h23',
+      }).format(new Date()));
+      const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      const initialsText = initials(name);
+      document.getElementById('dashboardGreeting').textContent = `${greeting}, ${name} 👋`;
+      document.getElementById('sidebarName').textContent = name;
+      document.getElementById('sidebarCompany').textContent = company;
+      document.getElementById('sidebarAvatar').textContent = initialsText;
+      document.getElementById('topbarAvatar').textContent = initialsText;
+
+      document.getElementById('monthlySpend').textContent = number(data.monthly_spent);
+      document.getElementById('monthlyOrders').textContent = number(data.monthly_orders);
+      document.getElementById('pendingOrders').textContent = number(data.pending_orders);
+      document.getElementById('wishlistCount').textContent = number(data.wishlist_count);
+      document.getElementById('ordersBadge').textContent = data.pending_orders;
+      document.getElementById('ordersBadge').hidden = !data.pending_orders;
+      const spendDelta = document.getElementById('spendDelta');
+      spendDelta.textContent = data.monthly_growth_percent === null
+        ? 'No previous-month comparison'
+        : `${data.monthly_growth_percent >= 0 ? '↑' : '↓'} ${Math.abs(data.monthly_growth_percent)}% vs last month`;
+      spendDelta.className = `kpi-delta ${data.monthly_growth_percent > 0 ? 'up' : data.monthly_growth_percent < 0 ? 'down' : 'flat'}`;
+      const orderDifference = data.monthly_orders - data.previous_month_orders;
+      const ordersDelta = document.getElementById('ordersDelta');
+      ordersDelta.textContent = `${orderDifference >= 0 ? '+' : ''}${orderDifference} vs last month`;
+      ordersDelta.className = `kpi-delta ${orderDifference > 0 ? 'up' : orderDifference < 0 ? 'down' : 'flat'}`;
+
+      renderOrders(data.recent_orders || []);
+      renderNotifications(data.notifications || []);
+      renderSpendChart(data.monthly_spend || []);
+      renderCategorySpend(data.category_spend || []);
+      renderSuppliers(data.top_suppliers || []);
+      document.getElementById('yearSpend').textContent = `${number(Number(data.year_spent) / 1000)}k`;
+      document.getElementById('averageSpend').textContent = `${number(Number(data.monthly_average) / 1000)}k`;
+      document.getElementById('monthlyGrowth').textContent = data.monthly_growth_percent === null
+        ? '—' : `${data.monthly_growth_percent > 0 ? '+' : ''}${data.monthly_growth_percent}%`;
+
+      const deliveryCard = document.querySelector('.two-col .card');
+      const activeDeliveries = (data.recent_orders || []).filter(order =>
+        ['confirmed', 'processing', 'shipped'].includes(order.status)
+      );
+      if (!activeDeliveries.length) {
+        deliveryCard.append(node('p', 'empty-state', 'No active deliveries.'));
+      } else {
+        activeDeliveries.forEach(order => {
+          const item = node('div', 'delivery-tracker');
+          item.append(
+            node('div', 'dt-order-num', `Order ${order.order_number}`),
+            node('div', '', `${order.product_name} · ${number(order.quantity)} items`),
+            node('div', 'dt-eta', formatOrderStatus(order.status))
+          );
+          deliveryCard.append(item);
+        });
+      }
+
+      const markAllRead = document.getElementById('markAllRead');
+      markAllRead.addEventListener('click', async event => {
+        event.preventDefault();
+        try {
+          await API.markAllNotificationsRead();
+          document.querySelectorAll('.notif-list .ndot').forEach(dot => {
+            dot.className = 'ndot grey';
+          });
+        } catch (error) {
+          document.getElementById('dashboardMessage').textContent = error.message || 'Could not mark notifications as read.';
+        }
+      });
+
+      try {
+        const result = await API.getProducts({ availability_status: 'available' });
+        const products = Array.isArray(result) ? result : result.results || [];
+        renderProducts(products.filter(product => product.availability_status !== 'out_of_stock'));
+        const priceList = document.getElementById('marketPriceList');
+        products.slice(0, 5).forEach(product => {
+          const row = node('div', 'price-row');
+          const left = node('div', 'price-item-left');
+          left.append(node('span', 'price-emoji', '🌱'));
+          const details = node('div');
+          details.append(node('div', 'price-name', product.name), node('div', 'price-source', product.district || product.province || 'Rwanda'));
+          left.append(details);
+          const right = node('div', 'price-item-right');
+          right.append(node('div', 'price-val', `${money(product.price_per_unit)}/${product.unit}`));
+          row.append(left, right);
+          priceList.append(row);
+        });
+        if (!products.length) priceList.append(node('p', '', 'No active products are listed right now.'));
+      } catch (error) {
+        document.getElementById('quickOrderMessage').textContent = error.message || 'Could not load products.';
+        document.getElementById('marketPriceList').append(node('p', '', 'Marketplace listings could not be loaded.'));
+      }
+
+      document.getElementById('dashboardMessage').hidden = true;
+    } catch (error) {
+      document.getElementById('dashboardMessage').textContent = error.message || 'Could not load your buyer dashboard. Please try again.';
+      document.getElementById('dashboardMessage').classList.add('dashboard-error');
+    } finally {
+      document.body.classList.remove('dashboard-loading');
+    }
+  }
+
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
   }
 
-  // Animate chart bars on load
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.chart-bar').forEach(bar => {
-      const target = bar.style.height;
-      bar.style.height = '0%';
-      setTimeout(() => { bar.style.height = target; }, 200);
-    });
+  document.getElementById('logoutButton').addEventListener('click', async event => {
+    event.preventDefault();
+    await API.logout();
+    window.location.href = 'index.html';
   });
 
-  // Tbl action demo feedback
-  document.querySelectorAll('.tbl-action').forEach(btn => {
-    btn.addEventListener('click', function() {
-      if (this.textContent === 'Reorder') {
-        this.textContent = 'Added ✓';
-        this.style.borderColor = 'var(--gf)';
-        this.style.color = 'var(--gd)';
-        setTimeout(() => {
-          this.textContent = 'Reorder';
-          this.style.borderColor = '';
-          this.style.color = '';
-        }, 2000);
-      }
-    });
-  });
+  loadDashboard();
 </script>
 </body>
 </html>

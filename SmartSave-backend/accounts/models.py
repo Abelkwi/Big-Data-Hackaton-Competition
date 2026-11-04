@@ -53,6 +53,7 @@ class Profile(models.Model):
     province = models.CharField(max_length=100, blank=True)
     district = models.CharField(max_length=100, blank=True)
     sector = models.CharField(max_length=100, blank=True)
+    cell = models.CharField(max_length=100, blank=True)
     village = models.CharField(max_length=100, blank=True)
 
     # Timestamps
@@ -128,6 +129,10 @@ class BuyerProfile(models.Model):
     )
     company_name = models.CharField(max_length=200, blank=True)
     buyer_type = models.CharField(max_length=20, choices=BUYER_TYPES, default="individual")
+    supply_needs = models.CharField(max_length=500, blank=True)
+    monthly_volume = models.CharField(max_length=100, blank=True)
+    delivery_frequency = models.CharField(max_length=100, blank=True)
+    registration_number = models.CharField(max_length=50, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -147,11 +152,16 @@ class NGOProfile(models.Model):
         Profile, on_delete=models.CASCADE, related_name="ngo_profile"
     )
     organization_name = models.CharField(max_length=200)
+    organization_type = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True)
     website = models.URLField(blank=True)
     mission = models.TextField(blank=True)
     focus_areas = models.CharField(max_length=300, blank=True)  # comma-separated
+    beneficiaries_served = models.CharField(max_length=100, blank=True)
+    collection_capacity = models.CharField(max_length=100, blank=True)
+    has_transport = models.CharField(max_length=100, blank=True)
+    food_types = models.CharField(max_length=300, blank=True)
     is_approved = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)

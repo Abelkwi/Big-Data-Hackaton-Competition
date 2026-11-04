@@ -25,6 +25,8 @@ class InnovationIdea(models.Model):
     )
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
+    institution = models.CharField(max_length=200, blank=True)
+    project_stage = models.CharField(max_length=50, blank=True)
     description = models.TextField()
     problem_solved = models.TextField(blank=True)
     expected_impact = models.TextField(blank=True)

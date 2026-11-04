@@ -600,10 +600,10 @@
         <div class="eyebrow">Live Donations</div>
         <h2 class="sec-title">Food available right now</h2>
       </div>
-      <a href="#" class="btn btn-secondary btn-sm">View all 47 donations</a>
+      <a href="#feed" class="btn btn-secondary btn-sm" id="availableCount">Loading listings…</a>
     </div>
 
-    <div class="feed-grid">
+    <div class="feed-grid" id="recoveryFeed">
 
       <!-- Donation Card 1 -->
       <div class="donation-card fade-up">
@@ -725,8 +725,8 @@
 
     <!-- View more prompt -->
     <div style="text-align:center;">
-      <a href="#" class="btn btn-secondary">
-        View All 47 Active Donations
+      <a href="#feed" class="btn btn-secondary" id="viewAllDonations">
+        View available donations
         <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -865,15 +865,16 @@
 
         <!-- DONOR FORM -->
         <div id="tab-donor">
+          <form id="donationListingForm">
           <div class="form-section-title">Organisation Details</div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Organisation Name</label>
-              <input type="text" class="form-input" placeholder="e.g. Kigali Heights Hotel" />
+              <input type="text" class="form-input" name="organization_name" placeholder="e.g. Kigali Heights Hotel" required />
             </div>
             <div class="form-group">
               <label class="form-label">Organisation Type</label>
-              <select class="form-select">
+              <select class="form-select" name="organization_type" required>
                 <option value="">Select type</option>
                 <option>Hotel</option>
                 <option>Restaurant</option>
@@ -888,16 +889,16 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Contact Person</label>
-              <input type="text" class="form-input" placeholder="Full name" />
+              <input type="text" class="form-input" name="contact_name" placeholder="Full name" required />
             </div>
             <div class="form-group">
               <label class="form-label">Email Address</label>
-              <input type="email" class="form-input" placeholder="you@example.com" />
+              <input type="email" class="form-input" name="email" placeholder="you@example.com" required />
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">District</label>
-            <select class="form-select">
+            <select class="form-select" name="district" required>
               <option value="">Select your district</option>
               <option>Gasabo</option><option>Kicukiro</option><option>Nyarugenge</option>
               <option>Musanze</option><option>Huye</option><option>Nyanza</option>
@@ -909,7 +910,7 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Food Type</label>
-              <select class="form-select">
+              <select class="form-select" name="food_type" required>
                 <option value="">Select food type</option>
                 <option>Cooked meals</option>
                 <option>Fresh produce</option>
@@ -921,17 +922,17 @@
             </div>
             <div class="form-group">
               <label class="form-label">Estimated Quantity (kg)</label>
-              <input type="number" class="form-input" placeholder="e.g. 50" min="1" />
+              <input type="number" class="form-input" name="quantity" placeholder="e.g. 50" min="0.01" step="0.01" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Pick-up Date</label>
-              <input type="date" class="form-input" />
+              <label class="form-label">Food expiry date</label>
+              <input type="date" class="form-input" name="expiry_date" />
             </div>
             <div class="form-group">
               <label class="form-label">Pick-up Time Window</label>
-              <select class="form-select">
+              <select class="form-select" name="pickup_window">
                 <option>Morning (6AM – 10AM)</option>
                 <option>Midday (10AM – 2PM)</option>
                 <option>Afternoon (2PM – 6PM)</option>
@@ -941,88 +942,43 @@
           </div>
           <div class="form-group">
             <label class="form-label">Additional Notes (optional)</label>
-            <textarea class="form-textarea" placeholder="Packaging, storage conditions, dietary notes, access instructions…"></textarea>
+            <textarea class="form-textarea" name="notes" placeholder="Packaging, storage conditions, dietary notes, access instructions…"></textarea>
           </div>
-          <a href="#" class="btn btn-gold" style="width:100%; justify-content:center; margin-top:4px;">
+          <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center; margin-top:4px;">
             Submit Donation Listing
             <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          </button>
+          <p id="donationFormMessage" role="status" aria-live="polite"></p>
           <p style="font-size:12px; color:var(--tm); margin-top:10px; text-align:center;">Our team will review and confirm within 2–4 hours. No food is collected without your approval.</p>
+          </form>
         </div>
 
         <!-- NGO REQUEST FORM -->
         <div id="tab-ngo" style="display:none;">
           <div class="request-panel">
             <h3 class="sec-title" style="font-size:20px; color:var(--sky-d); margin-bottom:6px;">Request Available Food</h3>
-            <p class="sec-desc" style="font-size:14px; color:#1976D2; margin-bottom:24px;">Fill in your organisation's details. We'll match you with available donations in your district.</p>
-            <div class="form-row">
+            <p class="sec-desc" style="font-size:14px; color:#1976D2; margin-bottom:24px;">Choose an available listing and submit a claim using your SMARTSAVE account.</p>
+            <form id="recoveryClaimForm">
               <div class="form-group">
-                <label class="form-label">Organisation Name</label>
-                <input type="text" class="form-input" placeholder="e.g. Inshuti z'Abana Rwanda" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Organisation Type</label>
-                <select class="form-select">
-                  <option value="">Select type</option>
-                  <option>NGO</option>
-                  <option>Community-Based Organisation</option>
-                  <option>Church / Faith-Based</option>
-                  <option>Government Agency</option>
-                  <option>School / Nutrition Programme</option>
-                  <option>Other</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Contact Person</label>
-                <input type="text" class="form-input" placeholder="Full name" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Email Address</label>
-                <input type="email" class="form-input" placeholder="you@example.com" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">District</label>
-                <select class="form-select">
-                  <option value="">Select district</option>
-                  <option>Gasabo</option><option>Kicukiro</option><option>Nyarugenge</option>
-                  <option>Musanze</option><option>Huye</option><option>Nyanza</option>
-                  <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
+                <label class="form-label" for="recoveryListing">Available donation</label>
+                <select class="form-select" id="recoveryListing" name="listing" required>
+                  <option value="">Loading available donations…</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">Number of Beneficiaries</label>
-                <input type="number" class="form-input" placeholder="e.g. 200" min="1" />
+                <label class="form-label" for="claimQuantity">Quantity requested (kg)</label>
+                <input type="number" class="form-input" id="claimQuantity" name="quantity" min="0.01" step="0.01" required />
               </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Type of Food Needed</label>
-              <select class="form-select">
-                <option value="">Any available food</option>
-                <option>Cooked meals</option>
-                <option>Fresh produce</option>
-                <option>Dry goods</option>
-                <option>Baked goods</option>
-                <option>Mixed / Any</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Collection Capacity</label>
-              <select class="form-select">
-                <option>Up to 50 kg</option>
-                <option>50–150 kg</option>
-                <option>150–500 kg</option>
-                <option>500 kg +</option>
-              </select>
-            </div>
-            <a href="#" class="btn btn-sky" style="width:100%; justify-content:center; margin-top:4px;">
-              Submit Food Request
+              <div class="form-group">
+                <label class="form-label" for="claimNotes">Notes <span class="optional">(optional)</span></label>
+                <textarea class="form-textarea" id="claimNotes" name="notes" placeholder="Collection details or additional information"></textarea>
+              </div>
+              <button type="submit" class="btn btn-sky" style="width:100%; justify-content:center; margin-top:4px;">
+              Submit Food Claim
               <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <p style="font-size:12px; color:#1976D2; margin-top:10px; text-align:center;">We'll match you with available donations and confirm within a few hours.</p>
+              </button>
+              <p id="claimFormMessage" role="status" aria-live="polite"></p>
+            </form>
           </div>
         </div>
 
@@ -1102,6 +1058,8 @@
   </div>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
   // Nav scroll
   const nav = document.getElementById('nav');
@@ -1112,16 +1070,142 @@
     document.getElementById('tab-donor').style.display = tab === 'donor' ? 'block' : 'none';
     document.getElementById('tab-ngo').style.display   = tab === 'ngo'   ? 'block' : 'none';
     document.querySelectorAll('.org-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
   }
 
-  // Claim button feedback
-  document.querySelectorAll('.dc-claim-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.textContent = 'Requested ✓';
-      btn.style.background = 'var(--gf)';
-      btn.disabled = true;
+  const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Africa/Kigali',
+    dateStyle: 'medium',
+  });
+  const number = value => Number(value || 0).toLocaleString('en-RW', { maximumFractionDigits: 2 });
+  const recoveryFeed = document.getElementById('recoveryFeed');
+  const listingSelect = document.getElementById('recoveryListing');
+  let recoveryListings = [];
+
+  function renderRecoveryListings() {
+    recoveryFeed.replaceChildren();
+    const available = recoveryListings.filter(listing => listing.status === 'available');
+    document.getElementById('availableCount').textContent = `${available.length} available donations`;
+    document.getElementById('viewAllDonations').textContent = `View ${available.length} available donations`;
+    listingSelect.replaceChildren(new Option(
+      available.length ? 'Select a donation' : 'No donations currently available',
+      ''
+    ));
+    available.forEach(listing => {
+      const card = document.createElement('article');
+      card.className = 'donation-card';
+      const content = document.createElement('div');
+      content.className = 'dc-body';
+      const title = document.createElement('div');
+      title.className = 'dc-title';
+      title.textContent = listing.title;
+      const donor = document.createElement('div');
+      donor.className = 'dc-donor';
+      donor.textContent = `${listing.donor_name} · ${listing.pickup_location}`;
+      const quantity = document.createElement('div');
+      quantity.className = 'dc-qty';
+      quantity.textContent = `${number(listing.quantity)} ${listing.unit}`;
+      const expiry = document.createElement('div');
+      expiry.className = 'dc-expires';
+      expiry.textContent = listing.expiry_date
+        ? `Expires: ${dateFormatter.format(new Date(`${listing.expiry_date}T12:00:00+02:00`))}`
+        : 'No expiry date provided';
+      const claimButton = document.createElement('button');
+      claimButton.type = 'button';
+      claimButton.className = 'dc-claim-btn';
+      claimButton.textContent = 'Request this donation';
+      claimButton.addEventListener('click', () => {
+        const tabButton = document.querySelectorAll('.org-tab')[1];
+        showTab('ngo', tabButton);
+        listingSelect.value = String(listing.id);
+        document.getElementById('claimQuantity').max = listing.quantity;
+        document.getElementById('claimQuantity').value = listing.quantity;
+        document.getElementById('tab-ngo').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      content.append(title, donor, quantity, expiry, claimButton);
+      card.append(content);
+      recoveryFeed.append(card);
+      listingSelect.add(new Option(
+        `${listing.title} — ${number(listing.quantity)} ${listing.unit} at ${listing.pickup_location}`,
+        listing.id
+      ));
     });
+    if (!available.length) {
+      const empty = document.createElement('p');
+      empty.textContent = 'No food recovery listings are available right now.';
+      recoveryFeed.append(empty);
+    }
+  }
+
+  async function loadRecoveryListings() {
+    const response = await API.getRecoveryListings({ status: 'available' });
+    recoveryListings = Array.isArray(response) ? response : response.results || [];
+    renderRecoveryListings();
+  }
+
+  document.getElementById('donationListingForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const values = Object.fromEntries(new FormData(form));
+    const button = form.querySelector('button[type="submit"]');
+    const message = document.getElementById('donationFormMessage');
+    button.disabled = true;
+    message.textContent = 'Submitting donation…';
+    try {
+      await API.createRecoveryListing({
+        title: `${values.organization_name} — ${values.food_type}`.slice(0, 200),
+        description: `${values.organization_type}. Contact: ${values.contact_name} (${values.email}). ${values.notes || ''}`.trim(),
+        quantity: values.quantity,
+        unit: 'kg',
+        expiry_date: values.expiry_date || null,
+        pickup_location: `${values.district}, Rwanda`,
+        pickup_instructions: `Pickup window: ${values.pickup_window}. Contact ${values.contact_name} at ${values.email}.`,
+      });
+      form.reset();
+      message.textContent = 'Donation listed successfully.';
+      await loadRecoveryListings();
+    } catch (error) {
+      message.textContent = error.message || 'Could not submit the donation. Please sign in and try again.';
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  listingSelect.addEventListener('change', () => {
+    const listing = recoveryListings.find(item => String(item.id) === listingSelect.value);
+    const quantity = document.getElementById('claimQuantity');
+    quantity.max = listing ? listing.quantity : '';
+    quantity.value = listing ? listing.quantity : '';
+  });
+
+  document.getElementById('recoveryClaimForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const values = Object.fromEntries(new FormData(form));
+    const button = form.querySelector('button[type="submit"]');
+    const message = document.getElementById('claimFormMessage');
+    button.disabled = true;
+    message.textContent = 'Submitting claim…';
+    try {
+      await API.claimRecoveryListing(values.listing, {
+        listing: Number(values.listing),
+        quantity: values.quantity,
+        notes: values.notes || '',
+      });
+      form.reset();
+      message.textContent = 'Your food claim was submitted.';
+      await loadRecoveryListings();
+    } catch (error) {
+      message.textContent = error.message || 'Could not submit the food claim. Please sign in and try again.';
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  recoveryFeed.textContent = 'Loading live donations…';
+  loadRecoveryListings().catch(error => {
+    recoveryFeed.textContent = error.message || 'Could not load live donations.';
+    listingSelect.replaceChildren(new Option('Could not load donations', ''));
   });
 
   // Animated counters

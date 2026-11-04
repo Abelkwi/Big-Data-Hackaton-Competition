@@ -289,13 +289,8 @@
 
             <div class="form-group">
               <label class="form-label">Email Address (for account access)</label>
-              <input type="email" class="form-input" name="email" placeholder="you@example.com" required />
+              <input type="email" class="form-input" id="farmerFormEmail" name="email" placeholder="you@example.com" required />
               <div class="form-hint">This email will be used to access your account and receive updates.</div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Email <span class="optional">(optional)</span></label>
-              <input type="email" class="form-input" placeholder="you@example.com" />
             </div>
 
             <div class="form-group">
@@ -318,26 +313,45 @@
               Farm &amp; Location Details
             </div>
 
+            <div data-rwanda-address>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">District</label>
-                <select class="form-select" required>
-                  <option value="">Select your district</option>
-                  <option>Musanze</option><option>Huye</option><option>Nyanza</option>
-                  <option>Rubavu</option><option>Rusizi</option><option>Rwamagana</option>
-                  <option>Bugesera</option><option>Kamonyi</option><option>Gasabo</option>
-                  <option>Kicukiro</option><option>Nyarugenge</option>
+                <label class="form-label">Province</label>
+                <select class="form-select" name="province" data-location-level="province" required>
+                  <option value="">Loading provinces…</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">Sector / Village <span class="optional">(optional)</span></label>
-                <input type="text" class="form-input" placeholder="e.g. Cyuve, Kinigi" />
+                <label class="form-label">District</label>
+                <select class="form-select" name="district" data-location-level="district" required disabled>
+                  <option value="">Select district</option>
+                </select>
               </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Sector</label>
+                <select class="form-select" name="sector" data-location-level="sector" required disabled>
+                  <option value="">Select sector</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cell</label>
+                <select class="form-select" name="cell" data-location-level="cell" required disabled>
+                  <option value="">Select cell</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Village</label>
+              <input type="text" class="form-input" name="village" placeholder="Enter your village" />
+            </div>
+            <p class="form-hint" data-location-error role="status"></p>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Cooperative <span class="optional">(optional)</span></label>
-              <input type="text" class="form-input" placeholder="e.g. Akagera Farmers Cooperative" />
+              <label class="form-label">Farm or Cooperative Name <span class="optional">(optional)</span></label>
+              <input type="text" class="form-input" name="farm_name" placeholder="e.g. Akagera Farmers Cooperative" />
             </div>
 
             <div class="form-group">
@@ -357,7 +371,7 @@
 
             <div class="form-group">
               <label class="form-label">Estimated Farm Size <span class="optional">(optional)</span></label>
-              <select class="form-select">
+              <select class="form-select" name="farm_size">
                 <option value="">Select size range</option>
                 <option>Less than 0.5 hectares</option>
                 <option>0.5 – 1 hectare</option>
@@ -385,16 +399,10 @@
 <p class="form-hint" style="margin-bottom:18px;">We'll send a confirmation link to verify your email address. This helps keep the marketplace safe for everyone.</p>
 
             <div class="form-group">
-              <label class="form-label">Email Address</label>
-              <div class="phone-row">
-                <input type="email" class="form-input" placeholder="you@example.com" disabled style="background:var(--gp);" />
-                <button type="button" class="verify-btn" onclick="sendCode()">Send Code</button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Verification Code</label>
-              <input type="text" class="form-input" name="verification_code" placeholder="Enter 6-digit code" maxlength="6" />
+              <label class="form-label">Verify your registration email</label>
+              <button type="button" class="verify-btn" id="googleVerifyButton">Verify with Google</button>
+              <p class="form-hint" id="googleVerifyError" role="status" hidden></p>
+              <p class="form-hint">Use the same Google email address entered in step 1.</p>
             </div>
 
             <div class="step-nav">
@@ -417,9 +425,9 @@
           <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h2 class="success-title">Welcome to SMARTSAVE!</h2>
-        <p class="success-desc">Your farmer account has been created. Our team will verify your details within 24 hours — you'll get an SMS once you're ready to start listing produce.</p>
-        <a href="buyer-dashboard.html" class="btn btn-primary">
-          Go to Farmer Dashboard
+        <p class="success-desc" id="successDesc">Your farmer account has been created and your Google email is verified.</p>
+        <a href="farmers.html" class="btn btn-primary">
+          Browse Farmers
           <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -431,6 +439,8 @@
 
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
+<script src="js/rwanda-locations.js"></script>
+<script src="js/google-verification.js"></script>
 <script>
   // Crop chip multi-select
   document.querySelectorAll('.crop-chip').forEach(chip => {
@@ -439,6 +449,15 @@
 
   // Step navigation
   function goToStep(step) {
+    const activeStep = document.querySelector('.form-step.active');
+    if (step > Number(activeStep.id.replace('step', ''))) {
+      const invalid = [...activeStep.querySelectorAll('input, select')]
+        .find(field => !field.checkValidity());
+      if (invalid) {
+        invalid.reportValidity();
+        return;
+      }
+    }
     document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
 
@@ -453,19 +472,23 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function sendCode() {
-    const btn = event.target;
-    btn.textContent = 'Code Sent ✓';
-    btn.style.background = 'var(--gl)';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = 'Resend Code'; btn.disabled = false; }, 5000);
-  }
+  GoogleVerification.init({
+    buttonId: 'googleVerifyButton',
+    errorId: 'googleVerifyError',
+    emailInputId: 'farmerFormEmail',
+  });
 
   // Real backend registration via SMARTSAVE REST API
   document.getElementById('farmerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const submitBtn = this.querySelector('button[type="submit"]');
     const form = new FormData(this);
+    const credential = GoogleVerification.getCredential();
+    if (!credential) {
+      document.getElementById('googleVerifyError').textContent = 'Verify your email with Google before creating your account.';
+      document.getElementById('googleVerifyError').hidden = false;
+      return;
+    }
     const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = 'Creating account...';
@@ -478,14 +501,29 @@
       password: form.get('password1') || '',
       password2: form.get('password1') || '',
       role: 'farmer',
+      google_credential: credential,
+      province: form.get('province') || '',
+      district: form.get('district') || '',
+      sector: form.get('sector') || '',
+      cell: form.get('cell') || '',
+      village: form.get('village') || '',
+      farm_name: form.get('farm_name') || '',
+      farm_size: form.get('farm_size') || '',
+      main_crop: [...document.querySelectorAll('.crop-chip.selected')]
+        .map(chip => chip.textContent.trim().replace(/^[^\w]+/u, ''))
+        .join(', '),
     };
 
     try {
       await API.registerFarmer(payload);
-      // Auto-login after registration
+      let loginMessage = '';
       try {
         await API.login(payload.email, payload.password);
-      } catch (e) {}
+      } catch (loginError) {
+        console.error('Farmer account was created, but automatic sign-in failed.', loginError);
+        loginMessage = 'Account created successfully. Please sign in to continue.';
+      }
+      if (loginMessage) document.getElementById('successDesc').textContent = loginMessage;
       document.getElementById('formWrap').style.display = 'none';
       document.getElementById('successBox').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });

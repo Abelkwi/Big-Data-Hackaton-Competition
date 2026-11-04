@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from google.auth.exceptions import GoogleAuthError
@@ -28,6 +28,46 @@ def verify_google_id_token(token, client_id):
     from google.oauth2.id_token import verify_oauth2_token
 
     return verify_oauth2_token(token, Request(), audience=client_id)
+
+
+def get_verified_google_email(credential):
+    client_id = getattr(settings, "GOOGLE_OAUTH_CLIENT_ID", "")
+    if not client_id:
+        raise serializers.ValidationError(
+            {"google_credential": "Google verification is not configured."}
+        )
+    if not isinstance(credential, str) or not credential:
+        raise serializers.ValidationError(
+            {"google_credential": "A Google credential is required."}
+        )
+    try:
+        claims = verify_google_id_token(credential, client_id)
+    except (ValueError, GoogleAuthError):
+        raise serializers.ValidationError(
+            {"google_credential": "The Google credential is invalid or expired."}
+        )
+    email = claims.get("email")
+    if (
+        not isinstance(email, str)
+        or not email.strip()
+        or claims.get("email_verified") is not True
+        or not isinstance(claims.get("sub"), str)
+        or not claims["sub"]
+    ):
+        raise serializers.ValidationError(
+            {"google_credential": "Google must provide a verified email address."}
+        )
+    return email.strip().lower()
+
+
+class GoogleVerifyView(APIView):
+    """Verify a Google identity without creating or signing in to an account."""
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        email = get_verified_google_email(request.data.get("credential"))
+        return Response({"email": email, "email_verified": True})
 
 
 class GoogleLoginView(APIView):
@@ -123,9 +163,14 @@ class FarmerRegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
     def perform_create(self, serializer):
-        user = serializer.save(role="farmer")
-        Profile.objects.get_or_create(user=user)
-        FarmerProfile.objects.get_or_create(profile=user.profile)
+        email = get_verified_google_email(
+            self.request.data.get("google_credential")
+        )
+        if email != serializer.validated_data["email"].strip().lower():
+            raise serializers.ValidationError(
+                {"google_credential": "Verify the same email address used for registration."}
+            )
+        serializer.save(role="farmer", is_verified=True)
 
 
 class BuyerRegisterView(generics.CreateAPIView):
@@ -135,9 +180,7 @@ class BuyerRegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
     def perform_create(self, serializer):
-        user = serializer.save(role="buyer")
-        Profile.objects.get_or_create(user=user)
-        BuyerProfile.objects.get_or_create(profile=user.profile)
+        serializer.save(role="buyer")
 
 
 class NGORegisterView(generics.CreateAPIView):
@@ -147,9 +190,7 @@ class NGORegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
     def perform_create(self, serializer):
-        user = serializer.save(role="ngo")
-        Profile.objects.get_or_create(user=user)
-        NGOProfile.objects.get_or_create(profile=user.profile)
+        serializer.save(role="ngo")
 
 
 class ProfileView(APIView):

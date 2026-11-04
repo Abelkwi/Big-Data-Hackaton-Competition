@@ -594,16 +594,16 @@
 <!-- ── PARTNERS ── -->
 <div class="partners-section" id="partners">
   <div class="partners-inner">
-    <p class="partners-lbl">Trusted by government, NGOs, universities &amp; private sector</p>
+    <p class="partners-lbl">Explore Rwanda's government, research, development &amp; innovation institutions</p>
     <div class="partners-row">
-      <div class="p-chip">RAB</div>
-      <div class="p-chip">MINICOM</div>
-      <div class="p-chip">MINAGRI</div>
-      <div class="p-chip">University of Rwanda</div>
-      <div class="p-chip">WFP Rwanda</div>
-      <div class="p-chip">RDB</div>
-      <div class="p-chip">NAEB</div>
-      <div class="p-chip">Kigali Innovation City</div>
+      <a class="p-chip" href="https://www.rab.gov.rw/" target="_blank" rel="noopener noreferrer">RAB</a>
+      <a class="p-chip" href="https://www.minicom.gov.rw/" target="_blank" rel="noopener noreferrer">MINICOM</a>
+      <a class="p-chip" href="https://www.minagri.gov.rw/" target="_blank" rel="noopener noreferrer">MINAGRI</a>
+      <a class="p-chip" href="https://ur.ac.rw/" target="_blank" rel="noopener noreferrer">University of Rwanda</a>
+      <a class="p-chip" href="https://www.wfp.org/countries/rwanda" target="_blank" rel="noopener noreferrer">WFP Rwanda</a>
+      <a class="p-chip" href="https://rdb.rw/" target="_blank" rel="noopener noreferrer">RDB</a>
+      <a class="p-chip" href="https://www.naeb.gov.rw/" target="_blank" rel="noopener noreferrer">NAEB</a>
+      <a class="p-chip" href="https://rdb.rw/the-government-of-rwanda-africa50-and-badea-break-ground-on-the-construction-of-kigali-innovation-city/" target="_blank" rel="noopener noreferrer">Kigali Innovation City</a>
     </div>
   </div>
 </div>
@@ -666,24 +666,18 @@
       </div>
 
       <!-- Contact form -->
-      <div class="card fade-up">
+      <form class="card fade-up" id="aboutContactForm">
         <div class="form-group">
           <label class="form-label">Full Name</label>
-          <input type="text" class="form-input" placeholder="Your name" />
+          <input type="text" class="form-input" name="name" placeholder="Your name" required />
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-input" placeholder="you@example.com" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email (optional)</label>
-            <input type="email" class="form-input" placeholder="you@example.com" />
-          </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" name="email" placeholder="you@example.com" required />
         </div>
         <div class="form-group">
           <label class="form-label">I am a...</label>
-          <select class="form-input">
+          <select class="form-input" name="subject">
             <option value="">Select one</option>
             <option>Farmer</option>
             <option>Buyer / Institution</option>
@@ -697,13 +691,14 @@
         </div>
         <div class="form-group">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell us how we can help, or how you'd like to get involved…"></textarea>
+          <textarea class="form-textarea" name="message" placeholder="Tell us how we can help, or how you'd like to get involved…" required></textarea>
         </div>
-        <a href="contact.html" class="btn btn-primary" style="width:100%; justify-content:center;">
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
           Send Message
           <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
+        </button>
+        <p id="aboutContactMessage" role="status" aria-live="polite"></p>
+      </form>
 
     </div>
   </div>
@@ -817,6 +812,8 @@
   </div>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
   // Nav scroll
   const nav = document.getElementById('nav');
@@ -829,6 +826,25 @@
     document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
     if (!wasOpen) item.classList.add('open');
   }
+
+  document.getElementById('aboutContactForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const button = form.querySelector('button[type="submit"]');
+    const message = document.getElementById('aboutContactMessage');
+    const payload = Object.fromEntries(new FormData(form));
+    button.disabled = true;
+    message.textContent = 'Sending your message…';
+    try {
+      await API.submitContact(payload);
+      form.reset();
+      message.textContent = 'Your message has been sent. Thank you for getting in touch.';
+    } catch (error) {
+      message.textContent = error.message || 'Could not send your message. Please try again.';
+    } finally {
+      button.disabled = false;
+    }
+  });
 
   // Fade up
   const fadeObs = new IntersectionObserver(entries => {
