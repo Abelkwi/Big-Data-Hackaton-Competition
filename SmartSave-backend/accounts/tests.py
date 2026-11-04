@@ -124,6 +124,15 @@ class GoogleLoginTests(TestCase):
             get_user_model().objects.filter(email="google-user@example.com").exists()
         )
 
+    def test_google_login_rejects_malformed_token(self):
+        response = self.client.post(
+            self.endpoint,
+            {"credential": "not-a-jwt"},
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 401)
+
     @override_settings(GOOGLE_OAUTH_CLIENT_ID="")
     def test_google_login_reports_missing_server_configuration(self):
         response = self.client.post(

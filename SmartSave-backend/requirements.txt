@@ -9,6 +9,7 @@ dj-database-url>=2.2
 djangorestframework>=3.17
 djangorestframework-simplejwt>=5.5
 google-auth>=2.40
+requests>=2.32
 django-filter>=26.0
 django-cors-headers>=4.9
 
