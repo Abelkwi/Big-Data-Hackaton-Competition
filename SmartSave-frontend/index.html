@@ -815,6 +815,7 @@
       flex-wrap: wrap;
     }
     .partner-logo {
+      display: inline-block;
       padding: 12px 24px;
       background: var(--green-pale);
       border-radius: var(--radius-sm);
@@ -823,6 +824,12 @@
       font-weight: 700;
       color: var(--text-muted);
       white-space: nowrap;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .partner-logo:hover, .partner-logo:focus-visible {
+      background: var(--green-light);
+      color: var(--green-dark);
     }
 
     /* ─── CTA ─── */
@@ -1574,13 +1581,13 @@
     <div class="partners-inner">
       <p class="partners-label">Trusted by government, NGOs, universities &amp; private sector</p>
       <div class="partners-row">
-        <div class="partner-logo">RAB</div>
-        <div class="partner-logo">MINICOM</div>
-        <div class="partner-logo">MINAGRI</div>
-        <div class="partner-logo">University of Rwanda</div>
-        <div class="partner-logo">WFP Rwanda</div>
-        <div class="partner-logo">RDB</div>
-        <div class="partner-logo">NAEB</div>
+        <a class="partner-logo" href="https://www.rab.gov.rw/" target="_blank" rel="noopener noreferrer">RAB</a>
+        <a class="partner-logo" href="https://www.minicom.gov.rw/" target="_blank" rel="noopener noreferrer">MINICOM</a>
+        <a class="partner-logo" href="https://www.minagri.gov.rw/" target="_blank" rel="noopener noreferrer">MINAGRI</a>
+        <a class="partner-logo" href="https://ur.ac.rw/" target="_blank" rel="noopener noreferrer">University of Rwanda</a>
+        <a class="partner-logo" href="https://www.wfp.org/countries/rwanda" target="_blank" rel="noopener noreferrer">WFP Rwanda</a>
+        <a class="partner-logo" href="https://rdb.rw/" target="_blank" rel="noopener noreferrer">RDB</a>
+        <a class="partner-logo" href="https://www.naeb.gov.rw/" target="_blank" rel="noopener noreferrer">NAEB</a>
       </div>
     </div>
   </div>
