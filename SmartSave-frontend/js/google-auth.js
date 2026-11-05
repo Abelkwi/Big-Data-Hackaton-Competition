@@ -24,8 +24,10 @@ window.GoogleAuth = {
           error.classList.remove('show');
           button.setAttribute('aria-busy', 'true');
           try {
-            await API.loginWithGoogle(credential);
-            window.location.href = redirectUrl;
+            const profile = await API.loginWithGoogle(credential);
+            window.location.href = typeof redirectUrl === 'function'
+              ? redirectUrl(profile)
+              : redirectUrl;
           } catch (err) {
             showError(err.message || 'Google sign-in failed. Please try again.');
             button.removeAttribute('aria-busy');

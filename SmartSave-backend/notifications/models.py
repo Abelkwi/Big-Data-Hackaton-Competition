@@ -15,6 +15,8 @@ class Notification(models.Model):
         ("recovery", "Food Recovery"),
         ("blog", "Blog"),
         ("system", "System"),
+        ("security", "Security alert"),
+        ("announcement", "Announcement"),
     ]
 
     recipient = models.ForeignKey(

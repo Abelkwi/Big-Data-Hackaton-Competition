@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#183c2b" />
+  <title>NGO Dashboard — SMARTSAVE Rwanda</title>
+  <style>
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-ExtraBold.ttf') format('truetype'); font-weight:800; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+
+    :root {
+      --forest:#183c2b; --green:#237348; --leaf:#60a879; --mint:#eaf4ed;
+      --canvas:#f6f8f5; --ink:#1d3024; --body:#516157; --muted:#829087;
+      --line:#e4ebe4; --gold:#bd8122; --gold-bg:#fff5e3; --blue:#4478a7;
+      --blue-bg:#eaf2fa; --rose:#b85b4c; --rose-bg:#fff0ed;
+      --teal:#287e83; --teal-bg:#e8f4f3; --violet:#7861a0; --violet-bg:#f1edf8;
+      --coral:#c96c59; --coral-bg:#fff0eb;
+      --sidebar:248px; --radius:16px; --shadow:0 12px 32px rgba(24,60,43,.06);
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body { min-height:100vh; background:var(--canvas); color:var(--body); font:14px/1.6 'Inter',system-ui,sans-serif; }
+    h1,h2,h3 { color:var(--ink); font-family:'Manrope',sans-serif; line-height:1.2; }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; }
+    svg { display:block; }
+    .sidebar { position:fixed; inset:0 auto 0 0; z-index:20; display:flex; flex-direction:column; width:var(--sidebar); padding:22px 16px 16px; overflow:hidden; background:var(--forest); color:white; }
+    .brand { display:flex; align-items:center; gap:10px; padding:0 8px 22px; border-bottom:1px solid #ffffff1a; }
+    .brand-mark { display:grid; width:36px; height:36px; place-items:center; overflow:hidden; border-radius:11px; background:#fff; }
+    .brand-mark img { width:100%; height:100%; object-fit:contain; }
+    .brand-name { color:white; font:800 16px 'Manrope',sans-serif; letter-spacing:-.4px; }
+    .brand-name span { color:#8bc49b; }
+    .org-card { display:flex; align-items:center; gap:11px; margin:18px 0 22px; padding:12px; border:1px solid #ffffff15; border-radius:14px; background:#ffffff0b; }
+    .org-avatar { display:grid; width:38px; height:38px; flex:none; place-items:center; border-radius:12px; background:#d8eadc; color:var(--forest); font:800 13px 'Manrope',sans-serif; }
+    .org-name { overflow:hidden; color:white; font:700 12px 'Manrope',sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+    .org-type { margin-top:2px; color:#ffffff85; font-size:11px; }
+    .side-nav { display:grid; min-height:0; flex:1; align-content:start; gap:3px; overflow-y:auto; padding:0 4px 12px 0; scrollbar-color:#ffffff30 transparent; scrollbar-width:thin; }
+    .nav-label { margin:13px 10px 5px; color:#ffffff61; font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; }
+    .nav-label:first-child { margin-top:0; }
+    .nav-link { display:flex; align-items:center; gap:11px; min-height:39px; padding:0 11px; border-radius:10px; color:#ffffffb8; font-size:12px; transition:background .18s,color .18s; }
+    .nav-link svg { width:17px; height:17px; flex:none; }
+    .nav-link:hover,.nav-link.active { background:#ffffff14; color:white; }
+    .nav-link.active { box-shadow:inset 3px 0 #83c794; font-weight:600; }
+    .nav-link.active svg { color:#9bd2a8; }
+    .sidebar-bottom { flex:none; margin-top:auto; padding-top:12px; border-top:1px solid #ffffff1a; }
+    .sidebar-bottom .nav-link { width:100%; border:0; background:none; text-align:left; cursor:pointer; }
+    .sidebar-bottom .nav-link:hover { background:#ffffff14; }
+    .topbar { position:sticky; top:0; z-index:10; display:flex; height:72px; align-items:center; justify-content:space-between; margin-left:var(--sidebar); padding:0 38px; border-bottom:1px solid var(--line); background:#ffffffed; backdrop-filter:blur(16px); }
+    .crumb { color:var(--muted); font-size:12px; }
+    .topbar-right { display:flex; align-items:center; gap:11px; }
+    .top-icon { position:relative; display:grid; width:38px; height:38px; place-items:center; border:1px solid var(--line); border-radius:50%; background:#fff; color:var(--body); }
+    .top-icon svg { width:17px; height:17px; }
+    .dot { position:absolute; top:8px; right:8px; width:7px; height:7px; border:1.5px solid white; border-radius:50%; background:var(--rose); }
+    .top-avatar { display:grid; width:36px; height:36px; place-items:center; border-radius:50%; background:#e1eee4; color:var(--forest); font:800 12px 'Manrope',sans-serif; }
+    .mobile-toggle { display:none; }
+    main { min-height:calc(100vh - 72px); margin-left:var(--sidebar); }
+    .page { width:min(1280px,100%); margin:auto; padding:34px 38px 56px; }
+    .welcome { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:24px; }
+    .eyebrow { margin-bottom:6px; color:var(--green); font-size:11px; font-weight:700; letter-spacing:1.35px; text-transform:uppercase; }
+    h1 { font-size:clamp(25px,3vw,34px); letter-spacing:-1.1px; }
+    .welcome-copy { margin-top:7px; color:var(--muted); font-size:13px; }
+    .welcome-actions { display:flex; gap:9px; }
+    .button { display:inline-flex; min-height:42px; align-items:center; justify-content:center; gap:8px; padding:0 17px; border:1px solid transparent; border-radius:10px; font-size:12px; font-weight:700; transition:transform .15s,background .15s; }
+    .button:hover { transform:translateY(-1px); }
+    .button svg { width:15px; height:15px; }
+    .button-primary { background:var(--green); color:white; }
+    .button-primary:hover { background:var(--forest); }
+    .button-light { border-color:var(--line); background:white; color:var(--ink); }
+    .preview-note { display:flex; align-items:center; gap:9px; margin-bottom:17px; padding:10px 13px; border:1px solid #e6decb; border-radius:10px; background:#fffaf0; color:#78694d; font-size:11px; }
+    .preview-note svg { width:15px; height:15px; flex:none; }
+    .preview-note[hidden] { display:none; }
+    .error-note { margin-bottom:16px; padding:12px 14px; border:1px solid #f1c7be; border-radius:10px; background:var(--rose-bg); color:#8e4034; font-size:12px; }
+    .error-note[hidden] { display:none; }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:17px; }
+    .metric { position:relative; overflow:hidden; min-height:152px; padding:19px 19px 16px; border:1px solid var(--line); border-radius:var(--radius); background:white; box-shadow:0 2px 6px #19391b08; }
+    .metric::after { position:absolute; top:0; right:0; bottom:0; width:3px; background:var(--leaf); content:''; }
+    .metric:nth-child(2)::after { background:#d4a449; }
+    .metric:nth-child(3)::after { background:#6b95b8; }
+    .metric:nth-child(4)::after { background:#a486ba; }
+    .metric-icon { display:grid; width:34px; height:34px; place-items:center; margin-bottom:14px; border-radius:10px; background:var(--mint); color:var(--green); }
+    .metric:nth-child(2) .metric-icon { background:var(--gold-bg); color:var(--gold); }
+    .metric:nth-child(3) .metric-icon { background:var(--blue-bg); color:var(--blue); }
+    .metric:nth-child(4) .metric-icon { background:#f3eef7; color:#8765a0; }
+    .metric-icon svg { width:17px; height:17px; }
+    .metric-value { color:var(--ink); font:800 27px/1 'Manrope',sans-serif; letter-spacing:-.7px; }
+    .metric-label { margin-top:7px; color:var(--muted); font-size:11px; }
+    .metric-foot { margin-top:10px; color:var(--green); font-size:10px; font-weight:700; }
+    .content-grid { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(270px,.9fr); gap:16px; }
+    .column { display:grid; align-content:start; gap:16px; min-width:0; }
+    .panel { padding:20px; border:1px solid var(--line); border-radius:var(--radius); background:#fff; box-shadow:0 2px 6px #19391b08; }
+    .panel-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+    .panel-title { font-size:14px; font-weight:800; letter-spacing:-.2px; }
+    .panel-subtitle { margin-top:4px; color:var(--muted); font-size:11px; }
+    .text-link { color:var(--green); font-size:11px; font-weight:700; }
+    .text-link:hover { text-decoration:underline; }
+    .impact-headline { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .period-tag { padding:5px 9px; border-radius:7px; background:var(--canvas); color:var(--muted); font-size:10px; font-weight:600; }
+    .impact-number { margin:15px 0 3px; color:var(--ink); font:800 25px 'Manrope',sans-serif; letter-spacing:-.7px; }
+    .impact-hint { color:var(--muted); font-size:11px; }
+    .chart { display:flex; height:120px; align-items:flex-end; justify-content:space-between; gap:10px; margin-top:23px; padding:0 7px; border-bottom:1px solid var(--line); background:repeating-linear-gradient(to top,transparent 0,transparent 29px,#eef2ed 30px); }
+    .chart-col { display:flex; width:100%; height:100%; flex-direction:column; align-items:center; justify-content:flex-end; gap:7px; }
+    .chart-bar { width:min(25px,65%); min-height:5px; border-radius:6px 6px 0 0; background:#dbe9de; }
+    .chart-bar.current { background:var(--green); }
+    .chart-label { padding-bottom:7px; color:var(--muted); font-size:9px; }
+    .chart-legend { display:flex; align-items:center; gap:7px; margin-top:12px; color:var(--muted); font-size:10px; }
+    .legend-dot { width:7px; height:7px; border-radius:50%; background:var(--green); }
+    .task-list { display:grid; gap:0; }
+    .task { display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid #edf1ed; }
+    .task:first-child { padding-top:2px; border-top:0; }
+    .task-icon { display:grid; width:35px; height:35px; flex:none; place-items:center; border-radius:11px; background:var(--mint); color:var(--green); }
+    .task-icon svg { width:17px; height:17px; }
+    .task-icon.gold { background:var(--gold-bg); color:var(--gold); }
+    .task-icon.blue { background:var(--blue-bg); color:var(--blue); }
+    .task-title { color:var(--ink); font:700 11px 'Manrope',sans-serif; }
+    .task-desc { margin-top:3px; color:var(--muted); font-size:10px; }
+    .task-arrow { margin-left:auto; color:#a0aaa2; }
+    .task-arrow svg { width:15px; height:15px; }
+    .pickup-card { position:relative; overflow:hidden; padding:21px; border:0; background:var(--forest); color:#ffffffc9; }
+    .pickup-card::after { position:absolute; top:-45px; right:-35px; width:160px; height:160px; border:1px solid #ffffff18; border-radius:50%; box-shadow:0 0 0 24px #ffffff08,0 0 0 48px #ffffff05; content:''; }
+    .pickup-card .panel-heading { position:relative; z-index:1; margin-bottom:18px; }
+    .pickup-card .panel-title { color:white; }
+    .pickup-label { color:#a8d5b3; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+    .pickup-title { margin:8px 0 5px; color:white; font:800 18px 'Manrope',sans-serif; }
+    .pickup-details { display:flex; align-items:center; gap:7px; margin-top:7px; color:#ffffffad; font-size:11px; }
+    .pickup-details svg { width:14px; height:14px; color:#a8d5b3; }
+    .pickup-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:19px; padding-top:15px; border-top:1px solid #ffffff20; color:#ffffff9a; font-size:10px; }
+    .pickup-tag { padding:5px 9px; border-radius:50px; background:#ffffff16; color:#d5eedb; font-size:10px; font-weight:600; }
+    .impact-card { display:flex; align-items:center; gap:13px; padding:15px; border:1px solid #e5eee6; border-radius:12px; background:#f8fbf8; }
+    .impact-badge { display:grid; width:41px; height:41px; flex:none; place-items:center; border-radius:13px; background:var(--mint); color:var(--green); }
+    .impact-badge svg { width:20px; height:20px; }
+    .impact-card strong { display:block; color:var(--ink); font:800 12px 'Manrope',sans-serif; }
+    .impact-card span { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+    .empty-state { padding:15px 4px 3px; color:var(--muted); font-size:11px; line-height:1.7; }
+    .empty-state a { color:var(--green); font-weight:700; }
+    .recent-requests { display:grid; }
+    .recent-request { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 0; border-top:1px solid #edf1ed; }
+    .recent-request:first-child { padding-top:2px; border-top:0; }
+    .recent-request strong,.recent-request div span { display:block; }
+    .recent-request strong { color:var(--ink); font:700 11px 'Manrope',sans-serif; }
+    .recent-request div span { margin-top:3px; color:var(--muted); font-size:10px; }
+    .request-status { flex:none; padding:4px 8px; border-radius:50px; background:var(--gold-bg); color:var(--gold); font-size:9px; font-weight:700; text-transform:capitalize; }
+    .request-status.status-collected,.request-status.status-completed { background:var(--mint); color:var(--green); }
+    .request-status.status-cancelled { background:var(--rose-bg); color:var(--rose); }
+    .toolkit { margin-top:20px; padding:23px; border:1px solid var(--line); border-radius:var(--radius); background:linear-gradient(135deg,#fff 0%,#fbfcfa 100%); box-shadow:0 2px 6px #19391b08; }
+    .toolkit-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin-bottom:17px; }
+    .toolkit-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .tool-card { position:relative; display:flex; min-height:177px; flex-direction:column; align-items:flex-start; padding:16px; overflow:hidden; border:1px solid var(--line); border-radius:14px; background:#fff; transition:transform .18s,box-shadow .18s; scroll-margin-top:90px; }
+    .tool-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+    .tool-card::before { position:absolute; inset:0 0 auto; height:3px; background:var(--tool-color,var(--green)); content:''; }
+    .tool-card.mint { --tool-color:var(--green); --tool-bg:var(--mint); }
+    .tool-card.gold { --tool-color:#d29a3d; --tool-bg:var(--gold-bg); }
+    .tool-card.blue { --tool-color:#6b95b8; --tool-bg:var(--blue-bg); }
+    .tool-card.teal { --tool-color:var(--teal); --tool-bg:var(--teal-bg); }
+    .tool-card.violet { --tool-color:var(--violet); --tool-bg:var(--violet-bg); }
+    .tool-card.coral { --tool-color:var(--coral); --tool-bg:var(--coral-bg); }
+    .tool-card-icon { display:grid; width:35px; height:35px; place-items:center; margin-bottom:12px; border-radius:11px; background:var(--tool-bg); color:var(--tool-color); }
+    .tool-card-icon svg { width:18px; height:18px; }
+    .tool-card h3 { font-size:12px; }
+    .tool-card p { margin-top:6px; color:var(--muted); font-size:10px; line-height:1.55; }
+    .tool-card-action { display:inline-flex; align-items:center; gap:5px; margin-top:auto; padding-top:12px; color:var(--tool-color); font-size:10px; font-weight:700; }
+    .tool-card-action svg { width:13px; height:13px; }
+    .toolkit-note { display:flex; align-items:flex-start; gap:9px; margin-top:14px; padding:10px 12px; border-radius:10px; background:#f6f3eb; color:#78694d; font-size:10px; }
+    .toolkit-note svg { width:15px; height:15px; flex:none; }
+    .mobile-overlay { display:none; }
+    @media(max-width:1100px) {
+      :root { --sidebar:220px; }
+      .page,.topbar { padding-right:25px; padding-left:25px; }
+      .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media(max-width:780px) {
+      .sidebar { transform:translateX(-100%); transition:transform .22s ease; }
+      .sidebar.open { transform:translateX(0); }
+      .mobile-overlay.show { position:fixed; inset:0; z-index:15; display:block; background:#10211770; }
+      .topbar,main { margin-left:0; }
+      .topbar { height:64px; padding:0 18px 0 61px; }
+      .mobile-toggle { position:fixed; top:13px; left:14px; z-index:30; display:grid; width:36px; height:36px; place-items:center; border:0; border-radius:10px; background:var(--forest); color:white; cursor:pointer; }
+      .mobile-toggle svg { width:18px; height:18px; }
+      .page { padding:26px 18px 40px; }
+      .content-grid { grid-template-columns:1fr; }
+      .column-right { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .toolkit-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media(max-width:540px) {
+      .welcome { align-items:flex-start; flex-direction:column; }
+      .welcome-actions { width:100%; }
+      .welcome-actions .button { flex:1; }
+      .metrics { gap:10px; }
+      .metric { min-height:139px; padding:15px; }
+      .metric-value { font-size:23px; }
+      .topbar-right { gap:7px; }
+      .topbar-right .top-icon:nth-child(2) { display:none; }
+      .column-right { grid-template-columns:1fr; }
+      .panel { padding:17px; }
+      .toolkit { padding:17px; }
+      .toolkit-heading { align-items:flex-start; flex-direction:column; }
+      .toolkit-grid { grid-template-columns:1fr; }
+      .tool-card { min-height:155px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *,*::before,*::after { scroll-behavior:auto !important; transition-duration:.01ms !important; animation-duration:.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()" aria-hidden="true"></div>
+  <button class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false" onclick="toggleSidebar()">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+  </button>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><img src="Logo.png" alt="" /></span>
+      <span class="brand-name">SMART<span>SAVE</span></span>
+    </a>
+    <div class="org-card">
+      <div class="org-avatar" id="orgAvatar">NG</div>
+      <div>
+        <div class="org-name" id="orgName">Community Partner</div>
+        <div class="org-type">NGO account</div>
+      </div>
+    </div>
+    <nav class="side-nav" aria-label="Main navigation">
+      <div class="nav-label">Workspace</div>
+      <a class="nav-link active" href="ngo-dashboard.html" aria-current="page">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        Overview
+      </a>
+      <a class="nav-link" href="recovery.html">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17s-6.5-3.8-6.5-8.6A3.5 3.5 0 0 1 10 6.2a3.5 3.5 0 0 1 6.5 2.2C16.5 13.2 10 17 10 17Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 4V2m-5.8 4L2.8 4.7m11.4 1.3 1.4-1.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Find food donations
+      </a>
+      <a class="nav-link" href="#requests">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5.5h14v11H3zM6 3.5v4m8-4v4M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Requests &amp; pickups
+      </a>
+      <div class="nav-label">Programs &amp; people</div>
+      <a class="nav-link" href="#distribution">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h9v8H3zM12 9h3l2 2v3h-5zM6 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Distribution planning
+      </a>
+      <a class="nav-link" href="#programs">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 2.5v3M13 2.5v3M3 8h14m-9 4h4m-4 2.5h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Community programs
+      </a>
+      <a class="nav-link" href="#beneficiaries">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 16a4.5 4.5 0 0 1 9 0m2-11a2.5 2.5 0 0 1 0 5m1 2a4 4 0 0 1 3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Beneficiary groups
+      </a>
+      <a class="nav-link" href="#team">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 17a6 6 0 0 1 12 0m-6-4v4m-2-2 2-2 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volunteers &amp; team
+      </a>
+      <div class="nav-label">Organization</div>
+      <a class="nav-link" href="#partners">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 16.5h14M4.5 16V8l5.5-4 5.5 4v8m-8-4h5m-5 2.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Partner network
+      </a>
+      <a class="nav-link" href="#impact">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 16.5h14M5 13V9m5 4V4m5 9v-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        Impact &amp; reports
+      </a>
+      <a class="nav-link" href="#funding">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5v15m4-11.5c0-1.1-1.8-2-4-2s-4 .9-4 2 1.8 2 4 2 4 .9 4 2-1.8 2-4 2-4 .9-4 2 1.8 2 4 2 4-.9 4-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Funding &amp; grants
+      </a>
+      <a class="nav-link" href="#profile">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="2.2" stroke="currentColor" stroke-width="1.4"/><path d="M5.8 15a4.2 4.2 0 0 1 8.4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Organization profile
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a class="nav-link" href="contact.html">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M7.8 7.5a2.3 2.3 0 1 1 3.8 1.7c-.9.7-1.6 1-1.6 2.3m0 2h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Help &amp; support
+      </a>
+      <button class="nav-link" type="button" onclick="signOut()">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 3H4.5A1.5 1.5 0 0 0 3 4.5v11A1.5 1.5 0 0 0 4.5 17H8m3-3 4-4-4-4m4 4H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Sign out
+      </button>
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <div class="crumb">Workspace <span aria-hidden="true">/</span> <strong>Overview</strong></div>
+    <div class="topbar-right">
+      <button class="top-icon" type="button" aria-label="Notifications">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M15.5 8a5.5 5.5 0 0 0-11 0c0 6-2 6.5-2 6.5h15S15.5 14 15.5 8ZM8 17h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="dot"></span>
+      </button>
+      <div class="top-avatar" id="topAvatar" aria-label="Organisation profile">NG</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page">
+      <section class="welcome" aria-labelledby="welcomeTitle">
+        <div>
+          <div class="eyebrow">Good to have you here</div>
+          <h1 id="welcomeTitle"><span id="greeting">Good morning</span>, <span id="welcomeName">Community Partner</span></h1>
+          <p class="welcome-copy">Here’s your organisation’s food recovery snapshot.</p>
+        </div>
+        <div class="welcome-actions">
+          <a class="button button-light" href="#impact">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16.5h12M5.5 13V9m4.5 4V4m4.5 9v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            View impact
+          </a>
+          <a class="button button-primary" href="recovery.html">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12m-6-6h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Find food
+          </a>
+        </div>
+      </section>
+
+      <div class="preview-note" id="previewNote">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v4m0-6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Preview dashboard — illustrative figures are shown until an NGO account is signed in.
+      </div>
+      <div class="error-note" id="loadError" role="alert" hidden></div>
+
+      <section class="metrics" aria-label="Organisation summary">
+        <article class="metric">
+          <div class="metric-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17s-6-3.5-6-8a3.3 3.3 0 0 1 6-1.9A3.3 3.3 0 0 1 16 9c0 4.5-6 8-6 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="metric-value" id="metricRecoveries">12</div>
+          <div class="metric-label">Active food recoveries</div>
+          <div class="metric-foot">Available to claim</div>
+        </article>
+        <article class="metric">
+          <div class="metric-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M1.8 16a5.2 5.2 0 0 1 10.4 0M13 4.5a3 3 0 0 1 0 5.8m1 1.2a4.6 4.6 0 0 1 4.2 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="metric-value" id="metricFarmers">248</div>
+          <div class="metric-label">Farmers in the network</div>
+          <div class="metric-foot">Verified local partners</div>
+        </article>
+        <article class="metric">
+          <div class="metric-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5 12 7l4.8.5-3.6 3.2 1 4.8-4.2-2.5-4.2 2.5 1-4.8-3.6-3.2L8 7l2-4.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="metric-value" id="metricProjects">8</div>
+          <div class="metric-label">Community programs</div>
+          <div class="metric-foot">Program tracking coming soon</div>
+        </article>
+        <article class="metric">
+          <div class="metric-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5v15m4-11.5c0-1.1-1.8-2-4-2s-4 .9-4 2 1.8 2 4 2 4 .9 4 2-1.8 2-4 2-4 .9-4 2 1.8 2 4 2 4-.9 4-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="metric-value" id="metricDonations">36</div>
+          <div class="metric-label">Funding donations received</div>
+          <div class="metric-foot">Completed contributions</div>
+        </article>
+      </section>
+
+      <div class="content-grid">
+        <div class="column">
+          <section class="panel" id="impact">
+            <div class="impact-headline">
+              <div>
+                <h2 class="panel-title">Community impact</h2>
+                <p class="panel-subtitle">A little goes a long way when we work together.</p>
+              </div>
+              <span class="period-tag">Last 6 months</span>
+            </div>
+            <div class="impact-number">1,240 <span style="font-size:13px;font-weight:600;letter-spacing:0">meals shared</span></div>
+            <div class="impact-hint">Estimated meals from food rescued by your organisation</div>
+            <div class="chart" role="img" aria-label="Illustrative community impact chart for the last six months">
+              <div class="chart-col"><div class="chart-bar" style="height:34%"></div><span class="chart-label">Jun</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:49%"></div><span class="chart-label">Jul</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:40%"></div><span class="chart-label">Aug</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:67%"></div><span class="chart-label">Sep</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:57%"></div><span class="chart-label">Oct</span></div>
+              <div class="chart-col"><div class="chart-bar current" style="height:86%"></div><span class="chart-label">Nov</span></div>
+            </div>
+            <div class="chart-legend"><span class="legend-dot"></span> Meals provided <span style="margin-left:auto">Illustrative preview</span></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2 class="panel-title">Your next steps</h2>
+                <p class="panel-subtitle">A few ways to keep your recovery work moving.</p>
+              </div>
+            </div>
+            <div class="task-list">
+              <a class="task" href="recovery.html">
+                <span class="task-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17s-6-3.5-6-8a3.3 3.3 0 0 1 6-1.9A3.3 3.3 0 0 1 16 9c0 4.5-6 8-6 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+                <span><span class="task-title">Browse available food</span><span class="task-desc">Find nearby donations your community can use.</span></span>
+                <span class="task-arrow"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </a>
+              <a class="task" href="register-ngo.html">
+                <span class="task-icon gold"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14m-7-7h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+                <span><span class="task-title">Complete your organisation profile</span><span class="task-desc">Help food partners understand your community.</span></span>
+                <span class="task-arrow"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </a>
+              <a class="task" href="contact.html">
+                <span class="task-icon blue"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5.5h14v9H3zM3.5 6l6.5 5 6.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span><span class="task-title">Connect with the SMARTSAVE team</span><span class="task-desc">We’re here if you need help getting started.</span></span>
+                <span class="task-arrow"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <div class="column column-right">
+          <section class="panel pickup-card">
+            <div class="panel-heading"><h2 class="panel-title">A fresh opportunity</h2><span class="pickup-tag">Nearby</span></div>
+            <div class="pickup-label">Food recovery programme</div>
+            <div class="pickup-title">Good food, shared locally</div>
+            <div class="pickup-details"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 8.3c0 4.4-6 9-6 9s-6-4.6-6-9a6 6 0 1 1 12 0Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/></svg>Browse current listings across Rwanda</div>
+            <div class="pickup-foot"><span>Every rescued meal makes a difference</span><a class="pickup-tag" href="recovery.html">Explore listings&nbsp; →</a></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2 class="panel-title">Recent food requests</h2>
+                <p class="panel-subtitle">The latest recovery listings your organization requested.</p>
+              </div>
+            </div>
+            <div class="recent-requests" id="recentRequests" aria-live="polite">
+              <div class="empty-state">Your recent food requests will appear here. <a href="recovery.html">Explore available food</a></div>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2 class="panel-title">Need a hand?</h2>
+                <p class="panel-subtitle">Our team is happy to help your organisation.</p>
+              </div>
+            </div>
+            <a class="button button-light" href="contact.html" style="width:100%">Contact support</a>
+          </section>
+        </div>
+      </div>
+
+      <section class="toolkit" aria-labelledby="toolkitTitle">
+        <div class="toolkit-heading">
+          <div>
+            <div class="eyebrow">Built around your day-to-day</div>
+            <h2 class="panel-title" id="toolkitTitle">Your organization toolkit</h2>
+            <p class="panel-subtitle">Jump into food recovery or explore tools for your wider community work.</p>
+          </div>
+          <a class="text-link" href="contact.html">Suggest a tool&nbsp; →</a>
+        </div>
+        <div class="toolkit-grid">
+          <article class="tool-card mint" id="requests">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17s-6-3.5-6-8a3.3 3.3 0 0 1 6-1.9A3.3 3.3 0 0 1 16 9c0 4.5-6 8-6 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 6v5m-2.5-2.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+            <h3>Food requests</h3>
+            <p>Browse food recovery listings and find available donations for your community.</p>
+            <a class="tool-card-action" href="recovery.html">Browse donations <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card gold" id="distribution">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h9v8H3zM12 9h3l2 2v3h-5zM6 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+            <h3>Distribution &amp; pickups</h3>
+            <p>Plan collection and delivery routes around your team and the communities you serve.</p>
+            <a class="tool-card-action" href="recovery.html">View food listings <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card violet" id="programs">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 2.5v3M13 2.5v3M3 8h14m-9 4h4m-4 2.5h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <h3>Community programs</h3>
+            <p>Keep school meals, food banks and community kitchens organized in one place.</p>
+            <a class="tool-card-action" href="contact.html">Share your program needs <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card blue" id="beneficiaries">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 16a4.5 4.5 0 0 1 9 0m2-11a2.5 2.5 0 0 1 0 5m1 2a4 4 0 0 1 3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <h3>Beneficiary groups</h3>
+            <p>Coordinate the needs of families, children and other groups in your programs.</p>
+            <a class="tool-card-action" href="contact.html">Tell us what you need <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card coral" id="team">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 17a6 6 0 0 1 12 0m-6-4v4m-2-2 2-2 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Volunteers &amp; team</h3>
+            <p>Give staff and volunteers a shared place to coordinate tasks and activities.</p>
+            <a class="tool-card-action" href="contact.html">Ask about team tools <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card teal" id="partners">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 16.5h14M4.5 16V8l5.5-4 5.5 4v8m-8-4h5m-5 2.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Partner network</h3>
+            <p>Discover local farmers and food partners working to reduce waste across Rwanda.</p>
+            <a class="tool-card-action" href="farmers.html">Explore farmers <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card violet" id="reports">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 16.5h14M5 13V9m5 4V4m5 9v-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <h3>Impact &amp; reports</h3>
+            <p>See your community impact at a glance and prepare updates for your supporters.</p>
+            <a class="tool-card-action" href="#impact">View impact summary <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card gold" id="funding">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5v15m4-11.5c0-1.1-1.8-2-4-2s-4 .9-4 2 1.8 2 4 2 4 .9 4 2-1.8 2-4 2-4 .9-4 2 1.8 2 4 2 4-.9 4-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+            <h3>Funding &amp; grants</h3>
+            <p>Keep track of funding opportunities and the outcomes your organization delivers.</p>
+            <a class="tool-card-action" href="contact.html">Ask about funding support <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tool-card mint" id="profile">
+            <span class="tool-card-icon"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="2.2" stroke="currentColor" stroke-width="1.4"/><path d="M5.8 15a4.2 4.2 0 0 1 8.4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+            <h3>Organization profile</h3>
+            <p>Keep your organization’s contact and service-area details up to date.</p>
+            <a class="tool-card-action" href="contact.html">Request a profile update <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+        </div>
+        <div class="toolkit-note">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v4m0-6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Food listings, the farmer directory and impact snapshot are available here. For other organization tools, contact us to share what would help your team most.
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/user-notifications.js"></script>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const isOpen = sidebar.classList.toggle('open');
+      document.querySelector('.mobile-toggle').setAttribute('aria-expanded', String(isOpen));
+      document.getElementById('mobileOverlay').classList.toggle('show', isOpen);
+    }
+
+    async function signOut() {
+      await API.logout();
+      window.location.href = 'login.html';
+    }
+
+    function initials(name) {
+      return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'NG';
+    }
+
+    function formatCount(value) {
+      const number = Number(value);
+      return Number.isFinite(number) ? new Intl.NumberFormat().format(number) : '0';
+    }
+
+    async function loadDashboard() {
+      const previewNote = document.getElementById('previewNote');
+      const user = API.getUser();
+      const hour = new Date().getHours();
+      document.getElementById('greeting').textContent = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+      if (user) {
+        const contactName = [user.first_name, user.last_name].filter(Boolean).join(' ') || user.username || 'Community Partner';
+        const name = user.ngo_profile?.organization_name || user.organization_name || contactName;
+        const shortName = user.first_name || name;
+        document.getElementById('welcomeName').textContent = shortName;
+        document.getElementById('orgName').textContent = name;
+        document.getElementById('orgAvatar').textContent = initials(name);
+        document.getElementById('topAvatar').textContent = initials(name);
+      }
+
+      if (!API.isAuthenticated() || !user || user.role !== 'ngo') return;
+
+      previewNote.hidden = true;
+      try {
+        const data = await API.getNGODashboard();
+        document.getElementById('metricFarmers').textContent = formatCount(data.total_farmers);
+        document.getElementById('metricRecoveries').textContent = formatCount(data.active_recoveries);
+        document.getElementById('metricProjects').textContent = formatCount(data.completed_projects);
+        document.getElementById('metricDonations').textContent = formatCount(data.total_donations);
+        renderRecentRequests(data.recent_requests || []);
+      } catch (error) {
+        previewNote.textContent = 'Showing illustrative preview figures because live dashboard data could not be loaded.';
+        previewNote.hidden = false;
+        const errorNote = document.getElementById('loadError');
+        errorNote.textContent = 'Could not load live dashboard data: ' + (error.message || 'Please try again later.');
+        errorNote.hidden = false;
+      }
+    }
+
+    function renderRecentRequests(requests) {
+      const container = document.getElementById('recentRequests');
+      container.replaceChildren();
+      if (!requests.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.append('No food requests yet. ');
+        const link = document.createElement('a');
+        link.href = 'recovery.html';
+        link.textContent = 'Explore available food';
+        empty.append(link);
+        container.append(empty);
+        return;
+      }
+
+      requests.forEach(request => {
+        const item = document.createElement('div');
+        item.className = 'recent-request';
+        const details = document.createElement('div');
+        const title = document.createElement('strong');
+        title.textContent = request.listing_title;
+        const meta = document.createElement('span');
+        meta.textContent = `${request.quantity} ${request.unit} · ${request.pickup_location}`;
+        details.append(title, meta);
+
+        const status = document.createElement('span');
+        status.className = `request-status status-${request.status}`;
+        status.textContent = request.status.replace('_', ' ');
+        item.append(details, status);
+        container.append(item);
+      });
+    }
+
+    loadDashboard();
+  </script>
+  <script>
+    (async function loadDashboardAnnouncements() {
+      try {
+        const announcements = await API.getPublicAnnouncements('dashboard');
+        if (!Array.isArray(announcements) || !announcements.length) return;
+        const banner = document.createElement('section');
+        banner.setAttribute('aria-label', 'SMARTSAVE announcements');
+        banner.style.cssText = 'margin:18px auto;padding:16px 20px;max-width:1180px;border:1px solid #d5e7db;border-radius:14px;background:#f1f8f2;color:#294c36;';
+        announcements.forEach(item => {
+          const card = document.createElement('article');
+          card.style.cssText = 'padding:6px 0;';
+          const title = document.createElement('strong');
+          title.textContent = `${item.is_pinned ? '📌 ' : ''}${item.title}`;
+          const body = document.createElement('p');
+          body.textContent = item.body;
+          body.style.margin = '4px 0 0';
+          card.append(title, body);
+          banner.append(card);
+        });
+        document.querySelector('main')?.prepend(banner);
+      } catch (error) {
+        console.error('Unable to load dashboard announcements:', error);
+      }
+    })();
+  </script>
+</body>
+</html>

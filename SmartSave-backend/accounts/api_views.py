@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from google.auth.exceptions import GoogleAuthError
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from dashboard.audit import record_event
+
 from .models import Profile, FarmerProfile, BuyerProfile, NGOProfile
 from .serializers import (
     UserSerializer,
@@ -112,11 +114,36 @@ class GoogleLoginView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         email = email.strip().lower()
+        configured_admin_email = getattr(settings, "ADMIN_LOGIN_EMAIL", "")
+        if email == configured_admin_email:
+            record_event(
+                "login_failed",
+                request=request,
+                user_identifier=email,
+                description="Administrator accounts cannot use Google sign-in",
+                metadata={"auth_method": "google"},
+            )
+            return Response(
+                {"detail": "Administrator accounts must use administrator sign-in."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         given_name = claims.get("given_name")
         family_name = claims.get("family_name")
 
         with transaction.atomic():
             user = User.objects.filter(email__iexact=email).first()
+            if user is not None and (user.role == "admin" or user.is_staff):
+                record_event(
+                    "login_failed",
+                    request=request,
+                    user=user,
+                    description="Administrator accounts cannot use Google sign-in",
+                    metadata={"auth_method": "google"},
+                )
+                return Response(
+                    {"detail": "Administrator accounts must use administrator sign-in."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
             if user is None:
                 base_username = re.sub(r"[^0-9A-Za-z_.-]+", "", email.split("@", 1)[0])[:140] or "google-user"
                 username = base_username
@@ -136,11 +163,25 @@ class GoogleLoginView(APIView):
                 Profile.objects.get_or_create(user=user)
                 BuyerProfile.objects.get_or_create(profile=user.profile)
             elif not user.is_active:
+                record_event(
+                    "login_failed",
+                    request=request,
+                    user=user,
+                    description="Inactive account attempted Google sign-in",
+                    metadata={"auth_method": "google"},
+                )
                 return Response(
                     {"detail": "This account is inactive. Contact support for help."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
+        record_event(
+            "login_success",
+            request=request,
+            user=user,
+            description="Signed in with Google",
+            metadata={"auth_method": "google"},
+        )
         refresh = RefreshToken.for_user(user)
         return Response({
             "access": str(refresh.access_token),

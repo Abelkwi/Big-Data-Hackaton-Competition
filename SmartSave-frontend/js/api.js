@@ -142,6 +142,23 @@ const API = {
         return profile;
     },
 
+    async loginAdmin(email, password) {
+        this.clearTokens();
+        try {
+            const data = await this.request('POST', '/auth/admin/login/', { email, password });
+            this.setTokens(data.access, data.refresh);
+            const profile = await this.getProfile();
+            if (profile.role !== 'admin') {
+                throw new Error('This account is not authorized for administrator access.');
+            }
+            this.setUser(profile);
+            return profile;
+        } catch (error) {
+            this.clearTokens();
+            throw error;
+        }
+    },
+
     async loginWithGoogle(credential) {
         const data = await this.request('POST', '/auth/google/', { credential });
         this.setTokens(data.access, data.refresh);
@@ -172,7 +189,12 @@ const API = {
     },
     
     async logout() {
-        this.clearTokens();
+        const refresh = this.getRefreshToken();
+        try {
+            if (refresh) await this.request('POST', '/auth/logout/', { refresh });
+        } finally {
+            this.clearTokens();
+        }
     },
     
     async getProfile() {
@@ -312,8 +334,9 @@ const API = {
     
     // ─── Notifications ────────────────────────────────────────
     
-    async getNotifications() {
-        return await this.request('GET', '/notifications/');
+    async getNotifications(params = {}) {
+        const qs = new URLSearchParams(params).toString();
+        return await this.request('GET', `/notifications/${qs ? '?' + qs : ''}`);
     },
     
     async markNotificationRead(id) {
@@ -423,6 +446,91 @@ const API = {
     
     async getAdminDashboard() {
         return await this.request('GET', '/dashboard/admin/');
+    },
+
+    async getAdminUsers(params = {}) {
+        const qs = new URLSearchParams(params).toString();
+        return await this.request('GET', `/dashboard/admin/users/${qs ? '?' + qs : ''}`);
+    },
+
+    async getAdminUser(id) {
+        return await this.request('GET', `/dashboard/admin/users/${id}/`);
+    },
+
+    async getAdminUserActivity(id) {
+        return await this.request('GET', `/dashboard/admin/users/${id}/activity/`);
+    },
+
+    async updateAdminUserStatus(id, data) {
+        return await this.request('POST', `/dashboard/admin/users/${id}/status/`, data);
+    },
+
+    async updateAdminUser(id, data) {
+        return await this.request('PATCH', `/dashboard/admin/users/${id}/`, data);
+    },
+
+    async verifyAdminUser(id, data) {
+        return await this.request('POST', `/dashboard/admin/users/${id}/verify/`, data);
+    },
+
+    async getAdminReport(params = {}) {
+        const qs = new URLSearchParams(params).toString();
+        return await this.request('GET', `/dashboard/admin/insights/reports/${qs ? '?' + qs : ''}`);
+    },
+
+    async getAdminImpact() {
+        return await this.request('GET', '/dashboard/admin/impact/');
+    },
+
+    async getAdminSettings() {
+        return await this.request('GET', '/dashboard/admin/settings/');
+    },
+
+    async getAdminActivity(params = {}) {
+        const qs = new URLSearchParams(params).toString();
+        return await this.request('GET', `/dashboard/admin/activity/${qs ? '?' + qs : ''}`);
+    },
+
+    async getAdminHealth() {
+        return await this.request('GET', '/dashboard/admin/health/');
+    },
+
+    async getAdminOrders(params = {}) {
+        const qs = new URLSearchParams(params).toString();
+        return await this.request('GET', `/dashboard/admin/orders/${qs ? '?' + qs : ''}`);
+    },
+
+    async getAdminAnnouncements(params = {}) {
+        const qs = new URLSearchParams(params).toString();
+        return await this.request('GET', `/dashboard/admin/announcements/${qs ? '?' + qs : ''}`);
+    },
+
+    async createAdminAnnouncement(data) {
+        return await this.request('POST', '/dashboard/admin/announcements/', data);
+    },
+
+    async updateAdminAnnouncement(id, data) {
+        return await this.request('PATCH', `/dashboard/admin/announcements/${id}/`, data);
+    },
+
+    async deleteAdminAnnouncement(id) {
+        return await this.request('DELETE', `/dashboard/admin/announcements/${id}/`);
+    },
+
+    async getPublicAnnouncements(surface = 'homepage') {
+        return await this.request('GET', `/dashboard/announcements/?${new URLSearchParams({ surface })}`);
+    },
+
+    async getAdminModerationQueue() {
+        return await this.request('GET', '/dashboard/admin/moderation/');
+    },
+
+    async moderateAdminContent(type, id, data) {
+        return await this.request('PATCH', `/dashboard/admin/moderation/${type}/${id}/`, data);
+    },
+
+    async resolveAdminReport(id, data) {
+        return await this.request('PATCH', `/dashboard/admin/reports/${id}/`, data);
     },
     
     // ─── Accounts ─────────────────────────────────────────────

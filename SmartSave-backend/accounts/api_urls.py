@@ -1,13 +1,20 @@
 """Authentication API endpoints."""
 
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from . import api_views
+from .admin_auth import (
+    AdminTokenObtainPairView,
+    AuditedTokenObtainPairView,
+    LogoutView,
+)
 
 urlpatterns = [
     # JWT Auth
-    path("login/", TokenObtainPairView.as_view(), name="auth-login"),
+    path("login/", AuditedTokenObtainPairView.as_view(), name="auth-login"),
+    path("admin/login/", AdminTokenObtainPairView.as_view(), name="auth-admin-login"),
+    path("logout/", LogoutView.as_view(), name="auth-logout"),
     path("token/refresh/", TokenRefreshView.as_view(), name="auth-token-refresh"),
     path("google/", api_views.GoogleLoginView.as_view(), name="auth-google"),
     path("google/verify/", api_views.GoogleVerifyView.as_view(), name="auth-google-verify"),

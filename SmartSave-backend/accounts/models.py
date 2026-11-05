@@ -148,11 +148,22 @@ class BuyerProfile(models.Model):
 class NGOProfile(models.Model):
     """NGO / Cooperative-specific information."""
 
+    ORGANIZATION_TYPES = [
+        ("unclassified", "Unclassified organization"),
+        ("ngo", "Non-governmental organization"),
+        ("cooperative", "Cooperative"),
+        ("institution", "Institutional partner"),
+    ]
+
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name="ngo_profile"
     )
     organization_name = models.CharField(max_length=200)
-    organization_type = models.CharField(max_length=100, blank=True)
+    organization_type = models.CharField(
+        max_length=100,
+        choices=ORGANIZATION_TYPES,
+        default="unclassified",
+    )
     slug = models.SlugField(unique=True, blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True)
     website = models.URLField(blank=True)

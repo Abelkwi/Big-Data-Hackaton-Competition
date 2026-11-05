@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # Third-party
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'django_filters',
 
@@ -201,6 +202,7 @@ CORS_ALLOWED_ORIGINS = config(
 )
 CORS_ALLOW_CREDENTIALS = True
 GOOGLE_OAUTH_CLIENT_ID = config("GOOGLE_OAUTH_CLIENT_ID", default="")
+ADMIN_LOGIN_EMAIL = config("ADMIN_LOGIN_EMAIL", default="").strip().lower()
 
 # REST Framework
 REST_FRAMEWORK = {
@@ -218,6 +220,9 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ],
+    "DEFAULT_THROTTLE_RATES": {
+        "admin_login": "5/min",
+    },
 }
 
 # SimpleJWT

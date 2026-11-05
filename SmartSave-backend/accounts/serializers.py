@@ -100,6 +100,10 @@ class NGOProfileSerializer(serializers.ModelSerializer):
             "collection_capacity",
             "has_transport",
             "food_types",
+            "beneficiaries_served",
+            "collection_capacity",
+            "has_transport",
+            "food_types",
             "is_approved",
         ]
         read_only_fields = ["id", "slug", "is_approved"]
@@ -124,7 +128,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     delivery_frequency = serializers.CharField(write_only=True, required=False, allow_blank=True)
     buyer_registration_number = serializers.CharField(write_only=True, required=False, allow_blank=True)
     organization_name = serializers.CharField(write_only=True, required=False, allow_blank=True)
-    organization_type = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    organization_type = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        default="unclassified",
+    )
     ngo_registration_number = serializers.CharField(write_only=True, required=False, allow_blank=True)
     website = serializers.URLField(write_only=True, required=False, allow_blank=True)
     focus_areas = serializers.CharField(write_only=True, required=False, allow_blank=True)
@@ -177,7 +186,23 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("A user with this email already exists.")
         return value
 
+    def validate_organization_type(self, value):
+        normalized = value.strip().lower()
+        if normalized in dict(NGOProfile.ORGANIZATION_TYPES):
+            return normalized
+        if "cooperative" in normalized:
+            return "cooperative"
+        if "institution" in normalized or "school" in normalized or "hospital" in normalized:
+            return "institution"
+        if "ngo" in normalized or "non-governmental" in normalized:
+            return "ngo"
+        return "unclassified"
+
     def validate(self, data):
+        if data.get("role") == "admin":
+            raise serializers.ValidationError(
+                {"role": "Administrator accounts must be provisioned by an administrator."}
+            )
         if data["password"] != data["password2"]:
             raise serializers.ValidationError({"password2": "Passwords do not match."})
         return data

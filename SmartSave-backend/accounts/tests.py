@@ -5,8 +5,10 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.models import BuyerProfile, FarmerProfile, Profile
+from dashboard.models import AuditEvent
 from marketplace.models import Category, Product
 from orders.models import Order, OrderItem
 
@@ -335,3 +337,117 @@ class BuyerDashboardTests(TestCase):
         )
         self.assertEqual(response.data["recent_orders"][0]["product_name"], "Tomatoes")
         self.assertEqual(response.data["top_suppliers"][0]["name"], "Green Farm")
+
+
+@override_settings(ADMIN_LOGIN_EMAIL="admin@example.com")
+class AdminAuthenticationTests(TestCase):
+    def setUp(self):
+        self.admin = get_user_model().objects.create_user(
+            username="platform-admin",
+            email="admin@example.com",
+            password="Secure-Test-Password-123!",
+            role="admin",
+            is_staff=True,
+            is_verified=True,
+        )
+        self.client = APIClient()
+
+    def test_only_allowlisted_admin_can_obtain_admin_tokens(self):
+        response = self.client.post(
+            "/api/auth/admin/login/",
+            {"email": self.admin.email, "password": "Secure-Test-Password-123!"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("access", response.data)
+
+        other_admin = get_user_model().objects.create_user(
+            username="other-admin",
+            email="other@example.com",
+            password="Secure-Test-Password-123!",
+            role="admin",
+            is_staff=True,
+            is_verified=True,
+        )
+        rejected = self.client.post(
+            "/api/auth/admin/login/",
+            {"email": other_admin.email, "password": "Secure-Test-Password-123!"},
+            format="json",
+        )
+        self.assertEqual(rejected.status_code, 401)
+
+    def test_regular_login_cannot_authenticate_admin_and_admin_apis_are_allowlisted(self):
+        regular_login = self.client.post(
+            "/api/auth/login/",
+            {"email": self.admin.email, "password": "Secure-Test-Password-123!"},
+            format="json",
+        )
+        self.assertEqual(regular_login.status_code, 401)
+
+        other_admin = get_user_model().objects.create_user(
+            username="unlisted-admin",
+            email="unlisted@example.com",
+            password="Secure-Test-Password-123!",
+            role="admin",
+            is_staff=True,
+            is_verified=True,
+        )
+        self.client.force_authenticate(user=other_admin)
+        response = self.client.get("/api/dashboard/admin/")
+        self.assertEqual(response.status_code, 403)
+
+    def test_admin_auth_is_disabled_when_no_allowlist_is_configured(self):
+        with override_settings(ADMIN_LOGIN_EMAIL=""):
+            response = self.client.post(
+                "/api/auth/admin/login/",
+                {"email": self.admin.email, "password": "Secure-Test-Password-123!"},
+                format="json",
+            )
+        self.assertEqual(response.status_code, 401)
+
+    def test_logout_blacklists_refresh_token(self):
+        refresh = RefreshToken.for_user(self.admin)
+        self.client.force_authenticate(user=self.admin)
+
+        response = self.client.post(
+            "/api/auth/logout/",
+            {"refresh": str(refresh)},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 204)
+
+    def test_public_registration_cannot_create_admin_role(self):
+        response = self.client.post(
+            "/api/auth/register/",
+            {
+                "email": "new-admin@example.com",
+                "username": "new-admin",
+                "password": "StrongPass123",
+                "password2": "StrongPass123",
+                "role": "admin",
+            },
+            format="json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(
+            get_user_model().objects.filter(email="new-admin@example.com").exists()
+        )
+
+    @override_settings(GOOGLE_OAUTH_CLIENT_ID="test-client-id")
+    @patch(
+        "accounts.api_views.verify_google_id_token",
+        return_value={
+            "sub": "admin-google-user",
+            "email": "admin@example.com",
+            "email_verified": True,
+        },
+    )
+    def test_google_sign_in_cannot_bypass_admin_login(self, verify_token):
+        response = self.client.post(
+            "/api/auth/google/",
+            {"credential": "valid-google-token"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 403)
+        verify_token.assert_called_once()

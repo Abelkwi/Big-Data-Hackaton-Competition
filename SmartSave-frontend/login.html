@@ -109,6 +109,8 @@
     .auth-form-sub { font-size:15px; color:var(--tm); }
     .auth-form-sub a { color:var(--gd); font-weight:700; }
     .auth-form-sub a:hover { color:var(--gf); }
+    .admin-login-toggle { margin-top:12px; padding:6px 10px; border:1px solid var(--border); border-radius:20px; background:white; color:var(--gd); font:600 12px 'Inter',sans-serif; cursor:pointer; }
+    .admin-login-toggle:hover { background:var(--gp); border-color:var(--border2); }
 
     /* Social buttons */
     .social-row { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
@@ -208,6 +210,8 @@
       <div class="auth-form-header">
         <h2 class="auth-form-title">Sign in</h2>
         <p class="auth-form-sub">Don't have an account yet? <a href="register.html">Register for free</a></p>
+        <p id="adminLoginHint" class="auth-form-sub" hidden>Use your administrator account for secure access.</p>
+        <button id="adminLoginMode" class="admin-login-toggle" type="button">Administrator</button>
       </div>
 
       <!-- Error message (hidden by default, shown via JS on failed attempt) -->
@@ -275,11 +279,27 @@
 <script src="js/api.js"></script>
 <script src="js/google-auth.js"></script>
 <script>
+  let administratorLogin = false;
+
   GoogleAuth.init({
     buttonId: 'googleSignInButton',
     errorId: 'googleAuthError',
     text: 'signin_with',
-    redirectUrl: 'buyer-dashboard.html',
+    redirectUrl: profile => profile.role === 'admin'
+      ? 'admin-dashboard.html'
+      : profile.role === 'ngo' ? 'ngo-dashboard.html' : 'buyer-dashboard.html',
+  });
+
+  document.getElementById('adminLoginMode').addEventListener('click', function() {
+    administratorLogin = !administratorLogin;
+    document.querySelector('.auth-form-title').textContent = administratorLogin ? 'Administrator sign in' : 'Sign in';
+    document.querySelector('.auth-form-sub').hidden = administratorLogin;
+    document.getElementById('adminLoginHint').hidden = !administratorLogin;
+    document.getElementById('adminLoginMode').textContent = administratorLogin ? 'Back to user sign-in' : 'Administrator';
+    document.querySelector('.social-row').hidden = administratorLogin;
+    document.querySelector('.divider-row').hidden = administratorLogin;
+    document.querySelector('.form-row-between').hidden = administratorLogin;
+    document.getElementById('loginForm').querySelector('button[type="submit"]').textContent = administratorLogin ? 'Administrator Sign In' : 'Sign In';
   });
 
   // Password visibility toggle
@@ -312,21 +332,23 @@
     }
 
     // Loading state
-    const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = 'Signing in...';
 
     try {
-      const profile = await API.login(email, password);
+      const profile = administratorLogin
+        ? await API.loginAdmin(email, password)
+        : await API.login(email, password);
       API.setUser(profile);
 
-      // Redirect to dashboard (all roles use buyer-dashboard since no separate admin page exists)
-      window.location.href = 'buyer-dashboard.html';
+      window.location.href = profile.role === 'admin'
+        ? 'admin-dashboard.html'
+        : profile.role === 'ngo' ? 'ngo-dashboard.html' : 'buyer-dashboard.html';
     } catch (err) {
       errorBox.textContent = err.message || 'Incorrect email or password. Please try again.';
       errorBox.classList.add('show');
       submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
+      submitBtn.textContent = administratorLogin ? 'Administrator Sign In' : 'Sign In';
     }
   });
 
@@ -334,7 +356,9 @@
   if (API.isAuthenticated()) {
     const user = API.getUser();
     if (user) {
-      window.location.href = 'buyer-dashboard.html';
+      window.location.href = user.role === 'admin'
+        ? 'admin-dashboard.html'
+        : user.role === 'ngo' ? 'ngo-dashboard.html' : 'buyer-dashboard.html';
     }
   }
 </script>

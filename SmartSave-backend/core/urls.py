@@ -47,6 +47,8 @@ if FRONTEND_EXISTS:
         path("register-farmer/", serve_static_page, {"page": "register-farmer.html"}, name="register_farmer_page"),
         path("register-ngo/", serve_static_page, {"page": "register-ngo.html"}, name="register_ngo_page"),
         path("buyer-dashboard/", serve_static_page, {"page": "buyer-dashboard.html"}, name="buyer_dashboard"),
+        path("ngo-dashboard/", serve_static_page, {"page": "ngo-dashboard.html"}, name="ngo_dashboard"),
+        path("admin-dashboard/", serve_static_page, {"page": "admin-dashboard.html"}, name="admin_dashboard"),
         path("404/", serve_static_page, {"page": "404.html"}, name="not_found"),
     ]
 

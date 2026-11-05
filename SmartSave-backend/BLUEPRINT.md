@@ -713,6 +713,23 @@ smartsave-backend/
 | GET | `/api/dashboard/buyer/` | Buyer dashboard stats | ✓(buyer) |
 | GET | `/api/dashboard/ngo/` | NGO dashboard stats | ✓(ngo) |
 | GET | `/api/dashboard/admin/` | Admin dashboard stats | ✓(admin) |
+| GET | `/api/dashboard/admin/users/` | Search, filter, list, and export registered users | ✓(allowlisted staff) |
+| GET/PATCH | `/api/dashboard/admin/users/{id}/` | View or edit permitted user profile fields | ✓(allowlisted staff) |
+| POST | `/api/dashboard/admin/users/{id}/verify/` | Verify or revoke stakeholder verification | ✓(allowlisted staff) |
+| POST | `/api/dashboard/admin/users/{id}/status/` | Activate or suspend an account | ✓(allowlisted staff) |
+| GET | `/api/dashboard/admin/users/{id}/activity/` | View a user's audit history | ✓(allowlisted staff) |
+| GET | `/api/dashboard/admin/activity/` | Search platform audit and security events | ✓(allowlisted staff) |
+| GET | `/api/dashboard/admin/health/` | Inspect configured service and security health | ✓(allowlisted staff) |
+| GET | `/api/dashboard/admin/insights/reports/` | Generate analytics reports (CSV export supported) | ✓(allowlisted staff) |
+| GET | `/api/dashboard/admin/impact/` | View evidence-based platform impact indicators | ✓(allowlisted staff) |
+| GET | `/api/dashboard/admin/settings/` | Read administrator settings | ✓(allowlisted staff) |
+| GET/POST | `/api/dashboard/admin/announcements/` | List or create announcements | ✓(allowlisted staff) |
+| PATCH/DELETE | `/api/dashboard/admin/announcements/{id}/` | Update or remove an announcement | ✓(allowlisted staff) |
+| GET | `/api/dashboard/announcements/` | List currently visible public or targeted announcements | ✗ |
+
+Administrator access is limited to the email configured by `ADMIN_LOGIN_EMAIL`.
+Provision that account with `python manage.py provision_admin`; passwords are
+stored using Django's password hashers and are never committed to source.
 
 ### 6.11 Accounts (`/api/accounts/`)
 
