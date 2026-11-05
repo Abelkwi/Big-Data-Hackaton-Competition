@@ -93,7 +93,8 @@ const API = {
                     response = await fetch(url, config);
                 } else {
                     this.clearTokens();
-                    window.location.href = 'login.html';
+                    const adminPage = /\/admin-(?:dashboard|login)\.html$/i.test(window.location.pathname);
+                    window.location.href = adminPage ? 'admin-login.html' : 'login.html';
                     throw new Error('Session expired');
                 }
             }

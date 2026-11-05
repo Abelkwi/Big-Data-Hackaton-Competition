@@ -109,8 +109,8 @@
     .auth-form-sub { font-size:15px; color:var(--tm); }
     .auth-form-sub a { color:var(--gd); font-weight:700; }
     .auth-form-sub a:hover { color:var(--gf); }
-    .admin-login-toggle { margin-top:12px; padding:6px 10px; border:1px solid var(--border); border-radius:20px; background:white; color:var(--gd); font:600 12px 'Inter',sans-serif; cursor:pointer; }
-    .admin-login-toggle:hover { background:var(--gp); border-color:var(--border2); }
+    .admin-login-link { display:inline-flex; align-items:center; gap:7px; margin-top:12px; color:var(--gd); font-size:12px; font-weight:700; }
+    .admin-login-link:hover { color:var(--gf); }
 
     /* Social buttons */
     .social-row { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
@@ -210,8 +210,10 @@
       <div class="auth-form-header">
         <h2 class="auth-form-title">Sign in</h2>
         <p class="auth-form-sub">Don't have an account yet? <a href="register.html">Register for free</a></p>
-        <p id="adminLoginHint" class="auth-form-sub" hidden>Use your administrator account for secure access.</p>
-        <button id="adminLoginMode" class="admin-login-toggle" type="button">Administrator</button>
+        <a class="admin-login-link" href="admin-login.html">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Administrator sign in
+        </a>
       </div>
 
       <!-- Error message (hidden by default, shown via JS on failed attempt) -->
@@ -279,8 +281,6 @@
 <script src="js/api.js"></script>
 <script src="js/google-auth.js"></script>
 <script>
-  let administratorLogin = false;
-
   GoogleAuth.init({
     buttonId: 'googleSignInButton',
     errorId: 'googleAuthError',
@@ -288,18 +288,6 @@
     redirectUrl: profile => profile.role === 'admin'
       ? 'admin-dashboard.html'
       : profile.role === 'ngo' ? 'ngo-dashboard.html' : 'buyer-dashboard.html',
-  });
-
-  document.getElementById('adminLoginMode').addEventListener('click', function() {
-    administratorLogin = !administratorLogin;
-    document.querySelector('.auth-form-title').textContent = administratorLogin ? 'Administrator sign in' : 'Sign in';
-    document.querySelector('.auth-form-sub').hidden = administratorLogin;
-    document.getElementById('adminLoginHint').hidden = !administratorLogin;
-    document.getElementById('adminLoginMode').textContent = administratorLogin ? 'Back to user sign-in' : 'Administrator';
-    document.querySelector('.social-row').hidden = administratorLogin;
-    document.querySelector('.divider-row').hidden = administratorLogin;
-    document.querySelector('.form-row-between').hidden = administratorLogin;
-    document.getElementById('loginForm').querySelector('button[type="submit"]').textContent = administratorLogin ? 'Administrator Sign In' : 'Sign In';
   });
 
   // Password visibility toggle
@@ -336,9 +324,7 @@
     submitBtn.innerHTML = 'Signing in...';
 
     try {
-      const profile = administratorLogin
-        ? await API.loginAdmin(email, password)
-        : await API.login(email, password);
+      const profile = await API.login(email, password);
       API.setUser(profile);
 
       window.location.href = profile.role === 'admin'
@@ -348,7 +334,7 @@
       errorBox.textContent = err.message || 'Incorrect email or password. Please try again.';
       errorBox.classList.add('show');
       submitBtn.disabled = false;
-      submitBtn.textContent = administratorLogin ? 'Administrator Sign In' : 'Sign In';
+      submitBtn.textContent = 'Sign In';
     }
   });
 

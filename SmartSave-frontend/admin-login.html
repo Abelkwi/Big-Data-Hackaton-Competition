@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111d2a" />
+  <title>Administrator Access — SMARTSAVE Rwanda</title>
+  <style>
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    @font-face { font-family:'Manrope'; src:url('Fonts/Manrope-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'Inter'; src:url('Fonts/Inter_18pt-SemiBold.ttf') format('truetype'); font-weight:600; font-display:swap; }
+    :root {
+      color-scheme:light;
+      --ink:#172637; --muted:#708092; --line:#e2e8e8; --green:#237347;
+      --green-dark:#154c32; --mint:#bce6cf; --gold:#efbd62; --paper:#f6f8f6;
+      --red:#a63838; --red-bg:#fff0ee;
+    }
+    *,*::before,*::after { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; color:var(--ink); background:var(--paper); font:14px/1.6 'Inter',system-ui,sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    button,input { font:inherit; }
+    .page { display:grid; min-height:100vh; grid-template-columns:minmax(380px,1fr) minmax(420px,1fr); }
+    .story { position:relative; display:flex; min-height:100vh; flex-direction:column; justify-content:space-between; overflow:hidden; padding:34px clamp(32px,6vw,88px) 30px; color:white; background:radial-gradient(ellipse at 18% 72%,#286c50 0,transparent 41%),linear-gradient(145deg,#10202a,#183b32 62%,#122b2b); }
+    .story::before,.story::after { position:absolute; width:440px; height:440px; border:1px solid #d5f3df20; border-radius:50%; content:''; pointer-events:none; }
+    .story::before { top:15%; right:-210px; box-shadow:0 0 0 38px #d5f3df08,0 0 0 78px #d5f3df06,0 0 0 120px #d5f3df04; }
+    .story::after { bottom:-300px; left:-240px; width:550px; height:550px; border-color:#efbd6228; }
+    .brand,.story-copy,.story-foot { position:relative; z-index:1; }
+    .brand { display:flex; align-items:center; gap:12px; width:max-content; }
+    .brand-mark { display:grid; width:42px; height:42px; place-items:center; overflow:hidden; border:1px solid #ffffff36; border-radius:13px; background:#ffffff12; }
+    .brand-mark img { width:100%; height:100%; object-fit:contain; }
+    .brand-word { color:white; font:700 17px 'Manrope',sans-serif; letter-spacing:.3px; }
+    .brand-word span { color:var(--mint); }
+    .story-copy { max-width:540px; margin:62px 0; }
+    .eyebrow { display:flex; align-items:center; gap:9px; color:#d5eadc; font-size:11px; font-weight:600; letter-spacing:1.55px; text-transform:uppercase; }
+    .eyebrow-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 14px #efbd62a0; }
+    h1 { max-width:520px; margin:22px 0 18px; color:white; font:600 clamp(35px,4.2vw,58px)/1.08 'Manrope',sans-serif; letter-spacing:-1.6px; }
+    h1 em { color:var(--mint); font-style:normal; }
+    .story-intro { max-width:430px; margin:0; color:#d6e0d9; font-size:15px; line-height:1.85; }
+    .signal-card { display:flex; max-width:400px; align-items:flex-start; gap:13px; margin-top:40px; padding:17px 18px; border:1px solid #ffffff20; border-radius:15px; background:#ffffff0b; backdrop-filter:blur(8px); }
+    .signal-icon { display:grid; width:35px; height:35px; flex:none; place-items:center; border-radius:11px; background:#bce6cf18; color:var(--mint); }
+    .signal-icon svg { width:18px; height:18px; }
+    .signal-title { display:block; color:white; font-size:12px; font-weight:600; }
+    .signal-copy { display:block; margin-top:3px; color:#c0d0c5; font-size:11px; line-height:1.6; }
+    .story-foot { display:flex; justify-content:space-between; gap:20px; color:#b5c8bb; font-size:10px; }
+    .main { display:grid; min-height:100vh; place-items:center; padding:48px clamp(24px,6vw,88px); }
+    .auth { width:min(100%,410px); }
+    .mobile-brand { display:none; }
+    .kicker { margin:0 0 8px; color:var(--green); font-size:10px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; }
+    h2 { margin:0; color:var(--ink); font:600 31px/1.2 'Manrope',sans-serif; letter-spacing:-.7px; }
+    .subhead { margin:11px 0 29px; color:var(--muted); font-size:13px; }
+    .secure-note { display:flex; align-items:center; gap:9px; margin-bottom:25px; padding:11px 12px; border:1px solid #dbeae0; border-radius:10px; background:#f0f7f2; color:#356548; font-size:11px; }
+    .secure-note svg { width:16px; height:16px; flex:none; }
+    .field { margin-bottom:17px; }
+    label { display:block; margin-bottom:7px; color:#344555; font-size:11px; font-weight:600; }
+    .input-wrap { position:relative; }
+    .input-icon { position:absolute; top:50%; left:14px; width:17px; height:17px; transform:translateY(-50%); color:#82918e; pointer-events:none; }
+    input { width:100%; height:49px; padding:0 46px 0 43px; border:1px solid #dce4e2; border-radius:10px; outline:none; background:white; color:#233445; font-size:13px; transition:border-color .18s,box-shadow .18s; }
+    input::placeholder { color:#a0aaa8; }
+    input:focus { border-color:#4d9b70; box-shadow:0 0 0 3px #31825418; }
+    .reveal { position:absolute; top:50%; right:10px; display:grid; width:32px; height:32px; transform:translateY(-50%); place-items:center; border:0; border-radius:8px; background:transparent; color:#71817d; cursor:pointer; }
+    .reveal:hover { background:#eff4f1; }
+    .reveal svg { width:17px; height:17px; }
+    .error { display:none; margin:0 0 16px; padding:11px 13px; border:1px solid #f1ceca; border-radius:9px; background:var(--red-bg); color:var(--red); font-size:12px; line-height:1.5; }
+    .error.show { display:block; }
+    .submit { display:flex; width:100%; height:49px; align-items:center; justify-content:center; gap:9px; margin-top:8px; border:0; border-radius:10px; background:var(--green-dark); color:white; font-size:13px; font-weight:600; cursor:pointer; transition:background .18s,transform .18s; }
+    .submit:hover:not(:disabled) { transform:translateY(-1px); background:#1b6140; }
+    .submit:disabled { cursor:wait; opacity:.72; }
+    .submit svg { width:17px; height:17px; }
+    .spinner { display:none; width:15px; height:15px; border:2px solid #ffffff60; border-top-color:white; border-radius:50%; animation:spin .7s linear infinite; }
+    .submit[aria-busy="true"] .spinner { display:block; }
+    .submit[aria-busy="true"] .submit-icon { display:none; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .auth-foot { margin:20px 0 0; color:#89958f; font-size:10px; text-align:center; }
+    .auth-foot a { color:var(--green); font-weight:600; }
+    .divider { display:flex; align-items:center; gap:10px; margin:25px 0 20px; color:#a0aaa7; font-size:9px; }
+    .divider::before,.divider::after { height:1px; flex:1; background:#e5eae8; content:''; }
+    .back-link { display:flex; align-items:center; justify-content:center; gap:7px; color:#64766f; font-size:11px; font-weight:600; }
+    .back-link:hover { color:var(--green); }
+    .back-link svg { width:14px; height:14px; }
+    @media(max-width:850px) {
+      .page { grid-template-columns: minmax(280px,.8fr) minmax(390px,1fr); }
+      .story { padding-right:34px; padding-left:34px; }
+      .main { padding-right:34px; padding-left:34px; }
+    }
+    @media(max-width:680px) {
+      .page { display:block; }
+      .story { display:none; }
+      .main { min-height:100vh; padding:32px 22px; background:radial-gradient(ellipse at 50% 0,#e8f2eb 0,transparent 48%),var(--paper); }
+      .auth { max-width:420px; }
+      .mobile-brand { display:flex; align-items:center; gap:10px; margin-bottom:50px; }
+      .mobile-brand .brand-mark { border-color:#dbe8df; background:#e9f2ec; }
+      .mobile-brand .brand-word { color:var(--ink); }
+    }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="story" aria-label="SMARTSAVE administrator portal">
+      <a class="brand" href="index.html" aria-label="SMARTSAVE home">
+        <span class="brand-mark"><img src="Logo.png" alt="" /></span>
+        <span class="brand-word">SMART<span>SAVE</span></span>
+      </a>
+      <div class="story-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Administrator workspace</div>
+        <h1>Steward the work that <em>moves us forward.</em></h1>
+        <p class="story-intro">A private control room for the people, activity, and opportunities growing Rwanda's circular food ecosystem.</p>
+        <div class="signal-card">
+          <span class="signal-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 16 5v4.3c0 3.8-2.6 6.4-6 8.2-3.4-1.8-6-4.4-6-8.2V5l6-2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.5 9.8 1.7 1.7 3.5-3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>One verified administrator</strong><span class="signal-copy">Sign-in is checked by SMARTSAVE's backend before access is granted.</span></span>
+        </div>
+      </div>
+      <div class="story-foot"><span>SMARTSAVE Rwanda</span><span>Private · Monitored · Accountable</span></div>
+    </aside>
+
+    <main class="main">
+      <section class="auth" aria-labelledby="pageTitle">
+        <a class="mobile-brand" href="index.html" aria-label="SMARTSAVE home">
+          <span class="brand-mark"><img src="Logo.png" alt="" /></span>
+          <span class="brand-word">SMART<span>SAVE</span></span>
+        </a>
+        <p class="kicker">Secure access</p>
+        <h2 id="pageTitle">Administrator sign in</h2>
+        <p class="subhead">Use your authorized SMARTSAVE administrator account to continue.</p>
+        <div class="secure-note">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="4" y="8.5" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 8.5V6a3.5 3.5 0 0 1 7 0v2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="12.8" r="1" fill="currentColor"/></svg>
+          Credentials are verified by the SMARTSAVE administrator service.
+        </div>
+        <div id="loginError" class="error" role="alert" aria-live="polite"></div>
+        <form id="adminLoginForm" novalidate>
+          <div class="field">
+            <label for="adminEmail">Administrator email</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m3.5 5 6.5 5.2L16.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <input id="adminEmail" name="email" type="email" autocomplete="username" placeholder="name@example.com" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="adminPassword">Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3.5" y="8.5" width="13" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 8.5V6a3.5 3.5 0 0 1 7 0v2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <input id="adminPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required />
+              <button id="togglePassword" class="reveal" type="button" aria-label="Show password" aria-pressed="false">
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 10s2.9-5 8-5 8 5 8 5-2.9 5-8 5-8-5-8-5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="10" cy="10" r="2.2" stroke="currentColor" stroke-width="1.5"/></svg>
+              </button>
+            </div>
+          </div>
+          <button id="submitButton" class="submit" type="submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="submitLabel">Verify and open dashboard</span>
+            <svg class="submit-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <p class="auth-foot">Access attempts are recorded for platform security. <a href="index.html">SMARTSAVE Rwanda</a></p>
+        <div class="divider">OTHER ACCESS</div>
+        <a class="back-link" href="login.html">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M12.5 8H3.5m4 4-4-4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Return to member sign in
+        </a>
+      </section>
+    </main>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    const form = document.getElementById('adminLoginForm');
+    const emailField = document.getElementById('adminEmail');
+    const passwordField = document.getElementById('adminPassword');
+    const errorBox = document.getElementById('loginError');
+    const submitButton = document.getElementById('submitButton');
+    const submitLabel = document.getElementById('submitLabel');
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.add('show');
+    }
+
+    function backendErrorMessage(error) {
+      if (error.status === 0) return 'Could not reach the SMARTSAVE service. Check your connection and try again.';
+      if (error.status === 503) return 'The SMARTSAVE service is waking up or temporarily unavailable. Wait a moment and try again.';
+      return error.message || 'Administrator sign-in could not be verified.';
+    }
+
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const visible = passwordField.type === 'password';
+      passwordField.type = visible ? 'text' : 'password';
+      this.setAttribute('aria-pressed', String(visible));
+      this.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+    });
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      errorBox.classList.remove('show');
+      if (!emailField.value.trim() || !passwordField.value) {
+        showError('Enter your administrator email and password.');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.setAttribute('aria-busy', 'true');
+      submitLabel.textContent = 'Verifying with SMARTSAVE...';
+      try {
+        const profile = await API.loginAdmin(emailField.value.trim(), passwordField.value);
+        if (profile.role !== 'admin') {
+          throw new Error('This account is not authorized for administrator access.');
+        }
+        window.location.replace('admin-dashboard.html');
+      } catch (error) {
+        API.clearTokens();
+        showError(backendErrorMessage(error));
+        submitButton.disabled = false;
+        submitButton.removeAttribute('aria-busy');
+        submitLabel.textContent = 'Verify and open dashboard';
+      }
+    });
+
+    (async function restoreAdminSession() {
+      if (!API.isAuthenticated()) return;
+      try {
+        const profile = await API.getProfile();
+        if (profile.role !== 'admin') {
+          API.clearTokens();
+          return;
+        }
+        window.location.replace('admin-dashboard.html');
+      } catch (error) {
+        API.clearTokens();
+        if (error.status === 0 || error.status === 503) {
+          showError(`Could not verify the saved session. ${backendErrorMessage(error)}`);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
