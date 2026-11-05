@@ -361,6 +361,13 @@ class AdminAuthenticationTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("access", response.data)
 
+        mixed_case_response = self.client.post(
+            "/api/auth/admin/login/",
+            {"email": "Admin@Example.com", "password": "Secure-Test-Password-123!"},
+            format="json",
+        )
+        self.assertEqual(mixed_case_response.status_code, 200)
+
         other_admin = get_user_model().objects.create_user(
             username="other-admin",
             email="other@example.com",

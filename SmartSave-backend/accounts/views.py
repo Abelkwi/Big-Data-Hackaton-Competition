@@ -33,7 +33,7 @@ class EmailBackend(ModelBackend):
         user = None
         if '@' in username:
             try:
-                user = User.objects.get(email=username)
+                user = User.objects.get(email__iexact=username.strip())
             except User.DoesNotExist:
                 user = None
         else:
